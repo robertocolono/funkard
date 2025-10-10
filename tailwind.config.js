@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -8,14 +9,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'funkard-yellow': '#FFB300',
-        'funkard-black': '#0C0C0C',
-        'funkard-white': '#FFFFFF',
+        "funkard-yellow": "#FFB300",
+        "funkard-orange": "#FF7A00",
+        "funkard-black": "#0C0C0C",
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        inter: ["Inter", "sans-serif"],
+        orbitron: ["Orbitron", "sans-serif"],
       },
     },
   },
   plugins: [],
-}
+};
