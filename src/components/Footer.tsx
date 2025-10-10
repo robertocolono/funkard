@@ -1,3 +1,5 @@
+"use client";
+import type { SyntheticEvent } from "react";
 export default function Footer() {
   return (
     <footer className="bg-[#0C0C0C] text-gray-400 text-center py-10 relative overflow-hidden">
@@ -11,8 +13,8 @@ export default function Footer() {
           src="/logo_sorriso.png"
           alt="Funkard Smile"
           className="w-12 h-auto opacity-90 hover:rotate-12 transition-transform duration-300"
-          onError={(e) => {
-            const img = e.currentTarget as HTMLImageElement;
+          onError={(e: SyntheticEvent<HTMLImageElement, Event>) => {
+            const img = e.currentTarget;
             img.onerror = null;
             img.src = "/logo.png"; // fallback al logo principale se il sorriso manca
           }}
