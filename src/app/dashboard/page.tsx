@@ -1,8 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
 
+interface Listing {
+  id: string;
+  title: string;
+  price: number;
+  condition?: string;
+}
+
 export default function Dashboard() {
-  const [listings, setListings] = useState([]);
+  const [listings, setListings] = useState<Listing[]>([]);
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
 
@@ -32,7 +39,7 @@ export default function Dashboard() {
         <button className="bg-yellow-500 px-4 py-2 rounded" onClick={create}>Aggiungi</button>
       </div>
       <ul>
-        {listings.map((l: any) => (
+        {listings.map((l: Listing) => (
           <li key={l.id} className="border-b border-white/10 py-2">
             {l.title} — €{l.price}
           </li>
