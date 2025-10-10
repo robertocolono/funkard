@@ -1,8 +1,21 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
+
+interface Listing {
+  id: string;
+  title: string;
+  description?: string;
+  price: number;
+  condition: string;
+  imageUrl?: string;
+  seller?: {
+    name: string;
+  };
+}
 
 export default function Dashboard() {
-  const [listings, setListings] = useState([]);
+  const [listings, setListings] = useState<Listing[]>([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -59,7 +72,7 @@ export default function Dashboard() {
     }
   };
 
-  const buyListing = (listingId) => {
+  const buyListing = (listingId: string) => {
     alert(`Pagamento simulato per listing ${listingId} ✅`);
   };
 
@@ -115,9 +128,11 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {listings.map((listing) => (
             <div key={listing.id} className="bg-gray-800 p-4 rounded-lg">
-              <img 
+              <Image 
                 src={listing.imageUrl || "https://images.pokemontcg.io/base2/4_hires.png"} 
                 alt={listing.title}
+                width={300}
+                height={200}
                 className="w-full h-48 object-cover rounded mb-4"
               />
               <h3 className="font-bold text-lg">{listing.title}</h3>
