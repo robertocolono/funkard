@@ -3,17 +3,24 @@ import Link from "next/link";
 export default function Header() {
   return (
     <header className="flex items-center justify-between px-6 py-3 bg-black border-b border-gray-800">
+      {/* LOGO + SCRITTA */}
       <div className="flex items-center space-x-3">
-        <img src="/favicon.png" alt="Funkard icon" className="h-8 w-8" />
-        <Link href="/" className="text-2xl font-bold text-white">
-          <span className="text-yellow-400">FUN</span>KARD
+        <img
+          src="/favicon.png" // 👈 usa il sorriso piccolo
+          alt="Funkard icon"
+          className="h-8 w-8 object-contain"
+        />
+        <Link href="/" className="flex items-center text-2xl font-extrabold tracking-tight">
+          <span className="text-yellow-400">FUN</span>
+          <span className="text-white">KARD</span>
         </Link>
       </div>
 
-      <nav className="flex space-x-6 text-sm">
-        <Link href="/dashboard">Dashboard</Link>
-        <Link href="/login">Login</Link>
-        <Link href="/register">Registrati</Link>
+      {/* NAV LINKS */}
+      <nav className="flex space-x-6 text-sm font-medium">
+        <Link href="/dashboard" className="text-gray-300 hover:text-yellow-400 transition">Dashboard</Link>
+        <Link href="/login" className="text-gray-300 hover:text-yellow-400 transition">Login</Link>
+        <Link href="/register" className="text-gray-300 hover:text-yellow-400 transition">Registrati</Link>
       </nav>
     </header>
   );
