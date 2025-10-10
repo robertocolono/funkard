@@ -6,9 +6,9 @@ export default function Header() {
         <h1 className="font-bold text-xl text-funkard-yellow tracking-wide">FUNKARD</h1>
       </div>
       <nav className="flex gap-6 text-white/80">
-        <a href="#" className="hover:text-funkard-yellow transition">Marketplace</a>
-        <a href="#" className="hover:text-funkard-yellow transition">GradeLens</a>
-        <a href="#" className="hover:text-funkard-yellow transition">Community</a>
+        <a href="/dashboard" className="hover:text-funkard-yellow transition">Dashboard</a>
+        <a href="/login" className="hover:text-funkard-yellow transition">Login</a>
+        <a href="/register" className="hover:text-funkard-yellow transition">Registrati</a>
       </nav>
     </header>
   );
