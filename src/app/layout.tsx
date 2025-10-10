@@ -10,6 +10,8 @@ export const metadata = {
   description: "Il marketplace di nuova generazione per il collezionismo di carte.",
   icons: {
     icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
   },
 };
 
