@@ -10,52 +10,50 @@ export default function Home() {
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-black via-neutral-900 to-black text-white">
-      <div className="relative flex flex-col items-center">
-        {/* Sorriso animato con luce */}
-        <div
+      <div
+        className="relative flex flex-col items-center"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        {/* === SORRISO CON EFFETTO LUCE === */}
+        <motion.div
+          animate={{
+            scale: hovered ? 1.1 : 1,
+            rotate: hovered ? 2 : 0,
+          }}
+          transition={{ type: "spring", stiffness: 150 }}
           className="relative"
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
         >
-          <motion.div
-            animate={{
-              scale: hovered ? 1.1 : 1,
-              rotate: hovered ? 2 : 0,
-            }}
-            transition={{ type: "spring", stiffness: 150 }}
-            className="relative"
-          >
-            <Image
-              src="/favicon.png"
-              alt="Funkard Smile"
-              width={220}
-              height={220}
-              priority
-              className="rounded-full"
+          <Image
+            src="/favicon.png"
+            alt="Funkard Smile"
+            width={220}
+            height={220}
+            priority
+            className="rounded-full select-none"
+          />
+
+          {/* ✨ Effetto luce dinamico */}
+          {hovered && (
+            <motion.div
+              initial={{ left: "-100%" }}
+              animate={{ left: "120%" }}
+              transition={{ duration: 1.5, ease: "easeInOut", repeat: Infinity }}
+              className="absolute top-0 h-full w-1/3 bg-gradient-to-r from-transparent via-white/50 to-transparent blur-md opacity-50"
             />
+          )}
+        </motion.div>
 
-            {/* ✨ Luce dinamica */}
-            {hovered && (
-              <motion.div
-                initial={{ left: "-100%" }}
-                animate={{ left: "120%" }}
-                transition={{ duration: 1.5, ease: "easeInOut", repeat: Infinity }}
-                className="absolute top-0 h-full w-1/3 bg-gradient-to-r from-transparent via-white/60 to-transparent blur-md opacity-50"
-              />
-            )}
-          </motion.div>
-        </div>
-
-        {/* Testo FUNKARD */}
+        {/* === TESTO FUNKARD === */}
         <motion.h1
-          className="mt-6 text-5xl font-extrabold tracking-wide drop-shadow-[0_0_10px_#FFB300]"
-          animate={{ opacity: hovered ? 0.7 : 1 }}
+          className="mt-6 text-6xl font-extrabold tracking-wide drop-shadow-[0_0_10px_#FFB300]"
+          animate={{ opacity: hovered ? 0.8 : 1 }}
           transition={{ duration: 0.3 }}
         >
-          FUN<span className="text-funkard-yellow">KARD</span>
+          FUN<span className="text-yellow-500">KARD</span>
         </motion.h1>
 
-        {/* Pulsante "Esplora il Marketplace" */}
+        {/* === PULSANTE ESPLORA === */}
         {hovered && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -65,7 +63,7 @@ export default function Home() {
           >
             <Link
               href="/marketplace"
-              className="px-6 py-3 bg-funkard-yellow text-black font-semibold rounded-xl hover:bg-funkard-orange transition"
+              className="px-6 py-3 bg-yellow-500 text-black font-semibold rounded-xl hover:bg-yellow-400 transition-all shadow-md"
             >
               Esplora il Marketplace
             </Link>
@@ -73,8 +71,8 @@ export default function Home() {
         )}
       </div>
 
-      {/* Slogan */}
-      <p className="mt-16 text-neutral-400 text-lg">
+      {/* === SLOGAN === */}
+      <p className="mt-24 text-neutral-400 text-lg tracking-wide">
         Collect. Connect. Play.
       </p>
     </main>
