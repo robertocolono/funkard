@@ -1,0 +1,5 @@
+{
+  "name": "funkard-dev",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:18",
+  "postCreateCommand": "npm install"
+}
