@@ -2,11 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import Image from "next/image";
+import type { GradeLensResult } from "@/types/gradelens";
 
 export default function GradeLensDetailPage() {
   const { id } = useParams();
   const router = useRouter();
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<GradeLensResult | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -23,15 +25,16 @@ export default function GradeLensDetailPage() {
         }
         if (!res.ok) throw new Error("Errore nel recupero dell’analisi.");
         const json = await res.json();
-        setData(json);
-      } catch (err: any) {
-        setError(err.message || "Errore imprevisto.");
+        setData(json as GradeLensResult);
+      } catch (err: unknown) {
+        const message = err instanceof Error ? err.message : "Errore imprevisto.";
+        setError(message);
       } finally {
         setLoading(false);
       }
     };
     fetchData();
-  }, [id]);
+  }, [id, apiBase]);
 
   if (loading)
     return (
@@ -58,24 +61,32 @@ export default function GradeLensDetailPage() {
     <div className="flex flex-col items-center justify-center min-h-screen bg-funkard-black text-white p-6">
       <div className="max-w-xl w-full space-y-6 text-center">
         <h1 className="text-3xl font-bold text-funkard-yellow">Analisi GradeLens</h1>
-        <p className="text-white/70">Risultato generato il {new Date(data.createdAt).toLocaleString()}</p>
+  <p className="text-white/70">Risultato generato il {data?.createdAt ? new Date(data.createdAt).toLocaleString() : ""}</p>
 
         <div className="bg-neutral-900 border border-white/10 rounded-xl p-6 space-y-4 text-left">
           <div className="flex flex-col sm:flex-row gap-6 items-start">
-            <img
-              src={data.imageUrl}
-              alt="Card"
-              className="w-48 h-64 object-cover rounded-lg border border-white/10"
-            />
+            {data && (
+              <Image
+                src={data.imageUrl}
+                alt="Card"
+                width={192}
+                height={256}
+                className="w-48 h-64 object-cover rounded-lg border border-white/10"
+              />
+            )}
             <div className="flex-1 space-y-2">
-              <p><b>Grade complessivo:</b> {data.grade.toFixed(1)} / 10</p>
-              <p><b>Centratura:</b> {data.centering}</p>
-              <p><b>Bordi:</b> {data.edges}</p>
-              <p><b>Angoli:</b> {data.corners}</p>
-              <p><b>Superficie:</b> {data.surface}</p>
-              <p><b>Valore stimato:</b> {data.valueLow}–{data.valueHigh} {data.currency}</p>
-              <p className="text-xs text-white/60 italic">{data.notes}</p>
-              <p className="text-xs text-white/40">Analisi valida fino al: {new Date(data.expiresAt).toLocaleString()}</p>
+              {data && (
+                <>
+                  <p><b>Grade complessivo:</b> {data.grade.toFixed(1)} / 10</p>
+                  <p><b>Centratura:</b> {data.centering}</p>
+                  <p><b>Bordi:</b> {data.edges}</p>
+                  <p><b>Angoli:</b> {data.corners}</p>
+                  <p><b>Superficie:</b> {data.surface}</p>
+                  <p><b>Valore stimato:</b> {data.valueLow}9{data.valueHigh} {data.currency}</p>
+                  <p className="text-xs text-white/60 italic">{data.notes}</p>
+                  <p className="text-xs text-white/40">Analisi valida fino al: {new Date(data.expiresAt).toLocaleString()}</p>
+                </>
+              )}
             </div>
           </div>
         </div>
