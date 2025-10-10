@@ -1,87 +1,71 @@
-"use client";
 
-import { useEffect, useState } from "react";
+"use client";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [show, setShow] = useState(true);
+  const isHome = pathname === "/";
+  const [hidden, setHidden] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const [scrolled, setScrolled] = useState(false);
-
-  // Simula stato autenticazione (da collegare a Supabase o Auth.js dopo)
-  const isLoggedIn = false;
 
   useEffect(() => {
-    if (pathname !== "/") return; // navbar dinamica solo in home
-
+    if (!isHome) return;
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      // Cambia colore dopo un po’ di scroll
-      setScrolled(currentScrollY > 30);
-
-      // Mostra o nasconde la navbar in base alla direzione
-      if (currentScrollY > lastScrollY && currentScrollY > 80) {
-        setShow(false); // nascondi se si scende
-      } else {
-        setShow(true); // mostra se si risale
-      }
-
-      setLastScrollY(currentScrollY);
+      if (window.scrollY > lastScrollY) setHidden(true);
+      else setHidden(false);
+      setLastScrollY(window.scrollY);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY, pathname]);
+  }, [lastScrollY, isHome]);
 
-  // Stile base per la navbar
-  const baseClasses =
-    "fixed top-0 left-0 w-full flex items-center justify-between px-8 py-4 z-50 transition-all duration-500";
-
-  const dynamicClasses =
-    pathname === "/"
-      ? `${scrolled ? "bg-black/90 shadow-md" : "bg-transparent"} ${
-          show ? "translate-y-0" : "-translate-y-full"
-        }`
-      : "bg-black shadow-md"; // navbar fissa nelle altre pagine
+  const isLoggedIn = false; // temporaneo
 
   return (
-    <nav className={`${baseClasses} ${dynamicClasses}`}>
-      {/* --- LOGO & TITLE --- */}
-      <div className="flex items-center space-x-3">
-        <Image
-          src="/favicon-32x32.png"
-          alt="Funkard icon"
-          width={28}
-          height={28}
-          className="rounded-sm"
-        />
-        <Link href="/" className="text-xl font-extrabold text-white">
-          <span className="text-[#f2b237] drop-shadow-[0_0_6px_#f2b237]">FUN</span>
-          KARD
-        </Link>
-      </div>
+    <nav
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+        hidden && isHome ? "-translate-y-full" : "translate-y-0"
+      } ${isHome ? "bg-transparent" : "bg-black/90 backdrop-blur-md"} py-4`}
+    >
+      <div className="flex items-center justify-between max-w-6xl mx-auto px-6">
+        
+        {/* LOGO + NOME CENTRATI */}
+        <div className="flex items-center justify-center w-full space-x-3">
+          <Link href="/" className="flex items-center space-x-2 group">
+            <Image
+              src="/favicon-32x32.png"
+              alt="Funkard icon"
+              width={30}
+              height={30}
+            />
+            <span className="text-2xl font-extrabold transition-all group-hover:drop-shadow-[0_0_8px_#f2b237]">
+              <span className="text-[#f2b237]">FUN</span>
+              <span className="text-white">KARD</span>
+            </span>
+          </Link>
+        </div>
 
-      {/* --- LOGIN / REGISTRAZIONE --- */}
-      <div>
-        {!isLoggedIn ? (
-          <Link
-            href="/register"
-            className="text-[#f2b237] font-semibold hover:text-white transition-all"
-          >
-            Registrati
-          </Link>
-        ) : (
-          <Link
-            href="/login"
-            className="text-[#f2b237] font-semibold hover:text-white transition-all"
-          >
-            Login
-          </Link>
-        )}
+        {/* CTA DESTRA */}
+        <div className="absolute right-8 top-1/2 -translate-y-1/2">
+          {isLoggedIn ? (
+            <Link
+              href="/login"
+              className="px-5 py-2 rounded-full bg-[#f2b237] text-black font-semibold shadow-[0_0_12px_#f2b23788] hover:shadow-[0_0_20px_#f2b237cc] transition-all duration-300"
+            >
+              Login
+            </Link>
+          ) : (
+            <Link
+              href="/register"
+              className="px-5 py-2 rounded-full bg-[#f2b237] text-black font-semibold shadow-[0_0_12px_#f2b23788] hover:shadow-[0_0_20px_#f2b237cc] transition-all duration-300"
+            >
+              Registrati
+            </Link>
+          )}
+        </div>
       </div>
     </nav>
   );
