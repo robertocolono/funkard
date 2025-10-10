@@ -1,24 +1,20 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-const inter = Inter({ subsets: ["latin"] });
-
 export const metadata = {
-  title: "Funkard — Collect. Connect. Play.",
-  description: "Il marketplace di nuova generazione per il collezionismo di carte.",
+  title: "Funkard",
+  description: "Collect. Connect. Play.",
   icons: {
-    icon: "/favicon.png",
+    icon: "/favicon.png",        // 👈 favicon trasparente
     shortcut: "/favicon.png",
-    apple: "/favicon.png",
   },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="it">
-      <body className={`${inter.className} bg-funkard-black text-white min-h-screen flex flex-col`}>
+      <body className="bg-funkard-black text-white min-h-screen flex flex-col">
         <Header />
         <main className="flex-grow">{children}</main>
         <Footer />

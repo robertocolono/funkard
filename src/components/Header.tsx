@@ -13,14 +13,7 @@ export default function Header() {
       <Link href="/" className="flex items-center gap-3">
         {isHome ? (
           // ✅ LOGO COMPLETO SOLO IN HOME
-          <Image
-            src="/logo.png"
-            alt="Funkard Logo"
-            width={120}
-            height={120}
-            priority
-            className="object-contain"
-          />
+          <img src="/logo.png" alt="Funkard logo" className="w-12 h-12 object-contain" />
         ) : (
           // ✅ SOLO SORRISO + TESTO NELLE ALTRE PAGINE
           <>
