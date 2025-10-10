@@ -1,10 +1,10 @@
+import Image from "next/image";
+
 export default function Header() {
   return (
     <header className="w-full flex items-center justify-between px-6 py-4 border-b border-white/10 bg-funkard-black">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center">
-          <span className="text-black font-bold">F</span>
-        </div>
+        <Image src="/logo.png" alt="Funkard logo" width={48} height={48} className="w-12 h-12" />
         <h1 className="font-bold text-xl text-funkard-yellow tracking-wide">FUNKARD</h1>
       </div>
       <nav className="flex gap-6 text-white/80">

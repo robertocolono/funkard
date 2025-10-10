@@ -1,16 +1,15 @@
 import "./globals.css";
-import { Inter, Orbitron } from "next/font/google";
+import { Inter } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
-const orbitron = Orbitron({ subsets: ["latin"], weight: ["400", "700"] });
 
 export const metadata = {
   title: "Funkard — Collect. Connect. Play.",
   description: "Il marketplace di nuova generazione per il collezionismo di carte.",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon.png",
   },
 };
 
