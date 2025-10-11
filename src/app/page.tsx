@@ -33,23 +33,21 @@ export default function HomePage() {
         </Link>
 
         {/* Bottone Login/Registrati */}
-        <div>
-          {!isLoggedIn ? (
-            <Link
-              href="/register"
-              className="bg-[#f2b237] text-black font-semibold px-5 py-2 rounded-full hover:shadow-[0_0_10px_#f2b237] transition-all"
-            >
-              Registrati
-            </Link>
-          ) : (
-            <Link
-              href="/profile"
-              className="text-white font-medium hover:text-[#f2b237] transition-all"
-            >
-              Bentornato, {username}
-            </Link>
-          )}
-        </div>
+        {!isLoggedIn ? (
+          <Link
+            href="/register"
+            className="bg-[#f2b237] text-black font-semibold px-6 py-2.5 rounded-full text-lg hover:shadow-[0_0_20px_#f2b237] hover:scale-105 transition-all"
+          >
+            Registrati
+          </Link>
+        ) : (
+          <Link
+            href="/profile"
+            className="bg-white/10 border border-[#f2b237] text-[#f2b237] font-medium px-6 py-2.5 rounded-full text-lg hover:bg-[#f2b237] hover:text-black hover:shadow-[0_0_15px_#f2b237] transition-all"
+          >
+            Ciao, {username}
+          </Link>
+        )}
       </nav>
 
       {/* Hero Section */}
