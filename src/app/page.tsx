@@ -19,67 +19,71 @@ export default function HomePage() {
   }, []);
 
   return (
-    <main className="min-h-screen flex flex-col bg-black text-white">
-      {/* Navbar */}
-      <nav className="sticky top-0 w-full h-16 flex items-center justify-between px-6 lg:px-12 bg-black/90 backdrop-blur-md z-50 border-b border-white/10">
-        {/* Logo */}
-        <Link href="/" className="flex items-center space-x-1 group">
-          <span className="text-[#f2b237] font-extrabold text-xl tracking-wide group-hover:drop-shadow-[0_0_5px_#f2b237] transition-all">
+    <main className="min-h-screen flex flex-col bg-black text-white font-[Poppins]">
+      {/* NAVBAR */}
+      <nav className="sticky top-0 w-full h-20 flex items-center justify-between px-8 lg:px-16 bg-black/80 backdrop-blur-sm z-50 border-b border-white/10">
+        {/* LOGO */}
+        <Link
+          href="/"
+          className="flex items-center space-x-2 group no-underline select-none"
+        >
+          <span className="text-[#f2b237] font-black text-3xl tracking-wide leading-none transition-all group-hover:drop-shadow-[0_0_8px_#f2b237]">
             FUN
           </span>
-          <span className="text-white font-extrabold text-xl tracking-wide">
+          <span className="text-white font-black text-3xl tracking-wide leading-none">
             KARD
           </span>
         </Link>
 
-        {/* Bottone Login/Registrati */}
+        {/* BOTTONE LOGIN/REGISTRAZIONE */}
         {!isLoggedIn ? (
           <Link
             href="/register"
-            className="bg-[#f2b237] text-black font-semibold px-6 py-2.5 rounded-full text-lg hover:shadow-[0_0_20px_#f2b237] hover:scale-105 transition-all"
+            className="bg-[#f2b237] text-black font-semibold text-xl px-8 py-3 rounded-xl hover:shadow-[0_0_25px_#f2b237] hover:scale-105 transition-all flex items-center justify-center no-underline"
           >
             Registrati
           </Link>
         ) : (
           <Link
             href="/profile"
-            className="bg-white/10 border border-[#f2b237] text-[#f2b237] font-medium px-6 py-2.5 rounded-full text-lg hover:bg-[#f2b237] hover:text-black hover:shadow-[0_0_15px_#f2b237] transition-all"
+            className="bg-white/10 border border-[#f2b237] text-[#f2b237] font-medium text-xl px-8 py-3 rounded-xl hover:bg-[#f2b237] hover:text-black hover:shadow-[0_0_20px_#f2b237] transition-all flex items-center justify-center no-underline"
           >
             Ciao, {username}
           </Link>
         )}
       </nav>
 
-      {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center flex-1 text-center px-6">
-        <h1 className="text-4xl md:text-5xl font-semibold mb-8 animate-fade-in">
-          Benvenuto su <span className="text-[#f2b237] font-bold">Funkard</span>
+      {/* HERO SECTION */}
+      <section className="flex flex-col items-center justify-center flex-1 text-center px-6 py-20">
+        {/* TITOLO */}
+        <h1 className="text-6xl md:text-7xl font-extrabold mb-8 animate-fade-in">
+          Benvenuto su
         </h1>
 
-        {/* Smile Logo */}
-        <div className="w-40 md:w-56 mb-8 animate-bounce-slow">
+        {/* LOGO PRINCIPALE */}
+        <div className="w-[260px] md:w-[360px] mb-12 animate-bounce-slow">
           <Image
-            src="/smile_closed.svg"
-            alt="Funkard Smile"
-            width={200}
-            height={200}
-            className="drop-shadow-[0_0_10px_#f2b237]"
+            src="/logo.png"
+            alt="Logo Funkard"
+            width={360}
+            height={360}
+            className="drop-shadow-[0_0_30px_#f2b237]"
             priority
           />
         </div>
 
-        {/* CTA Buttons */}
-        <div className="flex flex-col items-center gap-4">
+        {/* BOTTONI CTA */}
+        <div className="flex flex-col sm:flex-row gap-10 mt-6">
           <Link
             href="/register"
-            className="bg-[#f2b237] text-black font-semibold text-lg px-8 py-3 rounded-full hover:shadow-[0_0_15px_#f2b237] transition-all"
+            className="bg-[#f2b237] text-black font-bold text-2xl px-12 py-5 rounded-xl hover:shadow-[0_0_30px_#f2b237] hover:scale-105 transition-all no-underline"
           >
             Unisciti a noi
           </Link>
 
           <Link
             href="/marketplace"
-            className="border border-[#f2b237] text-white font-medium text-lg px-8 py-3 rounded-full hover:bg-[#f2b237] hover:text-black transition-all"
+            className="bg-[#f2b237] text-black font-bold text-2xl px-12 py-5 rounded-xl hover:shadow-[0_0_30px_#f2b237] hover:scale-105 transition-all no-underline"
           >
             Esplora il Marketplace
           </Link>
