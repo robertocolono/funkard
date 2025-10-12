@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import Button from "@/components/ui/Button";
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -29,11 +30,10 @@ export default function Navbar() {
 
       {/* Right Button */}
       {!isLoggedIn ? (
-        <Link
-          href="/register"
-          className="bg-[#f2b237] text-black font-semibold text-lg sm:text-xl px-6 sm:px-10 py-3 sm:py-4 rounded-lg hover:bg-[#ffca47] transition-all shadow-md hover:shadow-lg"
-        >
-          Registrati
+        <Link href="/register">
+          <Button variant="primary" size="md" className="rounded-md font-bold">
+            Registrati
+          </Button>
         </Link>
       ) : (
         <Link
