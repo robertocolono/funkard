@@ -22,7 +22,57 @@ a {
 
 /* Reusable components */
 @layer components {
+  /* ==============================
+     🎨 FUNKARD PREMIUM LIGHT UI
+     ============================== */
+
+  /* Pulsante primario globale */
   .btn-funkard {
-    @apply rounded-xl bg-[#f2b237] px-4 py-3 text-sm font-bold text-black hover:brightness-110 transition-all duration-200 active:scale-[0.98];
+    @apply rounded-xl bg-[#f2b237] px-4 py-3 text-sm font-bold text-black 
+    hover:brightness-110 hover:shadow-[0_0_12px_rgba(242,178,55,0.4)]
+    transition-all duration-200 active:scale-[0.98];
+  }
+
+  /* Input, select e textarea base */
+  .input-funkard {
+    @apply w-full rounded-xl bg-[#121212] border border-white/10 
+    px-4 py-3 text-sm text-white placeholder-white/40
+    focus:outline-none focus:ring-1 focus:ring-[#f2b237]
+    transition-all duration-150;
+  }
+
+  /* Card di prodotto o contenitore generico */
+  .card-funkard {
+    @apply rounded-2xl bg-[#0b0b0b] border border-white/10 overflow-hidden
+    hover:shadow-[0_0_15px_rgba(242,178,55,0.25)]
+    hover:scale-[1.01] transition-all duration-200;
+  }
+
+  /* Glow sotto i titoli principali */
+  .title-glow {
+    @apply drop-shadow-[0_0_12px_rgba(242,178,55,0.3)];
+  }
+
+  /* Separatore visivo sottile */
+  .divider-funkard {
+    @apply h-[1px] bg-white/5 my-10;
+  }
+
+  /* Tooltip semplice */
+  .tooltip-funkard {
+    @apply relative cursor-help;
+  }
+  .tooltip-funkard:hover::after {
+    content: attr(data-tip);
+    @apply absolute left-1/2 -translate-x-1/2 bottom-full mb-2 px-2 py-1 rounded-md bg-[#111] text-white text-xs whitespace-nowrap border border-white/10;
+  }
+
+  /* Glow morbido per hero / header */
+  .glow-text {
+    background: linear-gradient(90deg, #f2b237, #ff7a00);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(242, 178, 55, 0.2);
   }
 }

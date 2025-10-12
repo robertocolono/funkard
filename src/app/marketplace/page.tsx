@@ -73,9 +73,7 @@ export default async function MarketplacePage({
     <main className="mx-auto max-w-7xl px-6 py-16 text-white">
       {/* HERO */}
       <header className="mb-8 text-center md:text-left">
-        <h1 className="text-4xl md:text-5xl font-black text-[#f2b237] drop-shadow-[0_0_10px_rgba(242,178,55,0.4)]">
-          Marketplace
-        </h1>
+        <h1 className="text-4xl md:text-5xl font-black text-primary title-glow">Marketplace</h1>
         <p className="text-white/70 mt-2 max-w-2xl mx-auto md:mx-0 font-medium">
           Scopri, filtra e acquista carte e prodotti da collezione in un ambiente
           sicuro, moderno e pensato per veri collezionisti.
@@ -85,20 +83,20 @@ export default async function MarketplacePage({
       <div className="h-[1px] bg-white/5 my-10" />
 
       {/* FILTRI */}
-      <section className="mb-12 bg-[#0c0c0c] border border-white/10 rounded-2xl p-6">
+      <section className="mb-12 bg-dark-deep border border-white/10 rounded-2xl p-6">
         <form className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           <input
             type="text"
             name="q"
             defaultValue={query}
             placeholder="Cerca per nome o set..."
-            className="w-full rounded-xl bg-[#121212] border border-white/10 px-4 py-3 text-sm placeholder-white/40 focus:outline-none focus:ring-1 focus:ring-[#f2b237] hover:brightness-110"
+            className="input-funkard"
           />
 
           <select
             name="tcg"
             defaultValue={tcg}
-            className="w-full rounded-xl bg-[#121212] border border-white/10 px-4 py-3 text-sm text-white/80 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110"
+            className="input-funkard"
           >
             <option value="all">Tutti i TCG</option>
             <option value="Pokémon">Pokémon</option>
@@ -110,7 +108,7 @@ export default async function MarketplacePage({
           <select
             name="condition"
             defaultValue={condition}
-            className="w-full rounded-xl bg-[#121212] border border-white/10 px-4 py-3 text-sm text-white/80 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110"
+            className="input-funkard"
           >
             <option value="all">Tutte le condizioni</option>
             <option value="MINT">Mint</option>
@@ -123,7 +121,7 @@ export default async function MarketplacePage({
           <select
             name="sort"
             defaultValue={sort}
-            className="w-full rounded-xl bg-[#121212] border border-white/10 px-4 py-3 text-sm text-white/80 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110"
+            className="input-funkard"
           >
             <option value="new">Più recenti</option>
             <option value="low">Prezzo crescente</option>
@@ -136,14 +134,14 @@ export default async function MarketplacePage({
               name="min"
               placeholder="Prezzo min (€)"
               defaultValue={minPrice}
-              className="w-full rounded-xl bg-[#121212] border border-white/10 px-4 py-3 text-sm placeholder-white/40 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110"
+              className="input-funkard"
             />
             <input
               type="number"
               name="max"
               placeholder="Prezzo max (€)"
               defaultValue={maxPrice}
-              className="w-full rounded-xl bg-[#121212] border border-white/10 px-4 py-3 text-sm placeholder-white/40 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110"
+              className="input-funkard"
             />
           </div>
 
@@ -164,7 +162,7 @@ export default async function MarketplacePage({
           products.map((p) => (
             <div
               key={p.id}
-              className="rounded-2xl bg-[#0b0b0b] border border-white/10 overflow-hidden hover:shadow-[0_0_15px_rgba(242,178,55,0.2)] transition-all duration-200"
+              className="card-funkard"
             >
               <div className="relative w-full h-52 bg-[#111]">
                 <Image

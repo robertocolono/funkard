@@ -5,14 +5,36 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        // 🎨 FUNKARD BRAND COLORS
+        primary: {
+          DEFAULT: "#f2b237", // giallo Funkard
+          light: "#ffcc4d",   // hover/gradient light
+          dark: "#d99c2f",    // gradient dark
+        },
+        accent: {
+          DEFAULT: "#ff7a00", // arancio complementare
+          light: "#ffa733",
+        },
+        dark: {
+          DEFAULT: "#0b0b0b", // sfondo principale
+          deep: "#0c0c0c",    // variante profonda
+          card: "#121212",    // superfici (input/box)
+        },
+        neutral: {
+          white: "#ffffff",
+          gray: "#b3b3b3",
+        },
+        success: "#22c55e",
+        error: "#ef4444",
+      },
       fontFamily: {
         inter: ["Inter", "sans-serif"],
         luckiest: ["Luckiest Guy", "cursive"],
       },
-      colors: {
-        "funkard-yellow": "#FFB300",
-        "funkard-orange": "#FF7A00",
-        "funkard-black": "#0C0C0C",
+      boxShadow: {
+        funkard: "0 0 15px rgba(242,178,55,0.25)",
+        soft: "0 0 8px rgba(255,255,255,0.05)",
       },
     },
   },

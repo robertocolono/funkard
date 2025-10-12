@@ -46,11 +46,11 @@ export default function SellPage() {
           name="title"
           placeholder="Titolo del prodotto"
           required
-          className="w-full rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2 focus:outline-none focus:ring-1 focus:ring-[#f2b237] hover:brightness-110"
+          className="input-funkard"
         />
 
         <div className="grid grid-cols-2 gap-4">
-          <select name="tcg" required className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110">
+          <select name="tcg" required className="input-funkard">
             <option value="">Seleziona TCG</option>
             <option value="Pokémon">Pokémon</option>
             <option value="One Piece">One Piece</option>
@@ -58,7 +58,7 @@ export default function SellPage() {
             <option value="Yu-Gi-Oh!">Yu-Gi-Oh!</option>
           </select>
 
-          <select name="type" required className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110">
+          <select name="type" required className="input-funkard">
             <option value="SINGLE">Carta Singola</option>
             <option value="BOX">Booster Box</option>
             <option value="ETB">Elite Trainer Box</option>
@@ -71,17 +71,17 @@ export default function SellPage() {
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <input type="number" name="releaseYear" placeholder="Anno" className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110" />
-          <input type="text" name="setName" placeholder="Espansione / Set" className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110" />
+          <input type="number" name="releaseYear" placeholder="Anno" className="input-funkard" />
+          <input type="text" name="setName" placeholder="Espansione / Set" className="input-funkard" />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <input type="text" name="rarity" placeholder="Rarità" className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110" />
-          <input type="text" name="edition" placeholder="Edizione" className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110" />
+          <input type="text" name="rarity" placeholder="Rarità" className="input-funkard" />
+          <input type="text" name="edition" placeholder="Edizione" className="input-funkard" />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <select name="condition" required className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110">
+          <select name="condition" required className="input-funkard">
             <option value="">Condizione</option>
             <option value="MINT">Mint</option>
             <option value="NEAR_MINT">Near Mint</option>
@@ -90,7 +90,7 @@ export default function SellPage() {
             <option value="POOR">Poor</option>
           </select>
 
-          <select name="isSealed" className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110">
+          <select name="isSealed" className="input-funkard">
             <option value="false">Aperto</option>
             <option value="true">Sigillato</option>
           </select>
@@ -103,23 +103,23 @@ export default function SellPage() {
             placeholder="Prezzo (€)"
             step="0.01"
             required
-            className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110"
+            className="input-funkard"
           />
-          <input type="number" name="quantity" placeholder="Quantità" defaultValue={1} className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110" />
+          <input type="number" name="quantity" placeholder="Quantità" defaultValue={1} className="input-funkard" />
         </div>
 
         <input
           type="text"
           name="imageUrl"
           placeholder="URL immagine (temporaneo)"
-          className="w-full rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110"
+          className="input-funkard"
         />
 
         <textarea
           name="description"
           placeholder="Descrizione del prodotto..."
           rows={4}
-          className="w-full rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110"
+          className="input-funkard"
         ></textarea>
 
         <button
