@@ -3,9 +3,9 @@
 import Link from "next/link";
 import Image from "next/image";
 
-export default function HomePage() {
+export default function Page() {
   return (
-    <main className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#0b0b0b] text-white">
+    <main className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#0b0b0b] text-white font-inter">
       {/* Effetto glow radiale */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#f2b23722_0%,_#0b0b0b_70%)] pointer-events-none" />
 
@@ -37,14 +37,21 @@ export default function HomePage() {
 
         {/* Bottone principale */}
         <Link
-          href="/marketplace"
-          className="group relative inline-flex items-center justify-center px-16 py-5 text-2xl font-bold rounded-full
-                     border-2 border-[#f2b237] text-white overflow-hidden tracking-wide
-                     transition-all duration-300 hover:scale-110 hover:shadow-[0_0_50px_#f2b237aa]"
-        >
-          <span className="absolute inset-0 bg-[#f2b237] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-          <span className="relative group-hover:text-black">Esplora il Marketplace</span>
-        </Link>
+  href="/marketplace"
+  className="inline-flex items-center justify-center rounded-md transition-transform duration-200 hover:scale-105"
+  style={{
+    backgroundColor: '#f2b237',
+    color: '#000000',
+    fontWeight: 800,
+    fontSize: '22px',
+    padding: '18px 25px',
+    borderRadius: '10px',
+    boxShadow: '0 4px 25px rgba(0,0,0,0.3)',
+  }}
+>
+  Esplora il Marketplace
+</Link>
+
       </section>
     </main>
   );
