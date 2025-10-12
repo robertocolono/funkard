@@ -1,15 +1,13 @@
 import { PrismaClient } from "@prisma/client";
 
-const globalForPrisma = global as unknown as { prisma: PrismaClient };
+const globalForPrisma = global as unknown as { prisma?: PrismaClient };
 
 export const prisma =
-  globalForPrisma.prisma ||
+  globalForPrisma.prisma ??
   new PrismaClient({
-    log: ["warn", "error"],
+    log: ["error", "warn"],
     datasources: {
-      db: {
-        url: process.env.DATABASE_URL,
-      },
+      db: { url: process.env.DATABASE_URL },
     },
   });
 
