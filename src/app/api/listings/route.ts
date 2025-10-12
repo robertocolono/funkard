@@ -1,16 +1,4 @@
-import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
-
+// Deprecated endpoint removed due to schema changes.
 export async function GET() {
-  const listings = await prisma.listing.findMany({
-    include: {
-      card: true,
-      seller: {
-        select: { username: true, name: true },
-      },
-    },
-  });
-  return NextResponse.json(listings);
+  return new Response(JSON.stringify([]), { headers: { "content-type": "application/json" } });
 }
