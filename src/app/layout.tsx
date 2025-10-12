@@ -1,5 +1,5 @@
 import "./globals.css";
-import Navbar from "@/components/ui/navbar";
+import Navbar from "@/components/Navbar";
 
 export const metadata = {
   title: "Funkard — Il Marketplace dei Collezionisti",
