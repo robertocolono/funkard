@@ -63,23 +63,6 @@ export default function HomePage() {
       <footer className="absolute bottom-6 text-gray-400 text-sm opacity-80">
         © 2025 Funkard — Da collezionisti, per collezionisti.
       </footer>
-
-      {/* Animazioni */}
-      <style jsx global>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fadeIn {
-          animation: fadeIn 0.8s ease-out both;
-        }
-      `}</style>
     </main>
   );
 }
