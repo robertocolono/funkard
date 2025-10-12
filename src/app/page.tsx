@@ -1,8 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Button from "@/components/ui/Button";
-import { motion } from "framer-motion";
 
 export default function Home() {
   return (
@@ -31,23 +29,20 @@ export default function Home() {
           Il nuovo ecosistema digitale per i collezionisti moderni. Marketplace,
          AI e community in un&apos;unica piattaforma.
         </p>
-        <motion.div
-          className="flex flex-wrap justify-center gap-6"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-        >
-          <Link href="/marketplace">
-            <Button variant="primary" size="lg">
-              Esplora il Marketplace
-            </Button>
+        <div className="flex flex-col items-center gap-4 mt-8">
+          <Link
+            href="/marketplace"
+            className="px-8 py-3 border-[3px] border-[#f2b237] text-white font-bold text-lg rounded-md hover:bg-[#f2b237] hover:text-black transition-all duration-200 shadow-[0_0_10px_#f2b23740]"
+          >
+            Esplora il Marketplace
           </Link>
-          <Link href="/gradelens">
-            <Button variant="secondary" size="lg">
-              Scopri GradeLens AI
-            </Button>
+          <Link
+            href="/gradelens"
+            className="px-8 py-3 border-[3px] border-[#f2b237] text-white font-bold text-lg rounded-md hover:bg-[#f2b237] hover:text-black transition-all duration-200 shadow-[0_0_10px_#f2b23740]"
+          >
+            Scopri GradeLens AI
           </Link>
-        </motion.div>
+        </div>
       </section>
 
       {/* FEATURE GRID */}
