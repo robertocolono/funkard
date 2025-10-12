@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function FunkardLogo() {
@@ -25,12 +26,12 @@ export default function FunkardLogo() {
 
         {/* Bottone al centro della bocca */}
         {isHovered && (
-          <a
+          <Link
             href="/marketplace"
             className="absolute bottom-[105px] bg-gradient-to-r from-[#FFB300] to-[#FF7A00] text-black font-bold py-2 px-5 rounded-full shadow-[0_0_15px_#FF7A00] hover:shadow-[0_0_25px_#FFB300] transition-all duration-300"
           >
             Esplora il Marketplace
-          </a>
+          </Link>
         )}
       </div>
 
