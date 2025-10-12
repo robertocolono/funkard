@@ -6,33 +6,12 @@
 @tailwind utilities;
 
 html, body {
-  margin: 0;
-  padding: 0;
   background-color: #0b0b0b;
   color: #fff;
+  margin: 0;
+  padding: 0;
   overflow-x: hidden;
-  scroll-behavior: smooth;
   font-family: 'Poppins', sans-serif;
 }
 
-a {
-  text-decoration: none;
-  color: inherit;
-  transition: all 0.2s ease-in-out;
-}
-
-* {
-  transition: all 0.2s ease-in-out;
-}
-
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-thumb {
-  background: #2a2a2a;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #3a3a3a;
-}
+a { text-decoration: none; color: inherit; }
