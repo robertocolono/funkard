@@ -7,17 +7,18 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "seed": "node prisma/seed.js"
+    "seed": "tsx prisma/seed.ts",
+    "postinstall": "prisma generate"
   },
   "prisma": {
-    "seed": "node prisma/seed.js"
+    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
-    "@prisma/client": "^6.17.0",
+    "@prisma/client": "6.17.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.24",
     "next": "15.5.4",
-    "prisma": "^6.17.0",
+    "prisma": "6.17.0",
     "react": "19.1.0",
     "react-dom": "19.1.0"
   },
