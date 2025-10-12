@@ -46,11 +46,11 @@ export default function SellPage() {
           name="title"
           placeholder="Titolo del prodotto"
           required
-          className="w-full rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2"
+          className="w-full rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2 focus:outline-none focus:ring-1 focus:ring-[#f2b237] hover:brightness-110"
         />
 
         <div className="grid grid-cols-2 gap-4">
-          <select name="tcg" required className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2">
+          <select name="tcg" required className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110">
             <option value="">Seleziona TCG</option>
             <option value="Pokémon">Pokémon</option>
             <option value="One Piece">One Piece</option>
@@ -58,7 +58,7 @@ export default function SellPage() {
             <option value="Yu-Gi-Oh!">Yu-Gi-Oh!</option>
           </select>
 
-          <select name="type" required className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2">
+          <select name="type" required className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110">
             <option value="SINGLE">Carta Singola</option>
             <option value="BOX">Booster Box</option>
             <option value="ETB">Elite Trainer Box</option>
@@ -71,17 +71,17 @@ export default function SellPage() {
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <input type="number" name="releaseYear" placeholder="Anno" className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2" />
-          <input type="text" name="setName" placeholder="Espansione / Set" className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2" />
+          <input type="number" name="releaseYear" placeholder="Anno" className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110" />
+          <input type="text" name="setName" placeholder="Espansione / Set" className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110" />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <input type="text" name="rarity" placeholder="Rarità" className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2" />
-          <input type="text" name="edition" placeholder="Edizione" className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2" />
+          <input type="text" name="rarity" placeholder="Rarità" className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110" />
+          <input type="text" name="edition" placeholder="Edizione" className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110" />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <select name="condition" required className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2">
+          <select name="condition" required className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110">
             <option value="">Condizione</option>
             <option value="MINT">Mint</option>
             <option value="NEAR_MINT">Near Mint</option>
@@ -90,7 +90,7 @@ export default function SellPage() {
             <option value="POOR">Poor</option>
           </select>
 
-          <select name="isSealed" className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2">
+          <select name="isSealed" className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110">
             <option value="false">Aperto</option>
             <option value="true">Sigillato</option>
           </select>
@@ -103,29 +103,29 @@ export default function SellPage() {
             placeholder="Prezzo (€)"
             step="0.01"
             required
-            className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2"
+            className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110"
           />
-          <input type="number" name="quantity" placeholder="Quantità" defaultValue={1} className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2" />
+          <input type="number" name="quantity" placeholder="Quantità" defaultValue={1} className="rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110" />
         </div>
 
         <input
           type="text"
           name="imageUrl"
           placeholder="URL immagine (temporaneo)"
-          className="w-full rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2"
+          className="w-full rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110"
         />
 
         <textarea
           name="description"
           placeholder="Descrizione del prodotto..."
           rows={4}
-          className="w-full rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2"
+          className="w-full rounded-xl bg-[#0c0c0c] border border-white/10 px-4 py-2 focus:ring-1 focus:ring-[#f2b237] hover:brightness-110"
         ></textarea>
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-xl bg-[#f2b237] px-6 py-3 text-sm font-bold text-black transition hover:opacity-90"
+          className="btn-funkard w-full"
         >
           {loading ? "Pubblicazione..." : "Pubblica prodotto"}
         </button>
