@@ -1,10 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
+import { Product, User } from "@prisma/client";
 
 import { ProductCard } from "@/components/Marketplace/ProductCard";
 
+interface ProductWithSeller extends Product {
+  seller?: Pick<User, "handle" | "rating" | "country">;
+}
+
 export default function MarketplacePage() {
-  const [items, setItems] = useState<any[]>([]);
+  const [items, setItems] = useState<ProductWithSeller[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

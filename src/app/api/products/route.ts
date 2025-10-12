@@ -13,7 +13,7 @@ export async function GET(request: Request) {
     where: {
       AND: [
         q
-          ? { title: { contains: q, mode: "insensitive" } }
+          ? { title: { contains: q } }
           : {},
         type && type !== "All" ? { type: type as ProductType } : {},
         { priceEUR: { lte: maxPrice } },

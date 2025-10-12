@@ -1,5 +1,5 @@
 // prisma/seed.js
-const { PrismaClient } = require("@prisma/client");
+const { PrismaClient } = require("@prisma/client"); // eslint-disable-line
 const prisma = new PrismaClient();
 
 async function main() {
@@ -13,6 +13,8 @@ async function main() {
       country: "IT",
     },
   });
+
+  console.log("Utente creato:", user.handle);
 
   // Poi creiamo i prodotti
   await prisma.product.createMany({

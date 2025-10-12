@@ -14,6 +14,8 @@ async function main() {
     },
   });
 
+  console.log("Utente creato:", user.handle);
+
   // Poi creiamo i prodotti
   await prisma.product.createMany({
     data: [
