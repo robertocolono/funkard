@@ -118,6 +118,49 @@ export default async function ProductDetail({ params }: { params: { id: string }
               </p>
             </div>
           )}
+
+          {/* STORICO PREZZO / VALORE MEDIO */}
+          <div className="mt-10 rounded-2xl border border-white/10 bg-[#0c0c0c] p-6">
+            <h2 className="text-xl font-bold mb-4">📊 Andamento Prezzo e Valore Medio</h2>
+
+            {/* MOCK DATI (da collegare al modello PriceHistory) */}
+            <div className="text-sm text-white/70">
+              <p className="mb-2">Ultime valutazioni registrate:</p>
+              <ul className="space-y-1">
+                <li>12/10/2025 → €179</li>
+                <li>05/10/2025 → €172</li>
+                <li>25/09/2025 → €168</li>
+                <li>15/09/2025 → €165</li>
+              </ul>
+            </div>
+
+            <div className="mt-4 flex items-center justify-between">
+              <p className="text-white/70 text-sm">
+                💡 <span className="text-white">Media ultimi 30 giorni:</span>{" "}
+                <span className="font-bold text-[#f2b237]">€171,00</span>
+              </p>
+              <button className="rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-xs font-semibold text-white/80 hover:bg-white/10 transition">
+                Aggiorna valore
+              </button>
+            </div>
+
+            {/* GRAFICO MOCK (per ora placeholder, in futuro Recharts) */}
+            <div className="mt-6 h-40 rounded-xl bg-gradient-to-b from-[#1a1a1a] to-[#0b0b0b] flex items-end justify-between px-4">
+              {[165, 168, 172, 179].map((v, i) => (
+                <div
+                  key={i}
+                  className="w-8 bg-[#f2b237] rounded-t-md"
+                  style={{ height: `${(v - 160) * 1.5}px` }}
+                  title={`€${v}`}
+                ></div>
+              ))}
+            </div>
+
+            <p className="mt-3 text-xs text-white/50">
+              * I dati sopra sono a scopo dimostrativo. Saranno aggiornati automaticamente
+              quando la funzione di tracciamento prezzi sarà attiva.
+            </p>
+          </div>
         </section>
       </div>
     </main>
