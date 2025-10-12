@@ -5,11 +5,11 @@ import Image from "next/image";
 
 export default function HomePage() {
   return (
-    <main className="relative min-h-screen flex flex-col items-center justify-center bg-[#0b0b0b] text-white overflow-hidden">
-      {/* Glow radiale centrale */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(242,178,55,0.12)_0%,_rgba(11,11,11,1)_70%)] pointer-events-none" />
+    <main className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#0b0b0b] text-white">
+      {/* Effetto glow radiale */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#f2b23722_0%,_#0b0b0b_70%)] pointer-events-none" />
 
-      {/* --- Hero Section migliorata --- */}
+      {/* --- Hero Section --- */}
       <section className="relative z-10 flex flex-col items-center text-center px-6 pt-24 md:pt-32 pb-40">
         {/* Logo Smile */}
         <div className="flex justify-center mb-12">
@@ -46,11 +46,6 @@ export default function HomePage() {
           <span className="relative group-hover:text-black">Esplora il Marketplace</span>
         </Link>
       </section>
-
-      {/* --- Footer fissato --- */}
-      <footer className="absolute bottom-8 left-0 w-full text-center text-gray-500 text-sm">
-        © 2025 Funkard — Da collezionisti, per collezionisti.
-      </footer>
     </main>
   );
 }
