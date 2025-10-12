@@ -1,6 +1,6 @@
 // app/api/products/route.ts
 import { NextResponse } from "next/server";
-import { prisma } from "../../../lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { ProductType } from "@prisma/client";
 
 export async function GET(request: Request) {
@@ -25,4 +25,55 @@ export async function GET(request: Request) {
   });
 
   return NextResponse.json({ items: products, total: products.length });
+}
+
+export async function POST(req: Request) {
+  try {
+    const body = await req.json();
+    const {
+      title,
+      type,
+      tcg,
+      setName,
+      releaseYear,
+      rarity,
+      edition,
+      isSealed,
+      condition,
+      priceEUR,
+      quantity,
+      imageUrl,
+      description,
+      sellerId,
+    } = body || {};
+
+    // Validazione minima
+    if (!title || priceEUR == null || !sellerId || !tcg) {
+      return NextResponse.json({ error: "Dati incompleti" }, { status: 400 });
+    }
+
+    const product = await prisma.product.create({
+      data: {
+        title,
+        type,
+        tcg,
+        setName: setName || null,
+        releaseYear: typeof releaseYear === "number" ? releaseYear : releaseYear ? parseInt(releaseYear) : null,
+        rarity: rarity || null,
+        edition: edition || null,
+        isSealed: typeof isSealed === "boolean" ? isSealed : String(isSealed) === "true",
+        condition: condition || null,
+        priceEUR: Math.round(Number(priceEUR) * 100),
+        quantity: quantity ? parseInt(quantity) : 1,
+        imageUrl: imageUrl || "/images/placeholder.svg",
+        description: description || null,
+        sellerId,
+      },
+    });
+
+    return NextResponse.json({ success: true, data: product });
+  } catch (error) {
+    console.error("Errore creazione prodotto:", error);
+    return NextResponse.json({ error: "Errore interno" }, { status: 500 });
+  }
 }
