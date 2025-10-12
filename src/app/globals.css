@@ -1,10 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@reference "tailwindcss";
 
 
 html, body {
@@ -28,24 +26,23 @@ a {
 
   /* Pulsante primario globale */
   .btn-funkard {
-    @apply rounded-xl bg-[#f2b237] px-4 py-3 text-sm font-bold text-black 
-    hover:brightness-110 hover:shadow-[0_0_12px_rgba(242,178,55,0.4)]
+    @apply rounded-xl bg-primary px-4 py-3 text-sm font-bold text-black 
+    hover:brightness-110 hover:shadow-funkard
     transition-all duration-200 active:scale-[0.98];
   }
 
   /* Input, select e textarea base */
   .input-funkard {
-    @apply w-full rounded-xl bg-[#121212] border border-white/10 
+    @apply w-full rounded-xl bg-dark-card border border-white/10 
     px-4 py-3 text-sm text-white placeholder-white/40
-    focus:outline-none focus:ring-1 focus:ring-[#f2b237]
+    focus:outline-none focus:ring-1 focus:ring-primary
     transition-all duration-150;
   }
 
   /* Card di prodotto o contenitore generico */
   .card-funkard {
-    @apply rounded-2xl bg-[#0b0b0b] border border-white/10 overflow-hidden
-    hover:shadow-[0_0_15px_rgba(242,178,55,0.25)]
-    hover:scale-[1.01] transition-all duration-200;
+    @apply rounded-2xl bg-dark border border-white/10 overflow-hidden
+    hover:shadow-funkard hover:scale-[1.01] transition-all duration-200;
   }
 
   /* Glow sotto i titoli principali */
