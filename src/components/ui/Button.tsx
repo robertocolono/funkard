@@ -1,7 +1,7 @@
 "use client";
 
-import { ReactNode } from "react";
-import { motion, type HTMLMotionProps } from "framer-motion";
+import { ReactNode, useRef } from "react";
+import { motion, useMotionValue, useSpring, type HTMLMotionProps } from "framer-motion";
 import clsx from "clsx";
 
 type ButtonProps = HTMLMotionProps<"button"> & {
@@ -38,19 +38,42 @@ export default function Button({
   children,
   ...props
 }: ButtonProps) {
+  const ref = useRef<HTMLButtonElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const springX = useSpring(x, { stiffness: 200, damping: 15 });
+  const springY = useSpring(y, { stiffness: 200, damping: 15 });
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const rect = ref.current?.getBoundingClientRect();
+    if (!rect) return;
+    const offsetX = e.clientX - rect.left - rect.width / 2;
+    const offsetY = e.clientY - rect.top - rect.height / 2;
+    x.set(offsetX * 0.3);
+    y.set(offsetY * 0.3);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
   const base =
     "rounded-lg font-semibold inline-flex items-center justify-center select-none transition-all duration-150";
   const variantCls = VARIANT_CLASSES[variant];
   const sizeCls = SIZE_CLASSES[size];
-
   const iconMode =
     iconOnly &&
     "p-3 sm:p-4 aspect-square min-w-[48px] min-h-[48px] flex items-center justify-center";
 
   return (
     <motion.button
-      whileHover={{ scale: 1.03, y: -1 }}
-      whileTap={{ scale: 0.96, y: 0 }}
+      ref={ref}
+      style={{ x: springX, y: springY }}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       transition={{ type: "spring", stiffness: 400, damping: 25 }}
       className={clsx(
         base,
@@ -63,30 +86,6 @@ export default function Button({
       disabled={disabled || loading}
       {...props}
     >
-      {loading && (
-        <motion.svg
-          className="h-5 w-5 animate-spin mr-2"
-          viewBox="0 0 24 24"
-          fill="none"
-          aria-hidden="true"
-        >
-          <circle
-            className="opacity-25"
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="currentColor"
-            strokeWidth="4"
-          />
-          <path
-            className="opacity-75"
-            d="M4 12a8 8 0 018-8"
-            stroke="currentColor"
-            strokeWidth="4"
-            strokeLinecap="round"
-          />
-        </motion.svg>
-      )}
       {children}
     </motion.button>
   );
