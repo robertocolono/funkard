@@ -51,21 +51,22 @@ async function getProducts(
 export default async function MarketplacePage({
   searchParams,
 }: {
-  searchParams: {
+  searchParams: Promise<{
     q?: string;
     tcg?: string;
     condition?: string;
     sort?: string;
     min?: string;
     max?: string;
-  };
+  }>;
 }) {
-  const query = searchParams.q || "";
-  const tcg = searchParams.tcg || "all";
-  const condition = searchParams.condition || "all";
-  const sort = searchParams.sort || "new";
-  const minPrice = searchParams.min || "";
-  const maxPrice = searchParams.max || "";
+  const sp = await searchParams;
+  const query = sp.q || "";
+  const tcg = sp.tcg || "all";
+  const condition = sp.condition || "all";
+  const sort = sp.sort || "new";
+  const minPrice = sp.min || "";
+  const maxPrice = sp.max || "";
 
   const products = await getProducts(query, tcg, condition, sort, minPrice, maxPrice);
 
