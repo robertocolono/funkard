@@ -1,89 +1,64 @@
+// prisma/schema.prisma
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
 generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
 model User {
-  id          String         @id @default(cuid())
-  email       String         @unique
-  username    String?        @unique
-  name        String?
-  avatarUrl   String?
-  role        Role           @default(USER)
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
-
-  listings    Listing[]
-  transactions Transaction[] @relation("BuyerTransactions")
-  wishlist     Wishlist[]
+  id        String    @id @default(cuid())
+  email     String    @unique
+  handle    String
+  rating    Float?    @default(0)
+  country   String?
+  products  Product[]
+  createdAt DateTime  @default(now())
 }
 
-model Listing {
-  id          String      @id @default(cuid())
-  title       String
-  description String?
-  price       Float
-  condition   String
-  imageUrl    String?
-  isActive    Boolean     @default(true)
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+model Product {
+  id           String       @id @default(cuid())
+  title        String       // Nome o titolo principale (es. "Charizard ex 151")
+  type         ProductType  // SINGLE, BOX, ETB, ecc.
+  tcg          String       // Pokémon, One Piece, Magic, ecc.
+  setName      String?      // Nome dell'espansione o set
+  releaseYear  Int?         // Anno di uscita
+  rarity       String?      // Ultra Rare, Secret Rare, ecc.
+  edition      String?      // 1st Edition, Alternate Art, Promo
+  isSealed     Boolean      // true se sigillato
+  condition    Condition?   // MINT, NEAR_MINT, ecc.
+  priceEUR     Int          // prezzo in centesimi (€12.99 = 1299)
+  quantity     Int          // unità disponibili (es. 1 per singole)
+  imageUrl     String       // link immagine principale
+  description  String?      // testo scritto dal venditore
+  metadata     Json?        // dati extra variabili per tipo (es. boosterCount, accessories)
+  sellerId     String
+  seller       User         @relation(fields: [sellerId], references: [id])
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
 
-  seller      User        @relation(fields: [sellerId], references: [id])
-  sellerId    String
-
-  card        Card?       @relation(fields: [cardId], references: [id])
-  cardId      String?
-
-  transactions Transaction[]
+  @@index([type, priceEUR])
+  @@index([tcg, setName])
 }
 
-model Card {
-  id          String      @id @default(cuid())
-  name        String
-  setName     String?
-  rarity      String?
-  grade       Int?
-  imageUrl    String?
-  marketValue Float?       @default(0)
-  createdAt   DateTime     @default(now())
-
-  listings    Listing[]
-  wishlist    Wishlist[]
+enum ProductType {
+  SINGLE       // carta singola
+  BOOSTER      // pacchetto
+  BOX          // booster box
+  ETB          // elite trainer box
+  TIN          // latta
+  DECK         // mazzo
+  COLLECTION   // lotto o set multiplo
+  ACCESSORY    // accessorio (sleeves, binder, playmat, ecc.)
+  PROMO        // carta promozionale
 }
 
-model Transaction {
-  id          String      @id @default(cuid())
-  buyer       User        @relation("BuyerTransactions", fields: [buyerId], references: [id])
-  buyerId     String
-  listing     Listing     @relation(fields: [listingId], references: [id])
-  listingId   String
-  price       Float
-  status      TransactionStatus @default(PENDING)
-  createdAt   DateTime    @default(now())
-}
-
-model Wishlist {
-  id        String   @id @default(cuid())
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
-  card      Card     @relation(fields: [cardId], references: [id])
-  cardId    String
-  createdAt DateTime @default(now())
-}
-
-enum Role {
-  USER
-  ADMIN
-  BUSINESS
-}
-
-enum TransactionStatus {
-  PENDING
-  COMPLETED
-  CANCELLED
+enum Condition {
+  MINT
+  NEAR_MINT
+  LIGHT_PLAYED
+  PLAYED
+  POOR
 }
