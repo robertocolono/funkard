@@ -31,7 +31,7 @@ export default function Navbar() {
       {!isLoggedIn ? (
         <Link
           href="/register"
-          className="mr-6 font-semibold text-[#f2b237] hover:text-[#ffca47] transition-colors duration-200"
+          className="mr-8 font-semibold tracking-wide text-[#f2b237] hover:text-[#ffca47] transition-all duration-200"
         >
           Registrati
         </Link>
