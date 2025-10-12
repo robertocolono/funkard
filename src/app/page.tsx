@@ -22,23 +22,23 @@ export default function Home() {
 
       {/* HERO SECTION */}
       <section className="flex flex-col items-center justify-center text-center h-screen w-full px-6 pt-24">
-        <h1 className="text-5xl sm:text-6xl md:text-7xl font-[Bungee] mb-6">
+        <h1 className="text-5xl sm:text-6xl md:text-7xl font-[Bungee] mb-6 tracking-tight leading-tight">
           Colleziona. Scambia. Vivi la Passione.
         </h1>
-        <p className="text-gray-400 text-lg sm:text-xl max-w-2xl mb-10">
+        <p className="text-gray-400 text-lg sm:text-xl max-w-2xl mb-10 tracking-tight leading-snug">
           Il nuovo ecosistema digitale per i collezionisti moderni. Marketplace,
          AI e community in un&apos;unica piattaforma.
         </p>
         <div className="flex flex-col items-center gap-6 mt-8">
           <Link
             href="/marketplace"
-            className="px-8 py-3 border-[3px] border-[#f2b237] bg-[#f2b237] text-black font-bold text-lg rounded-xl hover:bg-[#ffca47] transition-all duration-200 shadow-[0_0_10px_#f2b23740]"
+            className="px-8 py-3 border-[3px] border-[#f2b237] bg-[#f2b237] text-black font-bold text-lg rounded-2xl tracking-tight whitespace-nowrap hover:bg-[#ffca47] transition-all duration-200 shadow-[0_0_10px_#f2b23740]"
           >
             Esplora il Marketplace
           </Link>
           <Link
             href="/gradelens"
-            className="px-8 py-3 border-[3px] border-[#f2b237] bg-[#f2b237] text-black font-bold text-lg rounded-xl hover:bg-[#ffca47] transition-all duration-200 shadow-[0_0_10px_#f2b23740]"
+            className="px-8 py-3 border-[3px] border-[#f2b237] bg-[#f2b237] text-black font-bold text-lg rounded-2xl tracking-tight whitespace-nowrap hover:bg-[#ffca47] transition-all duration-200 shadow-[0_0_10px_#f2b23740]"
           >
             Scopri GradeLens AI
           </Link>
