@@ -1,13 +1,16 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Header() {
   return (
     <header className="flex items-center justify-between px-6 py-3 bg-black border-b border-gray-800">
       {/* LOGO + SCRITTA */}
       <div className="flex items-center space-x-3">
-        <img
-          src="/favicon.png" // 👈 usa il sorriso piccolo
+        <Image
+          src="/favicon.png"
           alt="Funkard icon"
+          width={32}
+          height={32}
           className="h-8 w-8 object-contain"
         />
         <Link href="/" className="flex items-center text-2xl font-extrabold tracking-tight">
