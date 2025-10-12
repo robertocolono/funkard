@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-[#0b0b0b]/95 border-b border-[#1a1a1a] backdrop-blur-md shadow-[0_4px_25px_rgba(0,0,0,0.6)]">
-      <div className="max-w-[1400px] mx-auto flex justify-between items-center px-12 py-8">
+      <div className="max-w-[1600px] mx-auto flex justify-between items-center px-20 py-8">
         {/* LOGO */}
         <Link
           href="/"
@@ -16,7 +16,7 @@ export default function Navbar() {
         </Link>
 
         {/* LINK DESTRA */}
-        <div className="flex items-center gap-16 text-[1.25rem] font-semibold">
+        <div className="flex justify-end items-center gap-[90px] text-[1.25rem] font-semibold">
           <Link
             href="/marketplace"
             className="hover:text-[#f2b237] transition-all duration-200 hover:scale-105"
