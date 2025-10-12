@@ -1,30 +1,27 @@
-// prisma/schema.prisma
-
-datasource db {
-  provider = "sqlite" // usa "postgresql" quando torneremo su Neon
-  url      = env("DATABASE_URL")
-}
-
 generator client {
   provider = "prisma-client-js"
 }
 
-model User {
-  id         String   @id @default(cuid())
-  email      String   @unique
-  handle     String   @unique
-  rating     Float?
-  country    String?
-  role       String   @default("USER") // "USER" | "BUSINESS" | "ADMIN"
-  verified   Boolean  @default(false)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
 
-  products   Product[]
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  handle    String    @unique
+  rating    Float?
+  country   String?
+  role      String    @default("USER")
+  verified  Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[]
 }
 
 model Product {
-  id           String       @id @default(cuid())
+  id           String         @id @default(cuid())
   title        String
   type         ProductType
   tcg          String
@@ -40,23 +37,23 @@ model Product {
   description  String?
   metadata     Json?
   sellerId     String
-  seller       User         @relation(fields: [sellerId], references: [id])
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
   priceHistory PriceHistory[]
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
+  seller       User           @relation(fields: [sellerId], references: [id])
 
   @@index([type, priceEUR])
   @@index([tcg, setName])
 }
 
 model PriceHistory {
-  id         String    @id @default(cuid())
-  productId  String
-  product    Product   @relation(fields: [productId], references: [id])
-  date       DateTime  @default(now())
-  priceEUR   Int
-  source     String?
-  note       String?
+  id        String   @id @default(cuid())
+  productId String
+  date      DateTime @default(now())
+  priceEUR  Int
+  source    String?
+  note      String?
+  product   Product  @relation(fields: [productId], references: [id])
 }
 
 enum ProductType {
