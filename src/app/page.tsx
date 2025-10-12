@@ -1,61 +1,88 @@
+"use client";
+
+import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 
 export default function HomePage() {
   return (
-    <main className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#0b0b0b] text-white">
-      {/* Glow radiale al centro */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#f2b23733_0%,_#0b0b0b_70%)] pointer-events-none" />
+    <main className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden bg-[#0b0b0b] text-white">
+      {/* Glow radiale caldo */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#f2b23733_0%,_#0b0b0b_80%)] pointer-events-none" />
 
-      {/* Sezione principale */}
-      <section className="relative z-10 flex flex-col items-center text-center gap-8 px-4 py-32 md:py-40">
-        
-        {/* Titolo Benvenuto */}
-        <p className="text-[#f2b237] text-lg md:text-xl font-semibold tracking-wide">
+      <section className="relative z-10 flex flex-col items-center text-center gap-8 px-4 py-24">
+        {/* Benvenuto */}
+        <motion.p
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-[#f2b237] text-xl md:text-2xl font-semibold tracking-wide"
+        >
           Benvenuto su <span className="font-[Bungee]">FUNKARD!</span>
-        </p>
+        </motion.p>
 
         {/* Smile */}
-        <div className="flex justify-center items-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3, duration: 1 }}
+          className="flex justify-center"
+        >
           <Image
             src="/smile-closed.png"
             alt="Funkard Smile"
-            width={400}
-            height={400}
-            priority
-            className="w-64 md:w-80 lg:w-[420px] h-auto mx-auto select-none"
+            width={380}
+            height={380}
+            className="w-64 md:w-80 lg:w-[400px] select-none"
           />
-        </div>
+        </motion.div>
 
         {/* Headline */}
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight max-w-4xl">
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.9 }}
+          className="text-4xl md:text-6xl font-extrabold tracking-tight max-w-4xl leading-tight"
+        >
           COLLEZIONA. SCAMBIA. VIVI LA PASSIONE.
-        </h1>
+        </motion.h1>
 
         {/* Descrizione */}
-        <p className="text-gray-400 max-w-2xl text-base md:text-lg leading-relaxed">
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+          className="text-gray-400 max-w-2xl text-base md:text-lg leading-relaxed"
+        >
           Il nuovo ecosistema digitale per i collezionisti moderni. Marketplace, AI e community
           in un&apos;unica piattaforma.
-        </p>
+        </motion.p>
 
         {/* Bottoni */}
-        <div className="flex flex-col items-center gap-5 mt-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.1 }}
+          className="flex flex-col items-center gap-5 mt-6"
+        >
           <Link
             href="/marketplace"
-            className="px-10 py-4 border-[3px] border-[#f2b237] text-white font-semibold text-lg rounded-md
-                       hover:bg-[#f2b237] hover:text-black shadow-[0_0_20px_#f2b23744] transition-all duration-200"
+            className="px-12 py-4 text-white font-semibold text-lg rounded-md border-[3px] border-[#f2b237]
+                       shadow-[0_0_15px_#f2b23744] hover:shadow-[0_0_30px_#f2b23788]
+                       hover:bg-[#f2b237] hover:text-black transition-all duration-300"
           >
             Esplora il Marketplace
           </Link>
 
           <Link
             href="/gradelens"
-            className="px-10 py-4 border-[3px] border-[#f2b237] text-white font-semibold text-lg rounded-md
-                       hover:bg-[#f2b237] hover:text-black shadow-[0_0_20px_#f2b23744] transition-all duration-200"
+            className="px-12 py-4 text-white font-semibold text-lg rounded-md border-[3px] border-[#f2b237]
+                       shadow-[0_0_15px_#f2b23744] hover:shadow-[0_0_30px_#f2b23788]
+                       hover:bg-[#f2b237] hover:text-black transition-all duration-300"
           >
             Scopri GradeLens AI
           </Link>
-        </div>
+        </motion.div>
       </section>
     </main>
   );
