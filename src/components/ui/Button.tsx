@@ -1,20 +1,20 @@
 "use client";
 
 import { ReactNode } from "react";
+import { motion, type HTMLMotionProps } from "framer-motion";
 import clsx from "clsx";
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+type ButtonProps = HTMLMotionProps<"button"> & {
   variant?: "primary" | "secondary" | "ghost";
   size?: "sm" | "md" | "lg" | "xl";
   iconOnly?: boolean;
   loading?: boolean;
   children?: ReactNode;
-}
+};
 
 // Varianti visive (statiche per Tailwind JIT)
 const VARIANT_CLASSES: Record<NonNullable<ButtonProps["variant"]>, string> = {
-  primary:
-    "bg-[#f2b237] text-black border-none hover:bg-[#ffca47] active:scale-[0.98]",
+  primary: "bg-[#f2b237] text-black border-none hover:bg-[#ffca47]",
   secondary:
     "border border-[#f2b237] text-white hover:bg-[#f2b237] hover:text-black",
   ghost: "bg-transparent text-white hover:bg-neutral-800",
@@ -39,28 +39,23 @@ export default function Button({
   ...props
 }: ButtonProps) {
   const base =
-    "rounded-lg font-semibold inline-flex items-center justify-center transition-all duration-150 select-none";
+    "rounded-lg font-semibold inline-flex items-center justify-center select-none transition-all duration-150";
   const variantCls = VARIANT_CLASSES[variant];
   const sizeCls = SIZE_CLASSES[size];
-
-  const responsiveSizing =
-    size === "xl"
-      ? "sm:px-6 sm:py-3 sm:text-lg md:px-8 md:py-4 md:text-xl"
-      : size === "lg"
-      ? "sm:px-5 sm:py-3 sm:text-base md:px-7 md:py-4 md:text-lg"
-      : "";
 
   const iconMode =
     iconOnly &&
     "p-3 sm:p-4 aspect-square min-w-[48px] min-h-[48px] flex items-center justify-center";
 
   return (
-    <button
+    <motion.button
+      whileHover={{ scale: 1.03, y: -1 }}
+      whileTap={{ scale: 0.96, y: 0 }}
+      transition={{ type: "spring", stiffness: 400, damping: 25 }}
       className={clsx(
         base,
         variantCls,
         iconMode || sizeCls,
-        responsiveSizing,
         className,
         (disabled || loading) && "opacity-50 pointer-events-none",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#f2b237] focus-visible:ring-offset-[#0b0b0b]"
@@ -69,7 +64,7 @@ export default function Button({
       {...props}
     >
       {loading && (
-        <svg
+        <motion.svg
           className="h-5 w-5 animate-spin mr-2"
           viewBox="0 0 24 24"
           fill="none"
@@ -90,9 +85,9 @@ export default function Button({
             strokeWidth="4"
             strokeLinecap="round"
           />
-        </svg>
+        </motion.svg>
       )}
       {children}
-    </button>
+    </motion.button>
   );
 }
