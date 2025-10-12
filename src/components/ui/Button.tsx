@@ -14,18 +14,19 @@ type ButtonProps = HTMLMotionProps<"button"> & {
 
 // Varianti visive (statiche per Tailwind JIT)
 const VARIANT_CLASSES: Record<NonNullable<ButtonProps["variant"]>, string> = {
-  primary: "bg-[#f2b237] text-black border-none hover:bg-[#ffca47]",
+  primary:
+    "bg-gradient-to-b from-[#f2b237] to-[#e5a42d] text-black font-bold border border-[#f2b237]/40 shadow-[0_4px_14px_#f2b23740] hover:shadow-[0_6px_20px_#f2b23760] hover:scale-[1.03]",
   secondary:
-    "border border-[#f2b237] text-white hover:bg-[#f2b237] hover:text-black",
-  ghost: "bg-transparent text-white hover:bg-neutral-800",
+    "bg-transparent text-white font-bold border border-[#f2b237] hover:bg-[#f2b237] hover:text-black shadow-[inset_0_0_0_1px_#f2b237]",
+  ghost: "text-white hover:text-[#f2b237]",
 };
 
 // Dimensioni base
 const SIZE_CLASSES: Record<NonNullable<ButtonProps["size"]>, string> = {
-  sm: "px-4 py-2 text-sm",
-  md: "px-6 py-3 text-base",
-  lg: "px-8 py-4 text-lg",
-  xl: "px-10 py-5 text-xl",
+  sm: "px-5 py-2.5 text-sm",
+  md: "px-7 py-3 text-base",
+  lg: "px-9 py-4 text-lg",
+  xl: "px-12 py-5 text-xl",
 };
 
 export default function Button({
@@ -59,7 +60,7 @@ export default function Button({
   };
 
   const base =
-    "rounded-lg font-semibold inline-flex items-center justify-center select-none transition-all duration-150";
+    "rounded-xl font-semibold inline-flex items-center justify-center select-none transition-all duration-150";
   const variantCls = VARIANT_CLASSES[variant];
   const sizeCls = SIZE_CLASSES[size];
   const iconMode =

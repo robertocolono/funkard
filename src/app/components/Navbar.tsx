@@ -30,7 +30,7 @@ export default function Navbar() {
 
       {/* Right Button */}
       {!isLoggedIn ? (
-        <Link href="/register">
+        <Link href="/register" className="mr-6">
           <Button variant="primary" size="md" className="rounded-md font-bold">
             Registrati
           </Button>
@@ -38,7 +38,7 @@ export default function Navbar() {
       ) : (
         <Link
           href="/profile"
-          className="border border-[#f2b237] text-[#f2b237] font-semibold text-lg sm:text-xl px-6 sm:px-10 py-3 sm:py-4 rounded-lg hover:bg-[#f2b237] hover:text-black transition-all"
+          className="mr-6 border border-[#f2b237] text-[#f2b237] font-semibold text-lg sm:text-xl px-6 sm:px-10 py-3 sm:py-4 rounded-lg hover:bg-[#f2b237] hover:text-black transition-all"
         >
           Ciao, {username}
         </Link>
