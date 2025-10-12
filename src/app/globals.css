@@ -3,10 +3,13 @@
 @tailwind utilities;
 
 html, body {
-  scroll-behavior: smooth;
   background-color: #0b0b0b;
+  color: white;
+  scroll-behavior: smooth;
+  font-family: 'Poppins', sans-serif;
 }
 
-* {
-  box-sizing: border-box;
+a {
+  text-decoration: none;
+  color: inherit;
 }
