@@ -10,11 +10,11 @@ export default function RegisterPage() {
     e.preventDefault();
     setLoading(true);
 
-    const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
+  const formData = new FormData(e.currentTarget);
+  const data = Object.fromEntries(formData.entries());
 
     try {
-      const res = await fetch("https://funkard-backend.onrender.com/api/auth/register", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
