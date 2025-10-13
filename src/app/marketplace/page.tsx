@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import Image from "next/image";
+import Link from "next/link";
 import { Prisma, Condition } from "@prisma/client";
 
 // 🧠 Query lato server con tutti i filtri
@@ -160,17 +161,18 @@ export default async function MarketplacePage({
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {products.length > 0 ? (
           products.map((p) => (
-            <div
+            <Link
               key={p.id}
-              className="card-funkard"
+              href={`/marketplace/${p.id}`}
+              className="card-funkard block hover:scale-[1.02] transition-transform duration-200"
             >
-              <div className="relative w-full h-52 bg-[#111]">
+              <div className="relative w-full h-52 bg-[#111] rounded-t-xl overflow-hidden">
                 <Image
                   src={p.imageUrl || "/images/placeholder.svg"}
                   alt={p.title}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                  className="object-cover"
+                  className="object-cover transition-transform duration-300 hover:scale-105"
                 />
               </div>
               <div className="p-4">
@@ -182,7 +184,7 @@ export default async function MarketplacePage({
                   € {(p.priceEUR / 100).toLocaleString("it-IT")}
                 </p>
               </div>
-            </div>
+            </Link>
           ))
         ) : (
           <p className="text-center text-white/60 mt-20">

@@ -17,7 +17,20 @@ export default function Navbar() {
         <div className="flex items-center space-x-6 text-sm font-medium">
           <Link href="/marketplace" className="hover:text-[#f2b237] transition-colors">Marketplace</Link>
           <Link href="/gradelens" className="hover:text-[#f2b237] transition-colors">GradeLens</Link>
-          <Link href="/register" className="text-[#f2b237] font-semibold hover:text-white transition-colors">Registrati</Link>
+          <Link
+            href="/collection"
+            className="hover:text-[#f2b237] transition-colors"
+            onClick={(e) => {
+              const isAuthenticated = false; // TODO: sostituire con logica auth reale
+              if (!isAuthenticated) {
+                e.preventDefault();
+                window.location.href = "/register";
+              }
+            }}
+          >
+            Collezione
+          </Link>
+          <Link href="/register" className="hover:text-[#f2b237] transition-colors">Registrati</Link>
         </div>
       </div>
     </nav>

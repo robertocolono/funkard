@@ -6,7 +6,7 @@ export default function Page() {
   return (
     <main className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#0b0b0b] text-white font-inter">
       {/* --- Hero Section pulita e corretta --- */}
-      <section className="flex flex-col items-center justify-start text-center min-h-[85vh] pt-24 bg-[#0b0b0b]">
+      <section className="flex flex-col items-center justify-start text-center min-h-[75vh] pt-12 bg-[#0b0b0b]">
         <div className="flex flex-col items-center justify-center space-y-6">
           <Image
             src="/smile-closed.png"
@@ -37,7 +37,7 @@ export default function Page() {
       </section>
 
       {/* --- Sezione Funzionalità --- */}
-      <section className="w-full flex flex-col items-center justify-center gap-8 py-20 bg-[#0b0b0b] px-4 sm:px-8 max-w-5xl mx-auto">
+      <section className="w-full flex flex-col items-center justify-center gap-8 pt-2 pb-16 bg-[#0b0b0b] px-4 sm:px-8 max-w-5xl mx-auto">
 
         {/* Titolo sezione */}
         <div className="text-center mb-6">
