@@ -36,17 +36,25 @@ export default function Page() {
         </div>
       </section>
 
-      {/* --- Feature Sections --- */}
-      <section className="w-full flex flex-col items-center justify-center gap-6 py-20 bg-[#0b0b0b] px-4 sm:px-8">
+      {/* --- Sezione Funzionalità --- */}
+      <section className="w-full flex flex-col items-center justify-center gap-8 py-20 bg-[#0b0b0b] px-4 sm:px-8">
+
+        {/* Titolo sezione */}
+        <div className="text-center mb-6">
+          <h2 className="text-4xl font-bold text-white mb-2">Scopri di più su <span className="text-[#f2b237]">Funkard</span></h2>
+          <p className="text-gray-400 text-base sm:text-lg">
+            Esplora le funzioni che rendono il collezionismo moderno, sicuro e accessibile.
+          </p>
+        </div>
 
         {/* GradeLens Feature */}
         <Link
           href="/gradelens"
           className="w-full max-w-4xl border border-[#f2b23733] rounded-2xl p-8 hover:border-[#f2b237] hover:shadow-[0_0_20px_rgba(242,178,55,0.2)] transition-all duration-300"
         >
-          <h2 className="text-3xl font-bold text-[#f2b237] mb-2">GradeLens</h2>
+          <h3 className="text-3xl font-bold text-[#f2b237] mb-2">GradeLens</h3>
           <p className="text-gray-400 text-base sm:text-lg">
-            Scansiona le tue carte e scopri il loro valore con l’intelligenza artificiale.
+            Scansiona le tue carte e scopri il loro valore senza attese.
           </p>
         </Link>
 
@@ -55,7 +63,7 @@ export default function Page() {
           href="/collection"
           className="w-full max-w-4xl border border-[#f2b23733] rounded-2xl p-8 hover:border-[#f2b237] hover:shadow-[0_0_20px_rgba(242,178,55,0.2)] transition-all duration-300"
         >
-          <h2 className="text-3xl font-bold text-[#f2b237] mb-2">La tua Collezione</h2>
+          <h3 className="text-3xl font-bold text-[#f2b237] mb-2">La tua Collezione</h3>
           <p className="text-gray-400 text-base sm:text-lg">
             Gestisci le tue carte, monitora i prezzi e rivendile in un click.
           </p>
