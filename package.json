@@ -8,12 +8,14 @@
     "start": "next start",
     "lint": "eslint",
     "seed": "tsx prisma/seed.ts",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "generate:samples": "node scripts/generate-sample-images.mjs"
   },
   "dependencies": {
     "@prisma/client": "6.17.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.24",
+    "jimp": "^0.22.12",
     "next": "15.5.4",
     "prisma": "6.17.0",
     "react": "19.1.0",
