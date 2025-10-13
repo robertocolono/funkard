@@ -14,15 +14,21 @@ export default function Page() {
           <Image
             src="/smile-closed.png"
             alt="Funkard Logo"
-            width={112}
-            height={112}
+            width={160}
+            height={160}
             priority
-            className="w-28 h-28"
+            className="w-40 h-40 mb-2"
           />
           <h1 className="text-5xl font-bold">
             <span className="text-[#f2b237]">Benvenuto su </span>
             <span className="text-white">FUNKARD</span>
           </h1>
+
+          <p className="text-gray-300 max-w-xl text-base sm:text-lg leading-relaxed mt-2">
+            Il nuovo Marketplace digitale più sicuro per i collezionisti moderni.<br />
+            Connettiti con tutto il mondo con un semplice click!
+          </p>
+
           <p className="text-gray-400 max-w-xl text-sm sm:text-base leading-relaxed">
             Il nuovo ecosistema digitale per i collezionisti moderni.<br />
             Marketplace, AI e community in un&apos;unica piattaforma.
