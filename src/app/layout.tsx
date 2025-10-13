@@ -11,6 +11,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="it">
       <body className="bg-[#0b0b0b] text-white font-sans">
         <Navbar />
+        <div className="h-14" />
         {children}
       </body>
     </html>
