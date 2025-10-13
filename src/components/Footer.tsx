@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import type { SyntheticEvent } from "react";
 export default function Footer() {
   return (
@@ -20,9 +21,9 @@ export default function Footer() {
           }}
         />
         <nav className="flex gap-6 text-sm font-medium">
-          <a href="/about" className="hover:text-[#FFB300] transition-colors">About</a>
-          <a href="/support" className="hover:text-[#FFB300] transition-colors">Supporto</a>
-          <a href="/terms" className="hover:text-[#FFB300] transition-colors">Termini</a>
+          <Link href="/about" className="hover:text-[#FFB300] transition-colors">About</Link>
+          <Link href="/support" className="hover:text-[#FFB300] transition-colors">Supporto</Link>
+          <Link href="/terms" className="hover:text-[#FFB300] transition-colors">Termini</Link>
         </nav>
       </div>
 

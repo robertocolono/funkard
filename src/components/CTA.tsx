@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function CTA() {
   return (
     <section className="bg-gradient-to-b from-[#111] to-[#0A0A0A] text-center text-white py-32 px-6">
@@ -8,13 +10,13 @@ export default function CTA() {
         Unisciti a centinaia di collezionisti — Crea il tuo account e scopri Funkard.
       </p>
 
-      <a
+      <Link
         href="/register"
         className="bg-gradient-to-r from-[#FFB300] to-[#FF7A00] text-black font-bold text-lg py-4 px-12 
                    rounded-xl shadow-[0_0_25px_#FF7A00] hover:shadow-[0_0_40px_#FFB300] transition-all duration-300 hover:scale-105"
       >
         Crea il tuo account
-      </a>
+      </Link>
     </section>
   );
 }
