@@ -8,10 +8,9 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 h-14">
         {/* Logo */}
         <div className="flex items-center space-x-2">
-          <h1 className="text-2xl font-black tracking-tight">
-            <span className="text-[#f2b237]">FUN</span>
-            <span className="text-white">KARD</span>
-          </h1>
+          <Link href="/" className="font-bold text-xl text-white hover:text-[#f2b237] transition-colors">
+            FUNKARD
+          </Link>
         </div>
 
         {/* Link */}

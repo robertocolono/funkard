@@ -37,11 +37,13 @@ export default function Page() {
       </section>
 
       {/* --- Sezione Funzionalità --- */}
-      <section className="w-full flex flex-col items-center justify-center gap-8 py-20 bg-[#0b0b0b] px-4 sm:px-8">
+      <section className="w-full flex flex-col items-center justify-center gap-8 py-20 bg-[#0b0b0b] px-4 sm:px-8 max-w-5xl mx-auto">
 
         {/* Titolo sezione */}
         <div className="text-center mb-6">
-          <h2 className="text-4xl font-bold text-white mb-2">Scopri di più su <span className="text-[#f2b237]">Funkard</span></h2>
+          <h2 className="text-4xl font-bold text-white mb-2">
+            Scopri di più su <span className="text-[#f2b237]">Funkard</span>
+          </h2>
           <p className="text-gray-400 text-base sm:text-lg">
             Esplora le funzioni che rendono il collezionismo moderno, sicuro e accessibile.
           </p>
@@ -50,18 +52,18 @@ export default function Page() {
         {/* GradeLens Feature */}
         <Link
           href="/gradelens"
-          className="w-full max-w-4xl border border-[#f2b23733] rounded-2xl p-8 hover:border-[#f2b237] hover:shadow-[0_0_20px_rgba(242,178,55,0.2)] transition-all duration-300"
+          className="w-full border border-[#f2b23733] rounded-2xl p-8 hover:border-[#f2b237] hover:shadow-[0_0_20px_rgba(242,178,55,0.2)] transition-all duration-300"
         >
           <h3 className="text-3xl font-bold text-[#f2b237] mb-2">GradeLens</h3>
           <p className="text-gray-400 text-base sm:text-lg">
-            Scansiona le tue carte e scopri il loro valore senza attese.
+            Scansiona le tue carte e scopri il loro valore con l’intelligenza artificiale.
           </p>
         </Link>
 
         {/* Collezione Feature */}
         <Link
           href="/collection"
-          className="w-full max-w-4xl border border-[#f2b23733] rounded-2xl p-8 hover:border-[#f2b237] hover:shadow-[0_0_20px_rgba(242,178,55,0.2)] transition-all duration-300"
+          className="w-full border border-[#f2b23733] rounded-2xl p-8 hover:border-[#f2b237] hover:shadow-[0_0_20px_rgba(242,178,55,0.2)] transition-all duration-300"
         >
           <h3 className="text-3xl font-bold text-[#f2b237] mb-2">La tua Collezione</h3>
           <p className="text-gray-400 text-base sm:text-lg">
