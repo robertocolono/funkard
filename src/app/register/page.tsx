@@ -13,10 +13,28 @@ export default function RegisterPage() {
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
 
-    console.log("Registrazione inviata:", data);
-    alert("Registrazione inviata (mock). Collegheremo l'API dopo.");
+    try {
+      const res = await fetch("https://funkard-backend.onrender.com/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
 
-    setLoading(false);
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err?.message || "Registrazione fallita");
+      }
+
+      const out = await res.json().catch(() => null);
+      console.log("Registrazione OK:", out);
+      alert("Registrazione completata!");
+    } catch (err: unknown) {
+      console.error("Errore registrazione:", err);
+      const message = err instanceof Error ? err.message : "Errore durante la registrazione";
+      alert(message);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (

@@ -8,16 +8,24 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(cuid())
-  email     String    @unique
-  handle    String    @unique
-  rating    Float?
-  country   String?
-  role      String    @default("USER")
-  verified  Boolean   @default(false)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  products  Product[]
+  id               String    @id @default(cuid())
+  email            String    @unique
+  passwordHash     String
+  handle           String    @unique
+  nome             String
+  paese            String
+  tipoUtente       UserType  @default(PRIVATO)
+  indirizzo        String?
+  citta            String?
+  cap              String?
+  telefono         String?
+  metodoPagamento  String?
+  accettaTermini   Boolean   @default(false)
+  verified         Boolean   @default(false)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  products         Product[]
 }
 
 model Product {
@@ -74,4 +82,9 @@ enum Condition {
   LIGHT_PLAYED
   PLAYED
   POOR
+}
+
+enum UserType {
+  PRIVATO
+  BUSINESS
 }

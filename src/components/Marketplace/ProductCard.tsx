@@ -1,8 +1,18 @@
 import Image from "next/image";
-import { Product, User } from "@prisma/client";
+import Link from "next/link";
+import { Product } from "@prisma/client";
+
+type SellerPreview = {
+  handle: string;
+  paese?: string | null;
+  country?: string | null; // compat vecchio schema
+  verified?: boolean | null;
+  tipoUtente?: "PRIVATO" | "BUSINESS" | null;
+  role?: string | null; // compat vecchio schema
+};
 
 interface ProductWithSeller extends Product {
-  seller?: Pick<User, "handle" | "rating" | "country">;
+  seller?: SellerPreview;
 }
 
 export function ProductCard({ product }: { product: ProductWithSeller }) {
@@ -72,18 +82,27 @@ export function ProductCard({ product }: { product: ProductWithSeller }) {
         {/* Venditore */}
         {seller && (
           <div className="mt-2 flex items-center justify-between text-[11px] text-white/60">
-            <span>@{seller.handle}</span>
-            {seller.rating ? <span>★ {seller.rating.toFixed(1)}</span> : null}
+            <span>
+              @{seller.handle}
+              {seller.paese || seller.country ? ` • ${seller.paese ?? seller.country}` : ""}
+            </span>
+            <span>
+              {seller.verified
+                ? "Verificato"
+                : (seller.tipoUtente ?? (seller.role === "BUSINESS" ? "BUSINESS" : "PRIVATO")) === "BUSINESS"
+                ? "Business"
+                : "Privato"}
+            </span>
           </div>
         )}
 
         {/* CTA */}
-        <a
+        <Link
           href={`/marketplace/${id}`}
           className="mt-3 block w-full rounded-xl bg-[#f2b237] px-4 py-2 text-sm font-bold text-black text-center transition hover:opacity-90"
         >
           Vedi dettagli
-        </a>
+        </Link>
       </div>
     </article>
   );

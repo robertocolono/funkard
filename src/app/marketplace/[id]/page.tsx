@@ -2,9 +2,10 @@ import { prisma } from "@/lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
 
-export default async function ProductPage({ params }: { params: { id: string } }) {
+export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const product = await prisma.product.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: { seller: true },
   });
 
@@ -100,10 +101,11 @@ export default async function ProductPage({ params }: { params: { id: string } }
           <div className="mt-8 border-t border-gray-800 pt-6">
             <p className="text-sm text-gray-400 mb-1">Venduto da</p>
             <p className="text-white font-medium">
-              @{product.seller.handle} — ⭐ {product.seller.rating ?? "N/A"}
+              @{product.seller.handle}{product.seller.paese ? ` — ${product.seller.paese}` : ""}
             </p>
             <p className="text-xs text-gray-500 mt-1">
-              {product.seller.role === "BUSINESS" ? "Venditore verificato" : "Privato"}
+              {product.seller.tipoUtente === "BUSINESS" ? "Business" : "Privato"}
+              {product.seller.verified ? " · Verificato" : ""}
             </p>
           </div>
         </div>
