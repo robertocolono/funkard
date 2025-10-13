@@ -7,7 +7,7 @@ async function main() {
 
   // Prima controlliamo se l'utente esiste già
   let user = await prisma.user.findUnique({
-    where: { email: "seller@funkard.com" }
+    where: { email: "seller@funkard.com" },
   });
 
   if (!user) {
@@ -15,9 +15,18 @@ async function main() {
       data: {
         id: "seed_user",
         email: "seller@funkard.com",
+        passwordHash: "seed-password-hash", // placeholder
         handle: "FunkardSeller",
-        rating: 4.8,
-        country: "IT",
+        nome: "Demo Seller",
+        paese: "IT",
+        tipoUtente: "BUSINESS",
+        indirizzo: "Via Roma 1",
+        citta: "Roma",
+        cap: "00100",
+        telefono: "+39 333 0000000",
+        metodoPagamento: "Carta",
+        accettaTermini: true,
+        verified: true,
       },
     });
     console.log("✅ Utente creato:", user.handle);
@@ -27,7 +36,7 @@ async function main() {
 
   // Controlliamo se il Charizard esiste già
   let charizard = await prisma.product.findFirst({
-    where: { title: "Charizard ex (151)" }
+    where: { title: "Charizard ex (151)" },
   });
 
   if (!charizard) {
