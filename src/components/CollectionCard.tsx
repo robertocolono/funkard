@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import { Card } from "@/components/ui/card";
 import type { UserCard } from "@/types/usercard";
 import { motion } from "framer-motion";
 
@@ -32,9 +31,9 @@ export default function CollectionCard({ card, onClick }: Props) {
       onClick={onClick}
       className="cursor-pointer"
     >
-      <Card className="bg-zinc-900 border border-zinc-800 hover:border-yellow-500 transition-all rounded-2xl overflow-hidden">
+      <div className="bg-neutral-900 border border-neutral-800 hover:border-yellow-500/60 transition-all rounded-2xl overflow-hidden">
         <div className="p-3">
-          <div className="aspect-[3/4] w-full overflow-hidden rounded-lg border border-zinc-800 bg-zinc-950">
+          <div className="aspect-[3/4] w-full overflow-hidden rounded-lg border border-neutral-800 bg-neutral-950">
             <Image
               src={card.frontImage || "/mock/placeholder.png"}
               alt={card.name}
@@ -53,7 +52,7 @@ export default function CollectionCard({ card, onClick }: Props) {
             <div className="text-[11px] text-zinc-500 mt-1 italic">{sourceLabel}</div>
           </div>
         </div>
-      </Card>
+      </div>
     </motion.div>
   );
 }
