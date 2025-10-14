@@ -88,3 +88,14 @@ enum UserType {
   PRIVATO
   BUSINESS
 }
+
+model Card {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  price       Float
+  image       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      String?
+}

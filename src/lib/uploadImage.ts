@@ -15,13 +15,13 @@ export async function uploadImage(file: File): Promise<string> {
   // Prova a leggere JSON, fallback a text
   try {
     const data = await res.json();
-    if (typeof data === "string") return data;
+    if (typeof data === "string") return data.trim();
     if (data && typeof data.url === "string") return data.url;
     if (data && typeof data.imageUrl === "string") return data.imageUrl;
   } catch {
     // ignore
   }
 
-  const imageUrl = await res.text();
+  const imageUrl = (await res.text()).trim();
   return imageUrl;
 }
