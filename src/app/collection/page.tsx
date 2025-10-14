@@ -12,11 +12,19 @@ export default function CollectionPage() {
   const [showModal, setShowModal] = useState(false);
 
   // 🔹 Temporaneo: userId statico fino a JWT
-  const userId = "seed_user";
+  const userId = "7"; // TODO: sostituire con userId reale da auth
 
   const fetchCards = async () => {
     try {
-      const res = await fetch(`https://funkard-api.onrender.com/api/collection/${userId}`);
+      if (!userId) {
+        console.log("fetching user collection for:", userId);
+        throw new Error("User ID mancante");
+      }
+
+      console.log("fetching user collection for:", userId);
+      const url = `https://funkard-api.onrender.com/api/collection/${userId}`;
+      console.log("GET", url);
+      const res = await fetch(url);
       if (!res.ok) throw new Error("Errore nel caricamento delle carte");
       const data = await res.json();
       setCards(data);
