@@ -8,24 +8,25 @@ datasource db {
 }
 
 model User {
-  id               String    @id @default(cuid())
-  email            String    @unique
+  id               String       @id @default(cuid())
+  email            String       @unique
   passwordHash     String
-  handle           String    @unique
+  handle           String       @unique
   nome             String
   paese            String
-  tipoUtente       UserType  @default(PRIVATO)
+  tipoUtente       UserType     @default(PRIVATO)
   indirizzo        String?
   citta            String?
   cap              String?
   telefono         String?
   metodoPagamento  String?
-  accettaTermini   Boolean   @default(false)
-  verified         Boolean   @default(false)
-  createdAt        DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
+  accettaTermini   Boolean      @default(false)
+  verified         Boolean      @default(false)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
 
   products         Product[]
+  userCards        UserCard[]
 }
 
 model Product {
@@ -98,4 +99,48 @@ model Card {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   userId      String?
+}
+
+model UserCard {
+  id             String   @id @default(cuid())
+  userId         String
+  name           String
+  setName        String? // nuovo: nome set / espansione facoltativo
+  condition      String?
+  estimatedValue Float?
+  type           CardType    @default(RAW)
+  source         CardSource  @default(MANUAL)
+  frontImage     String?
+  backImage      String?
+  // immagini RAW extra
+  cornerTopLeft     String?
+  cornerTopRight    String?
+  cornerBottomLeft  String?
+  cornerBottomRight String?
+  edgeLeft          String?
+  edgeRight         String?
+  edgeTop           String?
+  edgeBottom        String?
+  // grading / AI
+  gradeValue      Float?
+  gradeLabel      String?
+  gradeConfidence Float?
+  gradeReportUrl  String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId, createdAt])
+}
+
+enum CardType {
+  RAW
+  GRADED
+}
+
+enum CardSource {
+  MANUAL
+  PURCHASE
+  GRADELENS
 }
