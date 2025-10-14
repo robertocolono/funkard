@@ -3,19 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import AddToCollectionModal from "@/components/AddToCollectionModal";
-
-type UserCard = {
-  id: string;
-  userId: string;
-  name: string;
-  setName: string;
-  condition: string;
-  estimatedValue: number;
-  frontImage?: string;
-  backImage?: string;
-  createdAt: string;
-  source: string;
-};
+import type { UserCard } from "@/types/usercard";
 
 export default function CollectionPage() {
   const [cards, setCards] = useState<UserCard[]>([]);
