@@ -10,6 +10,7 @@ interface AddToCollectionModalProps {
   onClose?: () => void;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
+  userId?: string; // opzionale: permette invio esplicito
 }
 
 export default function AddToCollectionModal({
@@ -20,6 +21,7 @@ export default function AddToCollectionModal({
   onClose,
   open,
   onOpenChange,
+  userId,
 }: AddToCollectionModalProps) {
   const [name, setName] = useState(defaultName);
   const [condition, setCondition] = useState(defaultCondition);
@@ -44,11 +46,12 @@ export default function AddToCollectionModal({
 
     try {
       const formData = new FormData();
-    formData.append("name", name);
-    formData.append("condition", condition);
-    formData.append("source", source);
-    if (estimatedValue) formData.append("estimatedValue", estimatedValue);
-    formData.append("image", image);
+      formData.append("name", name);
+      formData.append("condition", condition);
+      formData.append("source", source);
+      if (estimatedValue) formData.append("estimatedValue", estimatedValue);
+      formData.append("image", image);
+      if (userId) formData.append("userId", userId);
 
       const res = await fetch("https://funkard-api.onrender.com/api/collection/add", {
         method: "POST",
