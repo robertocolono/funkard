@@ -36,16 +36,10 @@ export default function HomePage() {
           <span className="text-yellow-400 font-semibold">Accresci la tua collezione preferita</span>{" "}in modo facile e veloce.<br />Il primo vero Marketplace che connette il mondo intero con un semplice click!
         </p>
         <div className="flex flex-wrap gap-4 justify-center">
-          <button
-            onClick={() => router.push("/marketplace")}
-            className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-6 py-3 rounded-xl transition-all duration-200 shadow-lg hover:shadow-yellow-500/30"
-          >
+          <button onClick={() => router.push("/marketplace")} className="btn-funkard">
             🔥 Esplora il Marketplace
           </button>
-          <button
-            onClick={() => router.push("/collection")}
-            className="border border-yellow-500 text-yellow-400 hover:bg-yellow-500 hover:text-black font-semibold px-6 py-3 rounded-xl transition-all duration-200"
-          >
+          <button onClick={() => router.push("/collection")} className="btn-funkard">
             📚 La Mia Collezione
           </button>
         </div>
@@ -67,10 +61,7 @@ export default function HomePage() {
 
       <div className="mt-24 text-center relative z-10">
         <h2 className="text-2xl font-semibold mb-4">Unisciti alla rivoluzione del collezionismo.</h2>
-        <button
-          onClick={() => router.push("/register")}
-          className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-8 py-3 rounded-xl shadow-lg hover:shadow-yellow-500/30 transition-all duration-200"
-        >
+        <button onClick={() => router.push("/register")} className="btn-funkard px-8">
           🚀 Inizia ora
         </button>
       </div>
