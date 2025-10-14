@@ -1,76 +1,86 @@
 "use client";
-import Image from "next/image";
-import Link from "next/link";
 
-export default function Page() {
+import { useRouter } from "next/navigation";
+
+export default function HomePage() {
+  const router = useRouter();
+
   return (
-    <main className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#0b0b0b] text-white font-inter">
-      {/* --- Hero Section pulita e corretta --- */}
-      <section className="flex flex-col items-center justify-start text-center min-h-[75vh] pt-12 bg-[#0b0b0b]">
-        <div className="flex flex-col items-center justify-center space-y-6">
-          <Image
-            src="/smile-closed.png"
-            alt="Funkard Logo"
-            width={140}
-            height={140}
-            priority
-            className="drop-shadow-[0_0_20px_rgba(242,178,55,0.25)]"
-          />
+    <main className="min-h-screen bg-neutral-950 text-white flex flex-col items-center justify-center px-6 py-20 relative overflow-hidden">
+      {/* 🔥 Sfondo gradiente dinamico */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,204,0,0.12)_0%,transparent_70%)] blur-3xl" />
 
-          <h1 className="text-5xl font-bold">
-            <span className="text-[#f2b237]">Benvenuto su </span>
-            <span className="text-white">FUNKARD</span>
-          </h1>
+      {/* 🏷️ Logo o titolo */}
+      <h1 className="text-5xl md:text-6xl font-extrabold mb-6 text-center text-white drop-shadow-[0_0_15px_rgba(255,204,0,0.1)]">
+        FUNKARD
+      </h1>
 
-          <p className="text-gray-400 max-w-xl text-base sm:text-lg leading-relaxed">
-            Il nuovo Marketplace digitale più sicuro per i collezionisti moderni.<br />
-            Connettiti con tutto il mondo con un semplice click!
-          </p>
+      {/* 💬 Slogan principale */}
+      <p className="text-xl md:text-2xl text-center text-gray-300 max-w-2xl leading-relaxed mb-10">
+        <span className="text-yellow-400 font-semibold">
+          Accresci la tua collezione preferita
+        </span>{" "}
+        in modo facile e veloce.<br />
+        Il primo vero Marketplace che connette il mondo intero con un semplice click!
+      </p>
 
-          <Link
-            href="/marketplace"
-            className="mt-4 inline-block bg-[#f2b237] text-black font-semibold px-6 py-3 rounded-xl shadow-md hover:bg-[#ffcb4d] transition-all duration-200"
+      {/* 🔘 Pulsanti azione */}
+      <div className="flex flex-wrap gap-4 justify-center">
+        <button
+          onClick={() => router.push("/marketplace")}
+          className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-6 py-3 rounded-xl transition-all duration-200 shadow-lg hover:shadow-yellow-500/30"
+        >
+          🔥 Esplora il Marketplace
+        </button>
+
+        <button
+          onClick={() => router.push("/collection")}
+          className="border border-yellow-500 text-yellow-400 hover:bg-yellow-500 hover:text-black font-semibold px-6 py-3 rounded-xl transition-all duration-200"
+        >
+          📚 La Mia Collezione
+        </button>
+      </div>
+
+      {/* 🧩 Sezione feature */}
+      <div className="mt-20 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl">
+        {[
+          {
+            title: "Compra",
+            text: "Scopri migliaia di carte rare e nuove release dai migliori venditori.",
+            icon: "🛒",
+          },
+          {
+            title: "Vendi",
+            text: "Metti in vendita le tue carte in modo sicuro e trasparente, senza abbonamenti.",
+            icon: "💸",
+          },
+          {
+            title: "Valuta",
+            text: "Analizza il valore delle tue carte con la nostra tecnologia di grading.",
+            icon: "📈",
+          },
+        ].map((item, i) => (
+          <div
+            key={i}
+            className="bg-neutral-900 border border-neutral-800 rounded-2xl p-6 hover:border-yellow-500/60 transition-all duration-300"
           >
-            Esplora il Marketplace
-          </Link>
-        </div>
-      </section>
+            <div className="text-4xl mb-4">{item.icon}</div>
+            <h3 className="text-xl font-semibold mb-2 text-white">{item.title}</h3>
+            <p className="text-gray-400 text-sm">{item.text}</p>
+          </div>
+        ))}
+      </div>
 
-      {/* --- Sezione Funzionalità --- */}
-      <section className="w-full flex flex-col items-center justify-center gap-8 pt-2 pb-16 bg-[#0b0b0b] px-4 sm:px-8 max-w-5xl mx-auto">
-
-        {/* Titolo sezione */}
-        <div className="text-center mb-6">
-          <h2 className="text-4xl font-bold text-white mb-2">
-            Scopri di più su <span className="text-[#f2b237]">Funkard</span>
-          </h2>
-          <p className="text-gray-400 text-base sm:text-lg">
-            Esplora le funzioni che rendono il collezionismo moderno, sicuro e accessibile.
-          </p>
-        </div>
-
-        {/* GradeLens Feature */}
-        <Link
-          href="/gradelens"
-          className="w-full border border-[#f2b23733] rounded-2xl p-8 hover:border-[#f2b237] hover:shadow-[0_0_20px_rgba(242,178,55,0.2)] transition-all duration-300"
+      {/* CTA finale */}
+      <div className="mt-24 text-center">
+        <h2 className="text-2xl font-semibold mb-4">Unisciti alla rivoluzione del collezionismo.</h2>
+        <button
+          onClick={() => router.push("/register")}
+          className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-8 py-3 rounded-xl shadow-lg hover:shadow-yellow-500/30 transition-all duration-200"
         >
-          <h3 className="text-3xl font-bold text-[#f2b237] mb-2">GradeLens</h3>
-          <p className="text-gray-400 text-base sm:text-lg">
-            Scansiona le tue carte e scopri il loro valore con l’intelligenza artificiale.
-          </p>
-        </Link>
-
-        {/* Collezione Feature */}
-        <Link
-          href="/collection"
-          className="w-full border border-[#f2b23733] rounded-2xl p-8 hover:border-[#f2b237] hover:shadow-[0_0_20px_rgba(242,178,55,0.2)] transition-all duration-300"
-        >
-          <h3 className="text-3xl font-bold text-[#f2b237] mb-2">La tua Collezione</h3>
-          <p className="text-gray-400 text-base sm:text-lg">
-            Gestisci le tue carte, monitora i prezzi e rivendile in un click.
-          </p>
-        </Link>
-      </section>
+          🚀 Inizia ora
+        </button>
+      </div>
     </main>
   );
 }
