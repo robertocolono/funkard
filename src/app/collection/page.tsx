@@ -131,10 +131,16 @@ export default function CollectionPage() {
       {showModal && (
         <AddToCollectionModal
           open={showModal}
+          userId={userId}
+          onCardAdded={() => {
+            fetchCards();
+            setShowModal(false);
+          }}
           onOpenChange={(open) => {
             setShowModal(open);
             if (!open) fetchCards();
           }}
+          onClose={() => setShowModal(false)}
         />
       )}
     </div>

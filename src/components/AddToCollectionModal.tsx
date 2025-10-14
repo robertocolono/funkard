@@ -11,6 +11,7 @@ interface AddToCollectionModalProps {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   userId?: string; // opzionale: permette invio esplicito
+  onCardAdded?: () => void; // callback dopo aggiunta riuscita
 }
 
 export default function AddToCollectionModal({
@@ -22,6 +23,7 @@ export default function AddToCollectionModal({
   open,
   onOpenChange,
   userId,
+  onCardAdded,
 }: AddToCollectionModalProps) {
   const [name, setName] = useState(defaultName);
   const [condition, setCondition] = useState(defaultCondition);
@@ -61,10 +63,11 @@ export default function AddToCollectionModal({
       if (!res.ok) throw new Error("Errore nel salvataggio");
 
       setMessage("✅ Carta aggiunta alla tua collezione!");
+      onCardAdded?.();
       setTimeout(() => {
         onClose?.();
         onOpenChange?.(false);
-      }, 1500);
+      }, 1000);
     } catch {
       setMessage("❌ Errore durante l’upload. Riprova.");
     } finally {
