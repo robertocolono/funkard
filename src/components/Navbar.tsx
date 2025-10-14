@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import Image from "next/image";
 
 export default function Navbar() {
@@ -10,83 +9,68 @@ export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const token = typeof window !== "undefined" ? localStorage.getItem("funkard_token") : null;
+    const token = localStorage.getItem("funkard_token");
     setIsLoggedIn(!!token);
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("funkard_token");
-    setIsLoggedIn(false);
-    router.push("/");
-  };
+  // In questa versione semplificata non includiamo ancora il pulsante di logout.
 
   return (
-    <nav
-      className="
-        w-full fixed top-0 left-0 z-50
-        bg-neutral-950/90 backdrop-blur-md border-b border-neutral-800
-        text-white flex items-center justify-between px-6 py-3 shadow-lg
-      "
-    >
-      {/* LOGO SINISTRA */}
-      <div
-        onClick={() => router.push("/")}
-        className="text-2xl font-extrabold tracking-tight cursor-pointer select-none"
-      >
-        <span className="text-yellow-500">FUN</span>
-        <span className="text-white">KARD</span>
-      </div>
+    <nav className="fixed top-0 left-0 w-full z-50 bg-black/90 backdrop-blur-md border-b border-neutral-800 text-white">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 h-16">
 
-      {/* 🌐 LINK CENTRALI CON LOGO */}
-      <div className="hidden md:flex items-center gap-8 text-sm font-medium">
-        <Link href="/marketplace" className="hover:text-yellow-400 transition-colors">
-          Marketplace
-        </Link>
-        <Image
-          src="/smile-closed.png"
-          alt="Funkard smile logo"
-          width={42}
-          height={42}
-          className="object-contain opacity-90 hover:opacity-100 transition-all"
-        />
-        <Link href="/collection" className="hover:text-yellow-400 transition-colors">
-          Collezione
-        </Link>
-      </div>
+        {/* 👈 Sinistra: logo */}
+        <div className="flex items-center gap-2 cursor-pointer" onClick={() => router.push("/")}>
+          <Image
+            src="/smile-closed.png"
+            alt="Funkard logo"
+            width={40}
+            height={40}
+            className="hover:scale-105 transition-transform"
+          />
+          <span className="hidden sm:block font-extrabold text-xl">
+            <span className="text-yellow-400">FUN</span>KARD
+          </span>
+        </div>
 
-      {/* AREA DESTRA */}
-      <div className="flex items-center gap-4 text-sm font-medium">
-        {!isLoggedIn ? (
-          <>
+        {/* 👉 Destra: link principali */}
+        <div className="flex items-center gap-8 text-sm font-medium">
+          <button
+            onClick={() => router.push("/marketplace")}
+            className="hover:text-yellow-400 transition-colors"
+          >
+            Marketplace
+          </button>
+          <button
+            onClick={() => router.push("/collection")}
+            className="hover:text-yellow-400 transition-colors"
+          >
+            Collezione
+          </button>
+          <button
+            onClick={() => router.push("/gradelens")}
+            className="hover:text-yellow-400 transition-colors"
+          >
+            GradeLens
+          </button>
+
+          {/* 🧠 Account */}
+          {!isLoggedIn ? (
             <button
               onClick={() => router.push("/register")}
-              className="bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 rounded-md font-semibold transition-all"
+              className="bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-1.5 rounded-md font-semibold"
             >
               Registrati
             </button>
-            <button
-              onClick={() => router.push("/login")}
-              className="border border-yellow-500 text-yellow-400 hover:bg-yellow-500 hover:text-black px-4 py-2 rounded-md font-semibold transition-all"
-            >
-              Accedi
-            </button>
-          </>
-        ) : (
-          <>
+          ) : (
             <button
               onClick={() => router.push("/profile")}
-              className="border border-yellow-500 text-yellow-400 hover:bg-yellow-500 hover:text-black px-4 py-2 rounded-md font-semibold transition-all"
+              className="border border-yellow-500 text-yellow-400 hover:bg-yellow-500 hover:text-black px-4 py-1.5 rounded-md font-semibold"
             >
               Profilo
             </button>
-            <button
-              onClick={handleLogout}
-              className="text-gray-400 hover:text-red-400 transition-all"
-            >
-              Esci
-            </button>
-          </>
-        )}
+          )}
+        </div>
       </div>
     </nav>
   );
