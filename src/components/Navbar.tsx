@@ -35,6 +35,19 @@ export default function Navbar() {
 
         {/* 👉 Destra: link principali */}
         <div className="flex items-center gap-8 text-sm font-medium">
+          {/* Centro: TCG (dropdown semplice) */}
+          <div className="relative group">
+            <button className="hover:text-yellow-400 transition-colors font-medium">TCG</button>
+            <div className="absolute right-0 mt-2 hidden group-hover:block bg-neutral-900 border border-neutral-800 rounded-xl p-3 w-64">
+              <div className="grid grid-cols-1 gap-2 text-sm">
+                {["Magic: The Gathering","Pokémon","Yu-Gi-Oh!","Disney Lorcana","One Piece","Flesh and Blood","Digimon","Dragon Ball Super","Cardfight!! Vanguard","My Hero Academia","Star Wars Unlimited","Union Arena"].map((g) => (
+                  <button key={g} className="text-left hover:text-yellow-400 transition-colors" onClick={() => router.push(`/marketplace?game=${encodeURIComponent(g)}`)}>
+                    {g}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
           <button
             onClick={() => router.push("/marketplace")}
             className="hover:text-yellow-400 transition-colors"
@@ -53,6 +66,19 @@ export default function Navbar() {
           >
             GradeLens
           </button>
+
+          {/* Destra: Grading (submenu) */}
+          <div className="relative group">
+            <button className="hover:text-yellow-400 transition-colors font-medium">Grading</button>
+            <div className="absolute right-0 mt-2 hidden group-hover:block bg-neutral-900 border border-neutral-800 rounded-xl p-3 w-64">
+              <div className="flex flex-col text-sm">
+                <button onClick={() => router.push("/grading/guide")} className="text-left hover:text-yellow-400">Guida alle condizioni</button>
+                <button onClick={() => router.push("/grading/psa")} className="text-left hover:text-yellow-400">PSA</button>
+                <button onClick={() => router.push("/grading/bgs")} className="text-left hover:text-yellow-400">BGS (subgrades)</button>
+                <button onClick={() => router.push("/grading/cgc")} className="text-left hover:text-yellow-400">CGC</button>
+              </div>
+            </div>
+          </div>
 
           {/* 🧠 Account */}
           {!isLoggedIn ? (

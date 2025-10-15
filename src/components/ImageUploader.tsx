@@ -2,7 +2,12 @@
 import { useState } from "react";
 import { uploadImage } from "@/lib/uploadImage";
 
-export default function ImageUploader() {
+interface ImageUploaderProps {
+  label?: string;
+  onUpload?: (url: string) => void;
+}
+
+export default function ImageUploader({ label, onUpload }: ImageUploaderProps) {
   const [preview, setPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -16,6 +21,7 @@ export default function ImageUploader() {
     try {
       const url = await uploadImage(file);
       setPreview(url);
+      onUpload?.(url);
       console.log("✅ File caricato:", url);
     } catch (err: unknown) {
       console.error("❌ Errore upload:", err);
@@ -26,8 +32,9 @@ export default function ImageUploader() {
   };
 
   return (
-    <div className="flex flex-col items-center gap-4 p-6 border border-white/10 rounded-xl bg-[#111] text-white">
-      <input type="file" onChange={handleFileChange} accept="image/*" className="input-funkard" />
+    <div className="flex flex-col items-center gap-4 p-6 border border-white/10 rounded-xl bg-[#111] text-white w-full">
+      {label && <p className="text-sm text-gray-300 self-start">{label}</p>}
+      <input type="file" onChange={handleFileChange} accept="image/*" capture="environment" className="input-funkard" />
       {loading && <p>Caricamento in corso...</p>}
       {error && <p className="text-red-400 text-sm">{error}</p>}
       {preview && (

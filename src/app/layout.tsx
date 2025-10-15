@@ -1,5 +1,6 @@
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { Toaster } from "sonner";
 
 export const metadata = {
   title: "Funkard — Il Marketplace dei Collezionisti",
@@ -13,6 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Navbar />
         <div className="h-14" />
         {children}
+        <Toaster richColors position="top-center" />
       </body>
     </html>
   );
