@@ -17,7 +17,7 @@ export class AdminApiClient {
 
   // Dashboard
   async getDashboard() {
-    const res = await fetch(`${this.baseUrl}/api/admin/dashboard`, {
+    const res = await fetch(`${this.baseUrl}/api/admin/stats`, {
       headers: this.getHeaders()
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);

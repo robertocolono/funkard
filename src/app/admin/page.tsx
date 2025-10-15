@@ -7,7 +7,7 @@ interface DashboardStats {
   pendingItems: number;
   openTickets: number;
   totalUsers: number;
-  recentActivity: Array<{
+  recentActivity?: Array<{
     id: string;
     type: string;
     message: string;

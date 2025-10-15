@@ -25,11 +25,14 @@ Poi vai su: `http://localhost:3000/admin`
   - 🔍 **Marca per revisione**: Flag per controllo futuro
   - ❌ **Rifiuta**: Rimuove dal sistema
 
-## API Endpoints Richiesti
+## API Endpoints Implementati
 
-Il frontend si aspetta questi endpoint nell'API:
+Il frontend è già collegato a questi endpoint backend:
 
 ```
+GET /api/admin/stats
+→ Statistiche dashboard (pendingItems, openTickets, totalUsers)
+
 GET /api/admin/valuation/pending
 → Lista prodotti in attesa
 
@@ -44,6 +47,21 @@ POST /api/admin/valuation/reject
 
 POST /api/admin/valuation/mark-review
 → Marca per revisione
+
+GET /api/admin/support/tickets
+→ Lista ticket support
+
+POST /api/admin/support/reply/{ticketId}
+→ Rispondi a ticket
+
+POST /api/admin/support/close/{ticketId}
+→ Chiudi ticket
+
+GET /api/admin/users
+→ Lista utenti
+
+POST /api/admin/users/{userId}/verify
+→ Verifica utente
 ```
 
 ## Sicurezza
