@@ -2,6 +2,16 @@ import { prisma } from "@/lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
 
+const conditionMap: Record<string, string> = {
+  "GEM MINT": "10/10",
+  "MINT": "9/10",
+  "NM": "8/10",
+  "EX": "7/10",
+  "LP": "5/10",
+  "PL": "3/10",
+  "DAMAGED": "1/10",
+};
+
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const product = await prisma.product.findUnique({
@@ -71,7 +81,11 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
               {product.edition && <p><span className="text-gray-300">Edizione:</span> {product.edition}</p>}
               {product.condition && (
                 <p>
-                  <span className="text-gray-300">Condizione:</span> {product.condition}
+                  <span className="text-gray-300">Condizione:</span>{" "}
+                  {product.condition}{" "}
+                  {conditionMap[product.condition] && (
+                    <span className="text-gray-400">({conditionMap[product.condition]})</span>
+                  )}
                 </p>
               )}
               <p><span className="text-gray-300">Quantità:</span> {product.quantity}</p>

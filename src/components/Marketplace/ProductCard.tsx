@@ -2,6 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 // import { Product } from "@prisma/client";
 
+const conditionMap: Record<string, string> = {
+  "GEM MINT": "10/10",
+  "MINT": "9/10",
+  "NM": "8/10",
+  "EX": "7/10",
+  "LP": "5/10",
+  "PL": "3/10",
+  "DAMAGED": "1/10",
+};
+
 type SellerPreview = {
   handle: string;
   paese?: string | null;
@@ -71,7 +81,7 @@ export function ProductCard({ product }: { product: ProductWithSeller }) {
         <p className="line-clamp-1 text-xs text-white/60">
           {setName ? `${setName}` : ""} {releaseYear ? `• ${releaseYear}` : ""}
           {rarity ? ` • ${rarity}` : ""}
-          {condition ? ` • ${condition}` : ""}
+          {condition ? ` • ${condition}${conditionMap[condition] ? ` (${conditionMap[condition]})` : ""}` : ""}
         </p>
 
         {/* Prezzo */}

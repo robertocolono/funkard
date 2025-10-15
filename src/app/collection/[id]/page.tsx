@@ -12,6 +12,16 @@ import TrendChart from "@/components/TrendChart";
 const API_BASE =
   process.env.NEXT_PUBLIC_API_URL || "https://funkard-api.onrender.com";
 
+const conditionMap: Record<string, string> = {
+  "GEM MINT": "10/10",
+  "MINT": "9/10",
+  "NM": "8/10",
+  "EX": "7/10",
+  "LP": "5/10",
+  "PL": "3/10",
+  "DAMAGED": "1/10",
+};
+
 interface UserCard {
   id: string;
   userId: string;
@@ -239,7 +249,11 @@ export default function CardDetailPage() {
             <h2 className="text-xl font-semibold mb-2">Dettagli</h2>
             <div className="flex flex-col gap-2 text-sm text-zinc-300">
               <p>
-                <span className="text-zinc-500">Condizione:</span> {card.condition}
+                <span className="text-zinc-500">Condizione:</span>{" "}
+                {card.condition}{" "}
+                {conditionMap[card.condition] && (
+                  <span className="text-gray-400">({conditionMap[card.condition]})</span>
+                )}
               </p>
               <p>
                 <span className="text-zinc-500">Tipo:</span> {card.type || "—"}
