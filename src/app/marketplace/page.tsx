@@ -104,8 +104,16 @@ export default async function MarketplacePage({
             <option value="all">Tutti i TCG</option>
             <option value="Pokémon">Pokémon</option>
             <option value="One Piece">One Piece</option>
-            <option value="Magic">Magic</option>
+            <option value="Magic: The Gathering">Magic: The Gathering</option>
             <option value="Yu-Gi-Oh!">Yu-Gi-Oh!</option>
+            <option value="Disney Lorcana">Disney Lorcana</option>
+            <option value="Flesh and Blood">Flesh and Blood</option>
+            <option value="Digimon">Digimon</option>
+            <option value="Dragon Ball Super">Dragon Ball Super</option>
+            <option value="Cardfight!! Vanguard">Cardfight!! Vanguard</option>
+            <option value="My Hero Academia">My Hero Academia</option>
+            <option value="Star Wars Unlimited">Star Wars Unlimited</option>
+            <option value="Union Arena">Union Arena</option>
           </select>
 
           <select

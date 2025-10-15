@@ -18,6 +18,7 @@ interface UserCard {
   name: string;
   setName: string;
   condition: string;
+  tcg?: string;
   estimatedValue?: number;
   frontImage?: string;
   backImage?: string;
@@ -242,6 +243,9 @@ export default function CardDetailPage() {
               </p>
               <p>
                 <span className="text-zinc-500">Tipo:</span> {card.type || "—"}
+              </p>
+              <p>
+                <span className="text-zinc-500">Gioco:</span> {card.tcg || "—"}
               </p>
               <p>
                 <span className="text-zinc-500">Valore stimato:</span> {value}
