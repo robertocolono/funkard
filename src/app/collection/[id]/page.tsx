@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import AddRawImagesModal from "@/components/AddRawImagesModal";
+import TrendChart from "@/components/TrendChart";
 
 const API_BASE =
   process.env.NEXT_PUBLIC_API_URL || "https://funkard-api.onrender.com";
@@ -252,6 +253,12 @@ export default function CardDetailPage() {
                 <span className="text-zinc-500">Aggiunta il:</span> {date}
               </p>
             </div>
+          </div>
+
+          {/* TREND CHART */}
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5">
+            <h2 className="text-xl font-semibold mb-4">Trend Prezzi</h2>
+            <TrendChart itemName={card.name} category="card" />
           </div>
           <div className="flex flex-col sm:flex-row gap-3 mt-4">
             <Button disabled className="flex-1 bg-zinc-800 text-zinc-500 cursor-not-allowed">

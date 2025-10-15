@@ -44,3 +44,10 @@ export async function updateUserCard(id: string, updates: Record<string, unknown
   if (!res.ok) throw new Error("Errore durante l'aggiornamento della carta");
   return res.json();
 }
+
+export async function getTrend(itemName: string, range: "7d"|"30d"|"1y", category = "card") {
+  const base = process.env.NEXT_PUBLIC_API_URL!;
+  const res = await fetch(`${base}/api/valuation/trend/${range}/${encodeURIComponent(itemName)}?category=${category}`, { cache: "no-store" });
+  if (!res.ok) throw new Error("Trend fetch failed");
+  return res.json(); // { itemName, category, rangeType, points, lastSoldPrice, updatedAt, status, manualCheck }
+}

@@ -1,7 +1,6 @@
 // app/api/products/route.ts
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { ProductType } from "@prisma/client";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -15,7 +14,7 @@ export async function GET(request: Request) {
         q
           ? { title: { contains: q } }
           : {},
-        type && type !== "All" ? { type: type as ProductType } : {},
+        type && type !== "All" ? { type: type as any } : {}, // eslint-disable-line @typescript-eslint/no-explicit-any
         { priceEUR: { lte: maxPrice } },
       ],
     },

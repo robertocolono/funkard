@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Product } from "@prisma/client";
+// import { Product } from "@prisma/client";
 
 type SellerPreview = {
   handle: string;
@@ -11,7 +11,19 @@ type SellerPreview = {
   role?: string | null; // compat vecchio schema
 };
 
-interface ProductWithSeller extends Product {
+interface ProductWithSeller {
+  id: string;
+  title: string;
+  imageUrl?: string | null;
+  tcg: string;
+  setName?: string | null;
+  releaseYear?: number | null;
+  rarity?: string | null;
+  edition?: string | null;
+  condition?: string | null;
+  isSealed: boolean;
+  priceEUR: number;
+  description?: string | null;
   seller?: SellerPreview;
 }
 

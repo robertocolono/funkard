@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
-import { Prisma, Condition } from "@prisma/client";
+// import { Prisma } from "@prisma/client";
 
 // 🧠 Query lato server con tutti i filtri
 async function getProducts(
@@ -12,7 +12,8 @@ async function getProducts(
   minPrice: string,
   maxPrice: string
 ) {
-  const filters: Prisma.ProductWhereInput = {};
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const filters: any = {};
 
   if (query) {
     filters.OR = [
@@ -23,7 +24,7 @@ async function getProducts(
   }
 
   if (tcg && tcg !== "all") filters.tcg = tcg;
-  if (condition && condition !== "all") filters.condition = condition as Condition;
+  if (condition && condition !== "all") filters.condition = condition;
 
   // Prezzo minimo e massimo (in centesimi)
   if (minPrice || maxPrice) {
@@ -33,7 +34,8 @@ async function getProducts(
   }
 
   // Ordinamento dinamico
-  let orderBy: Prisma.ProductOrderByWithRelationInput = { createdAt: "desc" };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let orderBy: any = { createdAt: "desc" };
   if (sort === "low") orderBy = { priceEUR: "asc" };
   else if (sort === "high") orderBy = { priceEUR: "desc" };
   else if (sort === "new") orderBy = { createdAt: "desc" };
@@ -160,7 +162,8 @@ export default async function MarketplacePage({
       {/* LISTA PRODOTTI */}
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {products.length > 0 ? (
-          products.map((p) => (
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          products.map((p: any) => (
             <Link
               key={p.id}
               href={`/marketplace/${p.id}`}

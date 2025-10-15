@@ -16,11 +16,11 @@ export async function GET(
 
   const avg =
     prices.length > 0
-      ? prices.reduce((a, b) => a + b.priceEUR, 0) / prices.length
+      ? prices.reduce((a: number, b: { priceEUR: number }) => a + b.priceEUR, 0) / prices.length
       : 0;
 
   return NextResponse.json({
-    items: prices.map((p) => ({
+    items: prices.map((p: { id: string; date: Date; priceEUR: number; source: string | null; note: string | null }) => ({
       id: p.id,
       date: p.date,
       priceEUR: p.priceEUR,
