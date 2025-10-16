@@ -94,7 +94,7 @@ export default function AdminNotificationsPage() {
                 </h2>
                 <p className="text-gray-400 text-sm leading-relaxed">
                   Qui trovi tutte le notifiche del sistema Funkard che richiedono la tua attenzione. 
-                  Puoi segnarle come risolte per spostarle automaticamente nell'archivio. 
+                  Puoi segnarle come risolte per spostarle automaticamente nell&apos;archivio. 
                   Le notifiche vengono archiviate automaticamente dopo 30 giorni per ottimizzare le performance.
                 </p>
               </div>

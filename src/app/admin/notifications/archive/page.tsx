@@ -156,7 +156,7 @@ export default function AdminNotificationsArchivePage() {
                 </label>
                 <select
                   value={filterType}
-                  onChange={(e) => setFilterType(e.target.value as any)}
+                  onChange={(e) => setFilterType(e.target.value as "all" | "ERROR" | "WARNING" | "INFO")}
                   className="w-full px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
                 >
                   <option value="all">Tutti i tipi</option>

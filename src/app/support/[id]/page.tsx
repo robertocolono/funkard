@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { SupportTicket, SupportMessage, CreateMessageRequest } from "@/types/support";
+import { SupportTicket, CreateMessageRequest } from "@/types/support";
 
 export default function SupportChatPage() {
   const router = useRouter();
