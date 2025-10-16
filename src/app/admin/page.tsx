@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { adminApi } from "@/lib/adminApi";
+import NotificationBadge from "@/components/admin/NotificationBadge";
 
 interface DashboardStats {
   pendingItems: number;
@@ -19,8 +20,15 @@ export default function AdminDashboard() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [adminToken, setAdminToken] = useState<string | null>(null);
 
   useEffect(() => {
+    // Ottieni il token admin
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("funkard_admin_token");
+      setAdminToken(token);
+    }
+
     const fetchDashboardData = async () => {
       try {
         const data = await adminApi.getDashboard();
@@ -55,10 +63,17 @@ export default function AdminDashboard() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold mb-2">📊 Dashboard Admin</h1>
-        <p className="text-gray-400 text-sm">
-          Panoramica generale del sistema Funkard
-        </p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold mb-2">📊 Dashboard Admin</h1>
+            <p className="text-gray-400 text-sm">
+              Panoramica generale del sistema Funkard
+            </p>
+          </div>
+          {adminToken && (
+            <NotificationBadge token={adminToken} />
+          )}
+        </div>
       </div>
 
       {/* STATS CARDS */}
