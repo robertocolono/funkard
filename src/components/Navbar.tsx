@@ -53,6 +53,12 @@ export default function Navbar() {
           >
             GradeLens
           </button>
+          <button
+            onClick={() => router.push("/support")}
+            className="hover:text-yellow-400 transition-colors"
+          >
+            Support
+          </button>
 
           {/* 🧠 Account */}
           {!isLoggedIn ? (
