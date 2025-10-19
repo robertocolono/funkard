@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { createSupportTicket, fetchUserTickets } from '@/lib/funkardApi';
 import Link from 'next/link';
 
@@ -15,20 +15,25 @@ export default function SupportPage() {
   const [email, setEmail] = useState('');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
-  const [tickets, setTickets] = useState<any[]>([]);
+  const [tickets, setTickets] = useState<Array<{
+    id: string;
+    subject: string;
+    message: string;
+    status: string;
+    createdAt: string;
+  }>>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  const loadTickets = async () => {
+  const loadTickets = useCallback(async () => {
     if (!email) return;
     try {
       const data = await fetchUserTickets(email);
       setTickets(data);
     } catch (e) {
       console.error(e);
-      setError('Errore nel caricamento dei ticket');
+      alert('Errore nel caricamento dei ticket');
     }
-  };
+  }, [email]);
 
   const handleSubmit = async () => {
     if (!email || !subject || !message) {
@@ -51,7 +56,7 @@ export default function SupportPage() {
 
   useEffect(() => {
     if (email.length > 5) loadTickets();
-  }, [email]);
+  }, [email, loadTickets]);
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white">

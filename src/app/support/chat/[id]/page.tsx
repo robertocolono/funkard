@@ -1,18 +1,29 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { fetchTicketById, sendSupportMessage } from '@/lib/funkardApi';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
 export default function TicketChatPage() {
   const { id } = useParams() as { id: string };
-  const [ticket, setTicket] = useState<any>(null);
+  const [ticket, setTicket] = useState<{
+    id: string;
+    subject: string;
+    email: string;
+    status: string;
+    createdAt: string;
+    messages?: Array<{
+      message: string;
+      sender: string;
+      createdAt: string;
+    }>;
+  } | null>(null);
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
 
-  const load = async () => {
+  const load = useCallback(async () => {
     try {
       const data = await fetchTicketById(id);
       setTicket(data);
@@ -22,14 +33,14 @@ export default function TicketChatPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
 
   useEffect(() => {
     load();
-  }, [id]);
+  }, [id, load]);
 
   const handleSend = async () => {
-    if (!message.trim()) return;
+    if (!message.trim() || !ticket) return;
     setSending(true);
     try {
       await sendSupportMessage(id, message, ticket.email);
@@ -94,7 +105,7 @@ export default function TicketChatPage() {
         <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 h-[500px] overflow-y-auto mb-4">
           {ticket.messages?.length ? (
             <div className="space-y-4">
-              {ticket.messages.map((msg: any, i: number) => (
+              {ticket.messages.map((msg, i: number) => (
                 <div key={i} className={`flex ${msg.sender === ticket.email ? 'justify-end' : 'justify-start'}`}>
                   <div className={`max-w-[70%] p-3 rounded-lg ${
                     msg.sender === ticket.email
