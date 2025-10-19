@@ -21,7 +21,7 @@ export default function HomePage() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,204,0,0.12)_0%,transparent_70%)] blur-3xl pointer-events-none" />
 
       <div className="mt-10 text-center relative z-10">
-        <h2 className="text-3xl md:text-4xl font-semibold text-yellow-400 mb-4 drop-shadow-sm">
+        <h2 className="text-5xl md:text-6xl font-bold text-yellow-400 mb-4 drop-shadow-sm">
           {welcome}
         </h2>
         <Image
