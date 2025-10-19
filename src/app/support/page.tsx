@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import { createSupportTicket, fetchUserTickets } from '@/lib/funkardApi';
 import Link from 'next/link';
 
@@ -12,6 +13,7 @@ const STATUS_COLOR: Record<string, string> = {
 };
 
 export default function SupportPage() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
@@ -23,6 +25,8 @@ export default function SupportPage() {
     createdAt: string;
   }>>([]);
   const [loading, setLoading] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [checkingAuth, setCheckingAuth] = useState(true);
 
   const loadTickets = useCallback(async () => {
     if (!email) return;
@@ -55,8 +59,44 @@ export default function SupportPage() {
   };
 
   useEffect(() => {
+    // Controlla se l'utente è autenticato
+    const token = localStorage.getItem("funkard_token");
+    if (!token) {
+      router.push("/register");
+      return;
+    }
+    setIsAuthenticated(true);
+    setCheckingAuth(false);
+  }, [router]);
+
+  useEffect(() => {
     if (email.length > 5) loadTickets();
   }, [email, loadTickets]);
+
+  if (checkingAuth) {
+    return (
+      <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center">
+        <div className="text-gray-400">Verifica accesso...</div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-gray-400 mb-4">🔒 Accesso richiesto</div>
+          <div className="text-gray-400 mb-6">Devi essere registrato per accedere al supporto</div>
+          <Link 
+            href="/register"
+            className="bg-yellow-500 hover:bg-yellow-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors"
+          >
+            Crea un account
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
