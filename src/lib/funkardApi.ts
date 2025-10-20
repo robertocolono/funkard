@@ -1,4 +1,4 @@
-export const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "https://funkard-api.onrender.com/api";
+export const API_BASE = process.env.NEXT_PUBLIC_API_URL || "https://funkard-backend.onrender.com";
 
 export async function analyzeGradeLens(frontImageUrl: string, backImageUrl: string) {
   const res = await fetch(`${API_BASE}/gradelens/analyze`, {
@@ -54,47 +54,70 @@ export async function getTrend(itemName: string, range: "7d"|"30d"|"1y", categor
 
 // ===== SUPPORT SYSTEM API =====
 
-export async function createSupportTicket(data: {
+export async function createSupportTicket({
+  email,
+  subject,
+  message,
+}: {
   email: string;
   subject: string;
   message: string;
 }) {
-  const base = process.env.NEXT_PUBLIC_API_URL!;
-  const res = await fetch(`${base}/api/support`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
+  const res = await fetch(`${API_BASE}/api/support`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      userEmail: email,
+      subject,
+      message,
+      category: "general",
+      priority: "normal",
+    }),
   });
-  if (!res.ok) throw new Error('Errore creazione ticket');
+
+  if (!res.ok) {
+    console.error("Errore API support:", await res.text());
+    throw new Error("Errore nella creazione del ticket");
+  }
+
   return res.json();
 }
 
 export async function fetchUserTickets(email: string) {
-  const base = process.env.NEXT_PUBLIC_API_URL!;
-  const res = await fetch(`${base}/api/support?email=${email}`, {
-    headers: { 'Content-Type': 'application/json' },
-    cache: 'no-store',
+  const token = typeof window !== "undefined" ? localStorage.getItem("funkard_token") : null;
+  const res = await fetch(`${API_BASE}/api/support?email=${encodeURIComponent(email)}`, {
+    headers: { 
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    cache: "no-store",
   });
-  if (!res.ok) throw new Error('Errore caricamento ticket');
+  if (!res.ok) throw new Error("Errore nel caricamento ticket utente");
   return res.json();
 }
 
 export async function fetchTicketById(id: string) {
-  const base = process.env.NEXT_PUBLIC_API_URL!;
-  const res = await fetch(`${base}/api/support/${id}`, {
-    cache: 'no-store',
+  const token = typeof window !== "undefined" ? localStorage.getItem("funkard_token") : null;
+  const res = await fetch(`${API_BASE}/api/support/${id}`, {
+    headers: {
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    cache: "no-store",
   });
-  if (!res.ok) throw new Error('Ticket non trovato');
+  if (!res.ok) throw new Error("Ticket non trovato");
   return res.json();
 }
 
 export async function sendSupportMessage(ticketId: string, message: string, sender: string) {
-  const base = process.env.NEXT_PUBLIC_API_URL!;
-  const res = await fetch(`${base}/api/support/${ticketId}/message`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+  const token = typeof window !== "undefined" ? localStorage.getItem("funkard_token") : null;
+  const res = await fetch(`${API_BASE}/api/support/${ticketId}/message`, {
+    method: "POST",
+    headers: { 
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
     body: JSON.stringify({ message, sender }),
   });
-  if (!res.ok) throw new Error('Errore invio messaggio');
+  if (!res.ok) throw new Error("Errore invio messaggio");
   return res.json();
 }
