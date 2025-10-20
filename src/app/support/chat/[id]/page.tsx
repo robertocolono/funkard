@@ -4,6 +4,8 @@ import { useState, useEffect, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Loader2, ArrowLeft, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Client } from '@stomp/stompjs';
+import SockJS from 'sockjs-client';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://funkard-backend.onrender.com';
 
@@ -30,6 +32,7 @@ export default function TicketChatPage() {
   const [message, setMessage] = useState('');
   const [sending, setSending] = useState(false);
   const [userEmail, setUserEmail] = useState('');
+  const [client, setClient] = useState<Client | null>(null);
 
   const fetchTicket = useCallback(async () => {
     try {
@@ -57,6 +60,15 @@ export default function TicketChatPage() {
         }),
       });
       if (!res.ok) throw new Error('Errore nell\'invio del messaggio');
+      
+      // Publish message via WebSocket for real-time updates
+      if (client && client.connected) {
+        client.publish({
+          destination: `/app/support/${id}/send`,
+          body: JSON.stringify({ sender: userEmail, content: message }),
+        });
+      }
+      
       setMessage('');
       await fetchTicket();
     } catch (err) {
@@ -66,6 +78,33 @@ export default function TicketChatPage() {
       setSending(false);
     }
   };
+
+  // WebSocket connection for real-time chat
+  useEffect(() => {
+    const socket = new SockJS(`${process.env.NEXT_PUBLIC_API_URL}/ws`);
+    const stompClient = new Client({
+      webSocketFactory: () => socket as any,
+      debug: () => {},
+      reconnectDelay: 5000,
+      onConnect: () => {
+        stompClient.subscribe(`/topic/support/${id}`, (message) => {
+          const msg = JSON.parse(message.body);
+          setTicket((prev) =>
+            prev
+              ? { ...prev, messages: [...prev.messages, msg] }
+              : prev
+          );
+        });
+      },
+    });
+
+    stompClient.activate();
+    setClient(stompClient);
+
+    return () => {
+      stompClient.deactivate();
+    };
+  }, [id]);
 
   useEffect(() => {
     const email = localStorage.getItem('funkard_user_email');
