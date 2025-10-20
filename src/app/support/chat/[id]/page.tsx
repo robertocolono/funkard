@@ -83,6 +83,7 @@ export default function TicketChatPage() {
   useEffect(() => {
     const socket = new SockJS(`${process.env.NEXT_PUBLIC_API_URL}/ws`);
     const client = new Client({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       webSocketFactory: () => socket as any,
       reconnectDelay: 5000,
       onConnect: () => {
@@ -98,7 +99,9 @@ export default function TicketChatPage() {
     client.activate();
     setClient(client);
 
-    return () => client.deactivate();
+    return () => {
+      client.deactivate();
+    };
   }, [id]);
 
   useEffect(() => {
