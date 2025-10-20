@@ -1,153 +1,169 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
-import { fetchTicketById, sendSupportMessage } from '@/lib/funkardApi';
-import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import { Loader2, ArrowLeft, Send } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://funkard-backend.onrender.com';
+
+interface Message {
+  id: number;
+  sender: string;
+  content: string;
+  createdAt: string;
+}
+
+interface Ticket {
+  id: number;
+  subject: string;
+  status: string;
+  createdAt: string;
+  messages: Message[];
+}
 
 export default function TicketChatPage() {
-  const { id } = useParams() as { id: string };
-  const [ticket, setTicket] = useState<{
-    id: string;
-    subject: string;
-    email: string;
-    status: string;
-    createdAt: string;
-    messages?: Array<{
-      message: string;
-      sender: string;
-      createdAt: string;
-    }>;
-  } | null>(null);
-  const [message, setMessage] = useState('');
+  const { id } = useParams();
+  const router = useRouter();
+  const [ticket, setTicket] = useState<Ticket | null>(null);
   const [loading, setLoading] = useState(true);
+  const [message, setMessage] = useState('');
   const [sending, setSending] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
 
-  const load = useCallback(async () => {
+  const fetchTicket = async () => {
     try {
-      const data = await fetchTicketById(id);
+      const res = await fetch(`${API_BASE}/api/support/${id}`);
+      if (!res.ok) throw new Error('Errore nel caricamento del ticket');
+      const data = await res.json();
       setTicket(data);
     } catch (err) {
-      console.error('Errore caricamento ticket:', err);
-      alert('Errore caricamento ticket');
+      console.error(err);
     } finally {
       setLoading(false);
     }
-  }, [id]);
+  };
 
-  useEffect(() => {
-    load();
-  }, [id, load]);
-
-  const handleSend = async () => {
-    if (!message.trim() || !ticket) return;
+  const sendMessage = async () => {
+    if (!message.trim()) return;
     setSending(true);
     try {
-      await sendSupportMessage(id, message, ticket.email);
+      const res = await fetch(`${API_BASE}/api/support/${id}/message`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sender: userEmail || 'utente', // potresti passare l'email reale se disponibile
+          content: message,
+        }),
+      });
+      if (!res.ok) throw new Error('Errore nell\'invio del messaggio');
       setMessage('');
-      await load(); // Ricarica per vedere il nuovo messaggio
+      await fetchTicket();
     } catch (err) {
-      console.error('Errore invio messaggio:', err);
-      alert('Errore nell\'invio del messaggio');
+      console.error(err);
+      alert('Errore durante l\'invio del messaggio');
     } finally {
       setSending(false);
     }
   };
 
+  useEffect(() => {
+    const email = localStorage.getItem('funkard_user_email');
+    if (email) setUserEmail(email);
+    fetchTicket();
+
+    // Aggiornamento periodico (ogni 15s) – prima dei WebSocket
+    const interval = setInterval(fetchTicket, 15000);
+    return () => clearInterval(interval);
+  }, [id]);
+
   if (loading) {
     return (
-      <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center">
-        <div className="text-gray-400">Caricamento chat...</div>
+      <div className="min-h-screen bg-zinc-950 text-gray-400 flex items-center justify-center">
+        <Loader2 className="animate-spin mr-2" size={18} /> Caricamento conversazione...
       </div>
     );
   }
 
   if (!ticket) {
     return (
-      <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center">
-        <div className="text-red-400">Ticket non trovato</div>
+      <div className="min-h-screen bg-zinc-950 text-gray-400 flex flex-col items-center justify-center">
+        <p className="mb-4">❌ Ticket non trovato</p>
+        <Button onClick={() => router.push('/support')} variant="outline">
+          Torna al supporto
+        </Button>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-white">
+    <div className="min-h-screen bg-zinc-950 text-white flex flex-col">
       {/* HEADER */}
-      <div className="max-w-4xl mx-auto px-6 py-6 border-b border-zinc-800">
-        <div className="flex items-center justify-between">
-          <div>
-            <Link 
-              href="/support" 
-              className="text-yellow-400 hover:text-yellow-300 transition-colors mb-2 inline-block"
-            >
-              ← Torna ai ticket
-            </Link>
-            <h1 className="text-2xl font-bold text-white">{ticket.subject}</h1>
-            <div className="flex items-center gap-3 mt-2">
-              <span className={`px-2 py-1 rounded text-xs font-medium ${
-                ticket.status === 'NEW' ? 'bg-red-500/20 text-red-400' :
-                ticket.status === 'IN_PROGRESS' ? 'bg-yellow-500/20 text-yellow-400' :
-                ticket.status === 'RESOLVED' ? 'bg-green-500/20 text-green-400' :
-                'bg-gray-500/20 text-gray-400'
-              }`}>
-                {ticket.status}
-              </span>
-              <span className="text-sm text-gray-400">
-                Creato il {new Date(ticket.createdAt).toLocaleDateString("it-IT")}
-              </span>
-            </div>
-          </div>
+      <div className="border-b border-zinc-800 px-6 py-4 flex items-center gap-3 bg-zinc-900">
+        <Button
+          onClick={() => router.push('/support')}
+          variant="ghost"
+          className="text-gray-400 hover:text-white"
+        >
+          <ArrowLeft size={18} />
+        </Button>
+        <div>
+          <h1 className="text-lg font-semibold text-white">{ticket.subject}</h1>
+          <p className="text-xs text-gray-500">
+            Stato: {ticket.status} • {new Date(ticket.createdAt).toLocaleString('it-IT')}
+          </p>
         </div>
       </div>
 
-      {/* CHAT */}
-      <div className="max-w-4xl mx-auto px-6 py-6">
-        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 h-[500px] overflow-y-auto mb-4">
-          {ticket.messages?.length ? (
-            <div className="space-y-4">
-              {ticket.messages.map((msg, i: number) => (
-                <div key={i} className={`flex ${msg.sender === ticket.email ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[70%] p-3 rounded-lg ${
-                    msg.sender === ticket.email
-                      ? 'bg-yellow-500 text-black'
-                      : 'bg-zinc-800 text-white'
-                  }`}>
-                    <p className="text-sm">{msg.message}</p>
-                    <p className="text-xs mt-1 opacity-70">
-                      {new Date(msg.createdAt).toLocaleString('it-IT')}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-10 text-gray-400">
-              <div className="text-2xl mb-2">💬</div>
-              <p>Nessun messaggio in questa conversazione</p>
-            </div>
-          )}
-        </div>
-
-        {/* INPUT MESSAGGIO */}
-        {ticket.status !== 'CLOSED' && (
-          <div className="flex gap-2">
-            <input
-              type="text"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder="Scrivi un messaggio..."
-              className="flex-1 p-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-              onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-            />
-            <button
-              onClick={handleSend}
-              disabled={sending || !message.trim()}
-              className="bg-yellow-500 hover:bg-yellow-600 disabled:bg-yellow-500/50 text-black font-semibold px-6 py-3 rounded-lg transition-colors"
+      {/* MESSAGGI */}
+      <div className="flex-1 overflow-y-auto p-6 space-y-4">
+        {ticket.messages.length === 0 ? (
+          <p className="text-gray-500 text-center mt-10">Nessun messaggio ancora.</p>
+        ) : (
+          ticket.messages.map((msg) => (
+            <div
+              key={msg.id}
+              className={`flex ${
+                msg.sender === 'admin' ? 'justify-end' : 'justify-start'
+              }`}
             >
-              {sending ? 'Invio...' : 'Invia'}
-            </button>
-          </div>
+              <div
+                className={`max-w-[75%] rounded-2xl px-4 py-2 text-sm ${
+                  msg.sender === 'admin'
+                    ? 'bg-yellow-500 text-black'
+                    : 'bg-zinc-800 text-gray-100 border border-zinc-700'
+                }`}
+              >
+                <p className="whitespace-pre-wrap break-words">{msg.content}</p>
+                <span className="text-xs text-gray-400 block mt-1">
+                  {new Date(msg.createdAt).toLocaleTimeString('it-IT', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })}
+                </span>
+              </div>
+            </div>
+          ))
         )}
+      </div>
+
+      {/* INPUT */}
+      <div className="border-t border-zinc-800 p-4 bg-zinc-900 flex items-center gap-3">
+        <input
+          type="text"
+          placeholder="Scrivi un messaggio..."
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+          className="flex-1 bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+        />
+        <Button
+          onClick={sendMessage}
+          disabled={sending || !message.trim()}
+          className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-4 py-2 rounded-lg"
+        >
+          {sending ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
+        </Button>
       </div>
     </div>
   );
