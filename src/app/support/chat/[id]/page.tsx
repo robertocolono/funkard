@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Loader2, ArrowLeft, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -31,7 +31,7 @@ export default function TicketChatPage() {
   const [sending, setSending] = useState(false);
   const [userEmail, setUserEmail] = useState('');
 
-  const fetchTicket = async () => {
+  const fetchTicket = useCallback(async () => {
     try {
       const res = await fetch(`${API_BASE}/api/support/${id}`);
       if (!res.ok) throw new Error('Errore nel caricamento del ticket');
@@ -42,7 +42,7 @@ export default function TicketChatPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
 
   const sendMessage = async () => {
     if (!message.trim()) return;
@@ -75,7 +75,7 @@ export default function TicketChatPage() {
     // Aggiornamento periodico (ogni 15s) – prima dei WebSocket
     const interval = setInterval(fetchTicket, 15000);
     return () => clearInterval(interval);
-  }, [id]);
+  }, [id, fetchTicket]);
 
   if (loading) {
     return (
