@@ -83,7 +83,7 @@ export default function TicketChatPage() {
   useEffect(() => {
     const socket = new SockJS(`${process.env.NEXT_PUBLIC_API_URL}/ws`);
     const stompClient = new Client({
-      webSocketFactory: () => socket as any,
+      webSocketFactory: () => socket as WebSocket,
       debug: () => {},
       reconnectDelay: 5000,
       onConnect: () => {
