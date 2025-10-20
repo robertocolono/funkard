@@ -82,28 +82,23 @@ export default function TicketChatPage() {
   // WebSocket connection for real-time chat
   useEffect(() => {
     const socket = new SockJS(`${process.env.NEXT_PUBLIC_API_URL}/ws`);
-    const stompClient = new Client({
-      webSocketFactory: () => socket as WebSocket,
-      debug: () => {},
+    const client = new Client({
+      webSocketFactory: () => socket as any,
       reconnectDelay: 5000,
       onConnect: () => {
-        stompClient.subscribe(`/topic/support/${id}`, (message) => {
+        client.subscribe(`/topic/support/${id}`, (message) => {
           const msg = JSON.parse(message.body);
           setTicket((prev) =>
-            prev
-              ? { ...prev, messages: [...prev.messages, msg] }
-              : prev
+            prev ? { ...prev, messages: [...prev.messages, msg] } : prev
           );
         });
       },
     });
 
-    stompClient.activate();
-    setClient(stompClient);
+    client.activate();
+    setClient(client);
 
-    return () => {
-      stompClient.deactivate();
-    };
+    return () => client.deactivate();
   }, [id]);
 
   useEffect(() => {
