@@ -27,7 +27,13 @@ export default function SupportPage() {
   const [email, setEmail] = useState('');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
-  const [tickets, setTickets] = useState<any[]>([]);
+  const [tickets, setTickets] = useState<Array<{
+    id: string;
+    subject: string;
+    message: string;
+    status: string;
+    createdAt: string;
+  }>>([]);
   const [loading, setLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [checkingAuth, setCheckingAuth] = useState(true);
@@ -198,7 +204,7 @@ export default function SupportPage() {
             </div>
             <select
               value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as any)}
+              onChange={(e) => setSortBy(e.target.value as 'newest' | 'oldest' | 'status')}
               className="p-3 bg-zinc-800 border border-zinc-700 rounded-lg text-sm"
             >
               <option value="newest">Più recenti</option>
