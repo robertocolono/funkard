@@ -1,168 +1,220 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Client } from '@stomp/stompjs';
-import SockJS from 'sockjs-client';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'next/navigation';
-import { fetchTicketById } from '@/lib/funkardApi';
+import { fetchTicketById, sendSupportMessage, reopenTicket } from '@/lib/funkardApi';
+import { ArrowLeft, Send, RefreshCw, WifiOff, Wifi } from 'lucide-react';
+import Link from 'next/link';
 import toast from 'react-hot-toast';
 
 export default function SupportChatPage() {
   const { id } = useParams();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [ticket, setTicket] = useState<any>(null);
+  const [messages, setMessages] = useState<any[]>([]);
   const [newMessage, setNewMessage] = useState('');
-  const [client, setClient] = useState<Client | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [isOnline, setIsOnline] = useState(true);
+  const [pollingActive, setPollingActive] = useState(true);
 
-  // 🔄 Carica ticket iniziale
+  // 🔄 Carica ticket
+  const loadTicket = useCallback(async () => {
+    if (!isOnline) return;
+    try {
+      const data = await fetchTicketById(id as string);
+      setTicket(data);
+      setMessages(data.messages || []);
+    } catch (e) {
+      console.error(e);
+    }
+  }, [id, isOnline]);
+
+  // 🧠 Polling intelligente
   useEffect(() => {
-    const loadTicket = async () => {
+    if (!pollingActive || !isOnline) return;
+
+    const interval = setInterval(async () => {
       try {
         const data = await fetchTicketById(id as string);
-        setTicket(data);
-      } catch (err) {
-        console.error('Errore caricamento ticket:', err);
-        toast.error('Errore nel caricamento del ticket');
+
+        const newMessages = data.messages || [];
+        const prevCount = messages.length;
+        const newCount = newMessages.length;
+
+        // Se è arrivato un nuovo messaggio
+        if (newCount > prevCount) {
+          const lastMessage = newMessages[newMessages.length - 1];
+          const fromAdmin = lastMessage.fromAdmin;
+
+          // ✅ Aggiorna stato
+          setMessages(newMessages);
+          setTicket(data);
+
+          // 🔔 Mostra toast solo se è dell'admin
+          if (fromAdmin) {
+            toast.success("Nuovo messaggio dal supporto 💬", {
+              style: { background: "#1c1c1c", color: "#fff" },
+            });
+
+            // 🔊 Suono (opzionale)
+            try {
+              const audio = new Audio("/sounds/notification.mp3");
+              audio.volume = 0.4;
+              audio.play().catch(() => {});
+            } catch (e) {
+              // Ignora errori audio
+            }
+          }
+        } else if (data.status !== ticket?.status) {
+          // Aggiorna solo se cambia stato
+          setTicket(data);
+        }
+
+        // Ferma polling se chiuso
+        if (['RESOLVED', 'CLOSED'].includes(data.status)) {
+          clearInterval(interval);
+          setPollingActive(false);
+        }
+      } catch (e) {
+        console.error('Polling error', e);
       }
-    };
-    loadTicket();
-  }, [id]);
+    }, 5000);
 
-  // ⚡ WebSocket Setup
+    return () => clearInterval(interval);
+  }, [id, messages.length, ticket?.status, pollingActive, isOnline]);
+
+  // 🌐 Rilevamento connessione
   useEffect(() => {
-    const socket = new SockJS(`${process.env.NEXT_PUBLIC_API_URL}/ws`);
-    const stompClient = new Client({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      webSocketFactory: () => socket as any,
-      reconnectDelay: 5000,
-      onConnect: () => {
-        stompClient.subscribe(`/topic/support/${id}`, (message) => {
-          const data = JSON.parse(message.body);
-
-          // Se contiene content → è un messaggio
-          if (data.content) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            setTicket((prev: any) =>
-              prev ? { ...prev, messages: [...prev.messages, data] } : prev
-            );
-          } else {
-            // Altrimenti è un aggiornamento ticket (status, ecc.)
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            setTicket((prev: any) => ({ ...prev, ...data }));
-          }
-
-          // 🎯 Notifiche toast per eventi specifici
-          if (data.event === "NEW_MESSAGE") {
-            toast.success(`💬 Nuova risposta al ticket "${data.subject}"`);
-          }
-          if (data.event === "RESOLVED") {
-            toast.success(`✅ Il ticket "${data.subject}" è stato risolto`);
-          }
-          if (data.event === "REOPENED") {
-            toast.success(`🔄 Il ticket "${data.subject}" è stato riaperto`);
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            setTicket((prev: any) => ({ ...prev, status: "OPEN" }));
-          }
-          // ⚫ Ignora CLOSED: non serve mostrare nulla
-        });
-      },
-    });
-
-    stompClient.activate();
-    setClient(stompClient);
-    return () => {
-      stompClient.deactivate();
+    const handleOnline = () => {
+      setIsOnline(true);
+      setPollingActive(true);
+      loadTicket();
     };
-  }, [id]);
+    const handleOffline = () => {
+      setIsOnline(false);
+      setPollingActive(false);
+    };
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, [loadTicket]);
 
-  // ✉️ Invia nuovo messaggio
-  const handleSend = () => {
-    if (!newMessage.trim() || !client) return;
-    client.publish({
-      destination: `/app/support/${id}/send`,
-      body: JSON.stringify({
-        sender: 'user',
-        content: newMessage.trim(),
-      }),
-    });
-    setNewMessage('');
-  };
-
-  // 🔄 Riapri ticket
-  const reopenTicket = async (ticketId: string) => {
+  const handleSend = async () => {
+    if (!newMessage.trim()) return;
+    setLoading(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/support/${ticketId}/reopen`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!res.ok) throw new Error("Errore riapertura ticket");
-
-      const updated = await res.json();
-      toast.success(`🔄 Ticket "${updated.subject}" riaperto con successo`);
-      setTicket(updated); // aggiorna stato locale
-    } catch (err) {
-      console.error(err);
-      toast.error("Impossibile riaprire il ticket");
+      await sendSupportMessage(id as string, newMessage, 'user');
+      setNewMessage('');
+      await loadTicket();
+    } catch (e) {
+      console.error(e);
+      alert('Errore nell\'invio del messaggio');
+    } finally {
+      setLoading(false);
     }
   };
 
-  if (!ticket) return <div className="p-6 text-gray-400">Caricamento...</div>;
+  const handleReopen = async () => {
+    try {
+      await reopenTicket(id as string);
+      toast.success('Ticket riaperto ✅');
+      await loadTicket();
+      setPollingActive(true);
+    } catch {
+      toast.error('Errore nella riapertura');
+    }
+  };
+
+  if (!ticket)
+    return (
+      <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center">
+        <div>Caricamento...</div>
+      </div>
+    );
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-white p-6">
-      <h1 className="text-2xl font-semibold mb-4">{ticket.subject}</h1>
-      <p className="text-sm mb-4">
-        Stato: <span className="text-yellow-400">{ticket.status}</span>
-      </p>
-
-      {/* Banner per ticket risolti */}
-      {ticket.status === "RESOLVED" && (
-        <div className="mt-4 bg-green-950/40 border border-green-800 rounded-xl p-4 flex flex-col items-center text-center">
-          <p className="text-green-400 mb-2">✅ Questo ticket è stato risolto.</p>
-          <button
-            onClick={() => reopenTicket(ticket.id)}
-            className="px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold rounded-lg transition"
-          >
-            Riapri ticket
-          </button>
-        </div>
-      )}
-
-      <div className="space-y-2 mb-4">
-        {ticket.messages?.map((msg: any, i: number) => ( // eslint-disable-line @typescript-eslint/no-explicit-any
-          <div
-            key={i}
-            className={`p-3 rounded-lg max-w-lg ${
-              msg.sender === 'admin'
-                ? 'bg-yellow-500/10 border border-yellow-500/40 ml-auto text-yellow-300'
-                : 'bg-zinc-800 border border-zinc-700 text-white'
-            }`}
-          >
-            <p className="text-sm">{msg.content}</p>
-            <p className="text-xs text-gray-500 mt-1">
-              {new Date(msg.createdAt).toLocaleString('it-IT')}
-            </p>
+    <div className="min-h-screen bg-zinc-950 text-white">
+      <div className="max-w-3xl mx-auto px-6 py-6 relative">
+        {/* Stato connessione */}
+        {!isOnline && (
+          <div className="absolute top-4 right-4 flex items-center gap-2 bg-red-600/20 text-red-400 px-3 py-1 rounded-full text-xs">
+            <WifiOff className="w-3 h-3" /> Offline – riconnessione automatica...
           </div>
-        ))}
-      </div>
+        )}
+        {isOnline && !pollingActive && (
+          <div className="absolute top-4 right-4 flex items-center gap-2 bg-green-600/20 text-green-400 px-3 py-1 rounded-full text-xs">
+            <Wifi className="w-3 h-3" /> Online
+          </div>
+        )}
 
-      <div className="flex gap-2">
-        <input
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          placeholder="Scrivi un messaggio..."
-          className="flex-1 bg-zinc-800 border border-zinc-700 p-3 rounded-lg focus:ring-2 focus:ring-yellow-500"
-          onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-        />
-        <button
-          onClick={handleSend}
-          className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-4 rounded-lg"
-        >
-          Invia
-        </button>
+        {/* Header */}
+        <div className="flex items-center justify-between mb-6">
+          <Link href="/support" className="flex items-center text-gray-400 hover:text-yellow-400">
+            <ArrowLeft className="w-4 h-4 mr-2" /> Indietro
+          </Link>
+          <div className="text-sm text-gray-500">
+            Stato: <span className="font-medium text-yellow-400">{ticket.status}</span>
+          </div>
+        </div>
+
+        {/* Titolo */}
+        <h1 className="text-2xl font-semibold mb-2">{ticket.subject}</h1>
+        <p className="text-gray-400 mb-6">Ticket ID: {ticket.id}</p>
+
+        {/* Messaggi */}
+        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 mb-4 max-h-[60vh] overflow-y-auto space-y-3">
+          {messages.length === 0 && (
+            <p className="text-gray-500 text-center py-10">Nessun messaggio ancora</p>
+          )}
+          {messages.map((msg) => (
+            <div
+              key={msg.id}
+              className={`p-3 rounded-lg ${
+                msg.fromAdmin
+                  ? 'bg-zinc-800 text-gray-200 self-start'
+                  : 'bg-yellow-500/20 text-yellow-300 self-end'
+              }`}
+            >
+              <p className="text-sm">{msg.message}</p>
+              <p className="text-[10px] text-gray-500 mt-1">
+                {new Date(msg.createdAt).toLocaleString('it-IT')}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Campo messaggio */}
+        {ticket.status !== 'RESOLVED' && ticket.status !== 'CLOSED' ? (
+          <div className="flex items-center gap-3">
+            <input
+              type="text"
+              placeholder="Scrivi un messaggio..."
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+              className="flex-1 p-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
+            />
+            <button
+              onClick={handleSend}
+              disabled={loading || !isOnline}
+              className="bg-yellow-500 hover:bg-yellow-600 text-black rounded-lg px-4 py-3 flex items-center gap-2 font-semibold disabled:opacity-50"
+            >
+              <Send className="w-4 h-4" /> Invia
+            </button>
+          </div>
+        ) : (
+          <div className="text-center mt-4">
+            <p className="text-gray-500 mb-3">🔒 Questo ticket è stato chiuso o risolto.</p>
+            <button
+              onClick={handleReopen}
+              className="text-yellow-400 hover:text-yellow-300 flex items-center gap-2 mx-auto"
+            >
+              <RefreshCw className="w-4 h-4" /> Riapri ticket
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

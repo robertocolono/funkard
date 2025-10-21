@@ -112,12 +112,20 @@ export async function sendSupportMessage(ticketId: string, message: string, send
   const token = typeof window !== "undefined" ? localStorage.getItem("funkard_token") : null;
   const res = await fetch(`${API_BASE}/api/support/${ticketId}/message`, {
     method: "POST",
-    headers: { 
+    headers: {
       "Content-Type": "application/json",
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
     body: JSON.stringify({ message, sender }),
   });
   if (!res.ok) throw new Error("Errore invio messaggio");
+  return res.json();
+}
+
+export async function reopenTicket(id: string) {
+  const res = await fetch(`${API_BASE}/api/support/${id}/reopen`, {
+    method: "POST",
+  });
+  if (!res.ok) throw new Error("Errore riapertura ticket");
   return res.json();
 }
