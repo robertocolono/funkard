@@ -30,6 +30,14 @@ export default function SupportChatPage() {
       const data = await fetchTicketById(id as string);
       setTicket(data);
       setMessages(data.messages || []);
+      
+      // Rimuovi badge non letto quando si carica la chat
+      const ticketId = id as string;
+      const unreadTickets = JSON.parse(localStorage.getItem('funkard_unreadTickets') || '{}');
+      if (unreadTickets[ticketId]) {
+        unreadTickets[ticketId] = false;
+        localStorage.setItem('funkard_unreadTickets', JSON.stringify(unreadTickets));
+      }
     } catch (e) {
       console.error(e);
     }
