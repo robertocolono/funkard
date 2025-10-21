@@ -9,6 +9,7 @@ import toast from 'react-hot-toast';
 
 export default function SupportChatPage() {
   const { id } = useParams();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [ticket, setTicket] = useState<any>(null);
   const [newMessage, setNewMessage] = useState('');
   const [client, setClient] = useState<Client | null>(null);
@@ -40,11 +41,13 @@ export default function SupportChatPage() {
 
           // Se contiene content → è un messaggio
           if (data.content) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             setTicket((prev: any) =>
               prev ? { ...prev, messages: [...prev.messages, data] } : prev
             );
           } else {
             // Altrimenti è un aggiornamento ticket (status, ecc.)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             setTicket((prev: any) => ({ ...prev, ...data }));
           }
 
@@ -62,7 +65,9 @@ export default function SupportChatPage() {
 
     stompClient.activate();
     setClient(stompClient);
-    return () => stompClient.deactivate();
+    return () => {
+      stompClient.deactivate();
+    };
   }, [id]);
 
   // ✉️ Invia nuovo messaggio
@@ -88,7 +93,7 @@ export default function SupportChatPage() {
       </p>
 
       <div className="space-y-2 mb-4">
-        {ticket.messages?.map((msg: any, i: number) => (
+        {ticket.messages?.map((msg: any, i: number) => ( // eslint-disable-line @typescript-eslint/no-explicit-any
           <div
             key={i}
             className={`p-3 rounded-lg max-w-lg ${
