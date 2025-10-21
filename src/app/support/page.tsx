@@ -4,7 +4,6 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { createSupportTicket, fetchUserTickets } from '@/lib/funkardApi';
-import { useUserSupportEvents } from '@/hooks/useUserSupportEvents';
 
 const STATUS_COLOR = {
   NEW: 'bg-red-600/20 text-red-400',
@@ -13,7 +12,6 @@ const STATUS_COLOR = {
   ARCHIVED: 'bg-neutral-600/20 text-neutral-400',
 };
 
-// Piccolo helper debounce inline (niente lib esterne)
 function useDebouncedValue(value: string, delay = 350) {
   const [debounced, setDebounced] = useState(value);
   useEffect(() => {
@@ -26,34 +24,34 @@ function useDebouncedValue(value: string, delay = 350) {
 export default function SupportPage() {
   const router = useRouter();
 
-  // form nuovo ticket
   const [email, setEmail] = useState('');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
+  const [tickets, setTickets] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
-
-  // tickets
-  const [tickets, setTickets] = useState<Array<{
-    id: string;
-    subject: string;
-    message: string;
-    status: 'NEW' | 'IN_PROGRESS' | 'RESOLVED' | 'ARCHIVED' | string;
-    createdAt: string;
-  }>>([]);
-
-  // auth
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [checkingAuth, setCheckingAuth] = useState(true);
 
-  // UX avanzata
+  // ricerca + filtri + ordinamento
   const [search, setSearch] = useState('');
   const debouncedSearch = useDebouncedValue(search, 300);
-
-  const [selectedStatuses, setSelectedStatuses] = useState<Array<'NEW' | 'IN_PROGRESS' | 'RESOLVED' | 'ARCHIVED'>>(
-    ['NEW', 'IN_PROGRESS', 'RESOLVED', 'ARCHIVED']
-  );
+  const [selectedStatuses, setSelectedStatuses] = useState(['NEW', 'IN_PROGRESS', 'RESOLVED', 'ARCHIVED']);
   const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'status'>('newest');
   const [expanded, setExpanded] = useState<string | null>(null);
+
+  // 🔴 nuove risposte
+  const [unreadTickets, setUnreadTickets] = useState<Record<string, boolean>>({});
+
+  // 🔁 carica stato salvato
+  useEffect(() => {
+    const stored = localStorage.getItem('funkard_unreadTickets');
+    if (stored) setUnreadTickets(JSON.parse(stored));
+  }, []);
+
+  // 💾 salva stato
+  useEffect(() => {
+    localStorage.setItem('funkard_unreadTickets', JSON.stringify(unreadTickets));
+  }, [unreadTickets]);
 
   const loadTickets = useCallback(async () => {
     if (!email) return;
@@ -85,7 +83,7 @@ export default function SupportPage() {
     }
   };
 
-  // auth check
+  // Auth
   useEffect(() => {
     const token = localStorage.getItem('funkard_token');
     if (!token) {
@@ -96,21 +94,67 @@ export default function SupportPage() {
     setCheckingAuth(false);
   }, [router]);
 
-  // Attiva SSE per notifiche real-time
-  const userEmail = typeof window !== "undefined" ? localStorage.getItem("funkard_email") || undefined : undefined;
-  useUserSupportEvents(userEmail);
+  // 🔄 Polling automatico (light)
+  useEffect(() => {
+    if (!email) return;
+    const interval = setInterval(() => {
+      loadTickets();
+    }, 30000); // ogni 30 secondi
+    return () => clearInterval(interval);
+  }, [email, loadTickets]);
 
-  // carica lista quando l'email è plausibile
   useEffect(() => {
     if (email && email.length > 5 && email.includes('@')) loadTickets();
   }, [email, loadTickets]);
 
-  // filtro + ricerca + ordinamento client-side
+  // 🎧 Ascolta eventi real-time via SSE
+  useEffect(() => {
+    if (!email) return;
+
+    const eventSource = new EventSource(
+      `${process.env.NEXT_PUBLIC_API_URL || "https://funkard-backend.onrender.com"}/api/support/stream?email=${encodeURIComponent(email)}`
+    );
+
+    eventSource.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+
+        if (data.type === 'ticket-reply') {
+          // 🔴 Segna ticket come non letto
+          setUnreadTickets((prev) => ({ ...prev, [data.ticketId]: true }));
+        }
+
+        if (data.type === 'ticket-resolved') {
+          // ✅ Rimuove badge quando ticket chiuso
+          setUnreadTickets((prev) => {
+            const updated = { ...prev };
+            delete updated[data.ticketId];
+            return updated;
+          });
+        }
+      } catch (err) {
+        console.error('Errore parsing SSE:', err);
+      }
+    };
+
+    eventSource.onerror = (err) => {
+      console.warn('SSE disconnected:', err);
+      eventSource.close();
+      // riconnessione automatica ogni 10s
+      setTimeout(() => {
+        window.location.reload();
+      }, 10000);
+    };
+
+    return () => {
+      eventSource.close();
+    };
+  }, [email]);
+
   const filteredSorted = useMemo(() => {
     const text = debouncedSearch.trim().toLowerCase();
-
     let list = tickets.filter(t =>
-      selectedStatuses.includes(t.status as any) &&
+      selectedStatuses.includes(t.status) &&
       (text.length === 0 ||
         t.subject?.toLowerCase().includes(text) ||
         t.message?.toLowerCase().includes(text))
@@ -122,25 +166,12 @@ export default function SupportPage() {
       list = list.sort((a, b) => +new Date(a.createdAt) - +new Date(b.createdAt));
     } else if (sortBy === 'status') {
       const order = ['NEW', 'IN_PROGRESS', 'RESOLVED', 'ARCHIVED'];
-      list = list.sort((a, b) => order.indexOf(a.status as any) - order.indexOf(b.status as any));
+      list = list.sort((a, b) => order.indexOf(a.status) - order.indexOf(b.status));
     }
-
     return list;
   }, [tickets, debouncedSearch, selectedStatuses, sortBy]);
 
-  // mini statistiche
-  const stats = useMemo(() => {
-    const totals = { total: tickets.length, NEW: 0, IN_PROGRESS: 0, RESOLVED: 0, ARCHIVED: 0 };
-    for (const t of tickets) {
-      if (totals[t.status as keyof typeof totals] !== undefined) {
-        // @ts-ignore (per semplicità con JS)
-        totals[t.status]++;
-      }
-    }
-    return totals;
-  }, [tickets]);
-
-  const toggleStatus = (s: typeof selectedStatuses[number]) => {
+  const toggleStatus = (s: string) => {
     setSelectedStatuses(prev =>
       prev.includes(s) ? prev.filter(x => x !== s) : [...prev, s]
     );
@@ -174,21 +205,14 @@ export default function SupportPage() {
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
       <div className="max-w-6xl mx-auto px-6 py-8">
-        {/* Header + mini stats */}
         <div className="mb-6 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div>
             <h1 className="text-3xl font-bold mb-1">💬 Supporto Funkard</h1>
             <p className="text-gray-400">Apri un ticket o gestisci le tue richieste.</p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 w-full md:w-auto">
-            <StatBox label="Totali" value={stats.total} />
-            <StatBox label="Nuovi" value={stats.NEW} />
-            <StatBox label="In corso" value={stats.IN_PROGRESS} />
-            <StatBox label="Risolti" value={stats.RESOLVED} />
-          </div>
         </div>
 
-        {/* Barra strumenti: ricerca + filtri + ordinamento */}
+        {/* Barra strumenti */}
         <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 mb-8">
           <div className="flex flex-col md:flex-row gap-3">
             <input
@@ -198,9 +222,8 @@ export default function SupportPage() {
               onChange={(e) => setSearch(e.target.value)}
               className="flex-1 p-3 bg-zinc-800 border border-zinc-700 rounded-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500"
             />
-
             <div className="flex flex-wrap gap-2">
-              {(['NEW','IN_PROGRESS','RESOLVED','ARCHIVED'] as const).map(s => {
+              {['NEW','IN_PROGRESS','RESOLVED','ARCHIVED'].map(s => {
                 const active = selectedStatuses.includes(s);
                 return (
                   <button
@@ -215,7 +238,6 @@ export default function SupportPage() {
                 );
               })}
             </div>
-
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
@@ -231,7 +253,7 @@ export default function SupportPage() {
         {/* Form nuovo ticket */}
         <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 mb-8">
           <h2 className="text-xl font-semibold mb-4">Apri un nuovo ticket</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-4">
             <input
               type="email"
               placeholder="La tua email"
@@ -250,54 +272,56 @@ export default function SupportPage() {
               placeholder="Descrivi il problema o la richiesta..."
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              className="md:col-span-2 w-full p-3 bg-zinc-800 border border-zinc-700 rounded-lg placeholder-gray-500 min-h-[120px] focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-lg placeholder-gray-500 min-h-[120px] focus:outline-none focus:ring-2 focus:ring-yellow-500"
             />
             <button
               onClick={handleSubmit}
               disabled={loading}
-              className="md:col-span-2 w-full bg-yellow-500 hover:bg-yellow-600 disabled:bg-yellow-500/50 text-black font-semibold px-6 py-3 rounded-lg transition-colors"
+              className="w-full bg-yellow-500 hover:bg-yellow-600 disabled:bg-yellow-500/50 text-black font-semibold px-6 py-3 rounded-lg transition-colors"
             >
               {loading ? 'Invio...' : 'Invia richiesta'}
             </button>
           </div>
         </div>
 
-        {/* Lista ticket con righe collassabili */}
+        {/* Lista ticket */}
         {filteredSorted.length > 0 ? (
           <div className="space-y-3">
             <h2 className="text-xl font-semibold">I tuoi ticket</h2>
             {filteredSorted.map((t) => {
               const open = expanded === t.id;
+              const unread = unreadTickets[t.id];
+
               return (
                 <div key={t.id} className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden">
                   <button
-                    onClick={() => setExpanded(open ? null : t.id)}
+                    onClick={() => {
+                      setExpanded(open ? null : t.id);
+                      setUnreadTickets(prev => ({ ...prev, [t.id]: false }));
+                    }}
                     className="w-full text-left px-4 py-4 hover:bg-zinc-900/60 transition flex items-start gap-3"
                     aria-expanded={open}
                   >
                     <div className="flex-1">
                       <div className="flex items-center justify-between gap-4">
-                        <h3 className="font-medium">{t.subject || '(Senza oggetto)'}</h3>
-                        <span
-                          className={`px-2 py-1 rounded-full text-xs font-medium ${STATUS_COLOR[t.status as keyof typeof STATUS_COLOR] || 'bg-gray-500/20 text-gray-400'}`}
-                        >
+                        <h3 className="font-medium flex items-center gap-2">
+                          {t.subject || '(Senza oggetto)'}
+                          {unread && (
+                            <span className="ml-1 inline-block w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse" title="Nuova risposta" />
+                          )}
+                        </h3>
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${STATUS_COLOR[t.status as keyof typeof STATUS_COLOR] || 'bg-gray-500/20 text-gray-400'}`}>
                           {t.status}
                         </span>
                       </div>
-                      <p className="text-sm text-gray-400 line-clamp-1 mt-1">
-                        {t.message}
-                      </p>
-                      <p className="text-xs text-gray-500 mt-1">
-                        {new Date(t.createdAt).toLocaleString('it-IT')}
-                      </p>
+                      <p className="text-sm text-gray-400 line-clamp-1 mt-1">{t.message}</p>
+                      <p className="text-xs text-gray-500 mt-1">{new Date(t.createdAt).toLocaleString('it-IT')}</p>
                     </div>
                   </button>
 
                   {open && (
                     <div className="px-4 pb-4 pt-2 border-t border-zinc-800">
-                      <div className="text-sm text-gray-300 whitespace-pre-line">
-                        {t.message}
-                      </div>
+                      <div className="text-sm text-gray-300 whitespace-pre-line">{t.message}</div>
                       <div className="mt-4 flex items-center gap-3">
                         <Link
                           href={`/support/chat/${t.id}`}
@@ -305,7 +329,6 @@ export default function SupportPage() {
                         >
                           Apri chat / Dettagli →
                         </Link>
-                        {/* Segnaposto per future azioni: aggiungi messaggio, allegati, ecc. */}
                       </div>
                     </div>
                   )}
@@ -317,7 +340,6 @@ export default function SupportPage() {
           <div className="text-gray-400">Nessun ticket trovato.</div>
         )}
 
-        {/* Link allo storico */}
         <div className="mt-10 text-center">
           <Link
             href="/support/history"
@@ -327,15 +349,6 @@ export default function SupportPage() {
           </Link>
         </div>
       </div>
-    </div>
-  );
-}
-
-function StatBox({ label, value }: { label: string; value: number }) {
-  return (
-    <div className="rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-2 text-center">
-      <div className="text-xs text-gray-400">{label}</div>
-      <div className="text-lg font-semibold">{value}</div>
     </div>
   );
 }
