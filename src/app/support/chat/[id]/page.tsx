@@ -9,7 +9,9 @@ import toast from 'react-hot-toast';
 
 export default function SupportChatPage() {
   const { id } = useParams();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [ticket, setTicket] = useState<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [messages, setMessages] = useState<any[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -60,7 +62,7 @@ export default function SupportChatPage() {
               const audio = new Audio("/sounds/notification.mp3");
               audio.volume = 0.4;
               audio.play().catch(() => {});
-            } catch (e) {
+            } catch {
               // Ignora errori audio
             }
           }
