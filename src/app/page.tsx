@@ -1,71 +1,45 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
-import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import Image from "next/image";
+import LoggedHome from "@/components/LoggedHome";
+import GuestHome from "@/components/GuestHome";
 
 export default function HomePage() {
-  const router = useRouter();
-  const [welcome, setWelcome] = useState("👋 Benvenuto");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (typeof window !== "undefined" && localStorage.getItem("funkard_token")) {
-      setWelcome("👋 Bentornato");
-    }
+    const checkAuth = () => {
+      const token = localStorage.getItem("funkard_token");
+      setIsAuthenticated(!!token);
+      setIsLoading(false);
+    };
+
+    // Check immediately
+    checkAuth();
+
+    // Listen for storage changes (login/logout from other tabs)
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === "funkard_token") {
+        checkAuth();
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
-  return (
-    <main className="min-h-screen bg-neutral-950 text-white flex flex-col items-center justify-start px-6 pb-20 pt-24 relative overflow-hidden">
-      <Navbar />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,204,0,0.12)_0%,transparent_70%)] blur-3xl pointer-events-none" />
-
-      <div className="mt-10 text-center relative z-10">
-        <h2 className="text-5xl md:text-6xl font-bold text-yellow-400 mb-4 drop-shadow-sm">
-          {welcome}
-        </h2>
-        <Image
-          src="/logo.png"
-          alt="Funkard logo"
-          width={280}
-          height={90}
-          priority
-          className="mx-auto mb-6 object-contain"
-        />
-        <p className="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto leading-relaxed mb-10">
-          <span className="text-yellow-400 font-semibold">Accresci la tua collezione preferita</span>{" "}in modo facile e veloce.<br />Il primo vero Marketplace che connette il mondo intero con un semplice click!
-        </p>
-        <div className="flex flex-wrap gap-4 justify-center">
-          <button onClick={() => router.push("/marketplace")} className="btn-funkard">
-            🔥 Esplora il Marketplace
-          </button>
-          <button onClick={() => router.push("/collection")} className="btn-funkard">
-            📚 La Mia Collezione
-          </button>
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-neutral-950 text-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-400 mx-auto mb-4"></div>
+          <p className="text-gray-400">Caricamento...</p>
         </div>
       </div>
+    );
+  }
 
-      <div className="mt-20 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl relative z-10">
-        {[
-          { title: "Compra", text: "Scopri migliaia di carte rare e nuove release dai migliori venditori.", icon: "🛒" },
-          { title: "Vendi", text: "Metti in vendita le tue carte in modo sicuro e trasparente, senza abbonamenti.", icon: "💸" },
-          { title: "Valuta", text: "Analizza il valore delle tue carte con la nostra tecnologia di grading.", icon: "📈" },
-        ].map((item, i) => (
-          <div key={i} className="bg-neutral-900 border border-neutral-800 rounded-2xl p-6 hover:border-yellow-500/60 transition-all duration-300">
-            <div className="text-4xl mb-4">{item.icon}</div>
-            <h3 className="text-xl font-semibold mb-2 text-white">{item.title}</h3>
-            <p className="text-gray-400 text-sm">{item.text}</p>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-24 text-center relative z-10">
-        <h2 className="text-2xl font-semibold mb-4">Unisciti alla rivoluzione del collezionismo.</h2>
-        <button onClick={() => router.push("/register")} className="btn-funkard px-8">
-          🚀 Inizia ora
-        </button>
-      </div>
-    </main>
-  );
+  return isAuthenticated ? <LoggedHome /> : <GuestHome />;
 }
 
