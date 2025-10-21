@@ -107,49 +107,7 @@ export default function SupportPage() {
     if (email && email.length > 5 && email.includes('@')) loadTickets();
   }, [email, loadTickets]);
 
-  // 🎧 Ascolta eventi real-time via SSE
-  useEffect(() => {
-    if (!email) return;
-
-    const eventSource = new EventSource(
-      `${process.env.NEXT_PUBLIC_API_URL || "https://funkard-backend.onrender.com"}/api/support/stream?email=${encodeURIComponent(email)}`
-    );
-
-    eventSource.onmessage = (event) => {
-      try {
-        const data = JSON.parse(event.data);
-
-        if (data.type === 'ticket-reply') {
-          // 🔴 Segna ticket come non letto
-          setUnreadTickets((prev) => ({ ...prev, [data.ticketId]: true }));
-        }
-
-        if (data.type === 'ticket-resolved') {
-          // ✅ Rimuove badge quando ticket chiuso
-          setUnreadTickets((prev) => {
-            const updated = { ...prev };
-            delete updated[data.ticketId];
-            return updated;
-          });
-        }
-      } catch (err) {
-        console.error('Errore parsing SSE:', err);
-      }
-    };
-
-    eventSource.onerror = (err) => {
-      console.warn('SSE disconnected:', err);
-      eventSource.close();
-      // riconnessione automatica ogni 10s
-      setTimeout(() => {
-        window.location.reload();
-      }, 10000);
-    };
-
-    return () => {
-      eventSource.close();
-    };
-  }, [email]);
+  // SSE gestito dal NotificationContext globale
 
   const filteredSorted = useMemo(() => {
     const text = debouncedSearch.trim().toLowerCase();

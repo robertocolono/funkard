@@ -19,6 +19,11 @@ export function useUserSupportEvents(userEmail?: string) {
         duration: 5000,
         style: { background: "#1c1c1c", color: "#fff" },
       });
+      
+      // Emetti evento custom per aggiornare badge
+      window.dispatchEvent(new CustomEvent('ticket-reply', { 
+        detail: { ticketId: data.ticketId } 
+      }));
     });
 
     // ✅ Ticket risolto

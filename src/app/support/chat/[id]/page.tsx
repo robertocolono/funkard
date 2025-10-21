@@ -4,12 +4,14 @@ import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import { fetchTicketById, sendSupportMessage, reopenTicket } from '@/lib/funkardApi';
 import { useUserSupportEvents } from '@/hooks/useUserSupportEvents';
+import { useNotifications } from '@/context/NotificationContext';
 import { ArrowLeft, Send, RefreshCw, WifiOff, Wifi } from 'lucide-react';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 
 export default function SupportChatPage() {
   const { id } = useParams();
+  const { markAsRead } = useNotifications();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [ticket, setTicket] = useState<any>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -31,17 +33,14 @@ export default function SupportChatPage() {
       setTicket(data);
       setMessages(data.messages || []);
       
-      // Rimuovi badge non letto quando si carica la chat
-      const ticketId = id as string;
-      const unreadTickets = JSON.parse(localStorage.getItem('funkard_unreadTickets') || '{}');
-      if (unreadTickets[ticketId]) {
-        unreadTickets[ticketId] = false;
-        localStorage.setItem('funkard_unreadTickets', JSON.stringify(unreadTickets));
+      // Segna notifica come letta quando si apre la chat
+      if (id) {
+        markAsRead(id.toString());
       }
     } catch (e) {
       console.error(e);
     }
-  }, [id, isOnline]);
+  }, [id, isOnline, markAsRead]);
 
   // 🧠 Polling intelligente
   useEffect(() => {

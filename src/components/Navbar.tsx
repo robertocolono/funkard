@@ -3,10 +3,12 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useNotifications } from "@/context/NotificationContext";
 
 export default function Navbar() {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { unreadCount } = useNotifications();
 
   useEffect(() => {
     const token = localStorage.getItem("funkard_token");
@@ -53,12 +55,19 @@ export default function Navbar() {
           >
             GradeLens
           </button>
-          <button
-            onClick={() => router.push("/support")}
-            className="hover:text-yellow-400 transition-colors"
-          >
-            Support
-          </button>
+          <div className="relative">
+            <button
+              onClick={() => router.push("/support")}
+              className="hover:text-yellow-400 transition-colors"
+            >
+              Support
+            </button>
+            {unreadCount > 0 && (
+              <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-pulse">
+                {unreadCount > 9 ? '9+' : unreadCount}
+              </span>
+            )}
+          </div>
 
           {/* 🧠 Account */}
           {!isLoggedIn ? (
