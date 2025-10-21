@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import { fetchTicketById, sendSupportMessage, reopenTicket } from '@/lib/funkardApi';
+import { useUserSupportEvents } from '@/hooks/useUserSupportEvents';
 import { ArrowLeft, Send, RefreshCw, WifiOff, Wifi } from 'lucide-react';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
@@ -17,6 +18,14 @@ export default function SupportChatPage() {
   const [loading, setLoading] = useState(false);
   const [isOnline, setIsOnline] = useState(true);
   const [pollingActive, setPollingActive] = useState(true);
+
+  // Attiva SSE per notifiche real-time
+  useEffect(() => {
+    const email = localStorage.getItem("funkard_email");
+    if (email) {
+      useUserSupportEvents(email);
+    }
+  }, []);
 
   // 🔄 Carica ticket
   const loadTicket = useCallback(async () => {

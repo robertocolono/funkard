@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { createSupportTicket, fetchUserTickets } from '@/lib/funkardApi';
+import { useUserSupportEvents } from '@/hooks/useUserSupportEvents';
 import Link from 'next/link';
 
 const STATUS_COLOR: Record<string, string> = {
@@ -61,12 +62,18 @@ export default function SupportPage() {
   useEffect(() => {
     // Controlla se l'utente è autenticato
     const token = localStorage.getItem("funkard_token");
+    const email = localStorage.getItem("funkard_email");
     if (!token) {
       router.push("/register");
       return;
     }
     setIsAuthenticated(true);
     setCheckingAuth(false);
+    
+    // Attiva SSE per notifiche real-time
+    if (email) {
+      useUserSupportEvents(email);
+    }
   }, [router]);
 
   useEffect(() => {
