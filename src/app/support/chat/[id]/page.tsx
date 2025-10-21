@@ -58,6 +58,10 @@ export default function SupportChatPage() {
           if (data.event === "RESOLVED") {
             toast.success(`✅ Il ticket "${data.subject}" è stato risolto`);
           }
+          if (data.event === "REOPENED") {
+            toast.info(`🔄 Il ticket "${data.subject}" è stato riaperto`);
+            setTicket((prev) => ({ ...prev, status: "OPEN" }));
+          }
           // ⚫ Ignora CLOSED: non serve mostrare nulla
         });
       },
@@ -83,6 +87,27 @@ export default function SupportChatPage() {
     setNewMessage('');
   };
 
+  // 🔄 Riapri ticket
+  const reopenTicket = async (ticketId: string) => {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/support/${ticketId}/reopen`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!res.ok) throw new Error("Errore riapertura ticket");
+
+      const updated = await res.json();
+      toast.success(`🔄 Ticket "${updated.subject}" riaperto con successo`);
+      setTicket(updated); // aggiorna stato locale
+    } catch (err) {
+      console.error(err);
+      toast.error("Impossibile riaprire il ticket");
+    }
+  };
+
   if (!ticket) return <div className="p-6 text-gray-400">Caricamento...</div>;
 
   return (
@@ -91,6 +116,19 @@ export default function SupportChatPage() {
       <p className="text-sm mb-4">
         Stato: <span className="text-yellow-400">{ticket.status}</span>
       </p>
+
+      {/* Banner per ticket risolti */}
+      {ticket.status === "RESOLVED" && (
+        <div className="mt-4 bg-green-950/40 border border-green-800 rounded-xl p-4 flex flex-col items-center text-center">
+          <p className="text-green-400 mb-2">✅ Questo ticket è stato risolto.</p>
+          <button
+            onClick={() => reopenTicket(ticket.id)}
+            className="px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold rounded-lg transition"
+          >
+            Riapri ticket
+          </button>
+        </div>
+      )}
 
       <div className="space-y-2 mb-4">
         {ticket.messages?.map((msg: any, i: number) => ( // eslint-disable-line @typescript-eslint/no-explicit-any

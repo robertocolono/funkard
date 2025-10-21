@@ -156,6 +156,9 @@ export default function SupportPage() {
                       <p className="text-xs text-gray-500">
                         {new Date(ticket.createdAt).toLocaleString('it-IT')}
                       </p>
+                      {ticket.status === "RESOLVED" && (
+                        <span className="text-xs text-green-400 italic">Risolto – clicca per riaprire</span>
+                      )}
                     </div>
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${STATUS_COLOR[ticket.status] || 'bg-gray-500/20 text-gray-400'}`}>
                       {ticket.status}
