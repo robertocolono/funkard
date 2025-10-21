@@ -24,19 +24,22 @@ interface Ticket {
   messages: Message[];
 }
 
-export default function TicketChatPage() {
+export default function AdminTicketChatPage() {
   const { id } = useParams();
   const router = useRouter();
   const [ticket, setTicket] = useState<Ticket | null>(null);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
   const [sending, setSending] = useState(false);
-  const [userEmail, setUserEmail] = useState('');
   const [client, setClient] = useState<Client | null>(null);
 
   const fetchTicket = useCallback(async () => {
     try {
-      const res = await fetch(`${API_BASE}/api/support/${id}`);
+      const res = await fetch(`${API_BASE}/api/admin/support/${id}`, {
+        headers: {
+          'X-Admin-Token': localStorage.getItem('funkard_admin_token') || '',
+        },
+      });
       if (!res.ok) throw new Error('Errore nel caricamento del ticket');
       const data = await res.json();
       setTicket(data);
@@ -51,12 +54,14 @@ export default function TicketChatPage() {
     if (!message.trim()) return;
     setSending(true);
     try {
-      const res = await fetch(`${API_BASE}/api/support/${id}/message`, {
+      const res = await fetch(`${API_BASE}/api/admin/support/${id}/reply`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'X-Admin-Token': localStorage.getItem('funkard_admin_token') || '',
+        },
         body: JSON.stringify({
-          sender: userEmail || 'utente', // potresti passare l'email reale se disponibile
-          content: message,
+          message: message,
         }),
       });
       if (!res.ok) throw new Error('Errore nell\'invio del messaggio');
@@ -65,7 +70,7 @@ export default function TicketChatPage() {
       if (client && client.connected) {
         client.publish({
           destination: `/app/support/${id}/send`,
-          body: JSON.stringify({ sender: userEmail, content: message }),
+          body: JSON.stringify({ sender: 'admin', content: message }),
         });
       }
       
@@ -110,13 +115,7 @@ export default function TicketChatPage() {
   }, [id]);
 
   useEffect(() => {
-    const email = localStorage.getItem('funkard_user_email');
-    if (email) setUserEmail(email);
     fetchTicket();
-
-    // Aggiornamento periodico (ogni 15s) – prima dei WebSocket
-    const interval = setInterval(fetchTicket, 15000);
-    return () => clearInterval(interval);
   }, [id, fetchTicket]);
 
   if (loading) {
@@ -131,7 +130,7 @@ export default function TicketChatPage() {
     return (
       <div className="min-h-screen bg-zinc-950 text-gray-400 flex flex-col items-center justify-center">
         <p className="mb-4">❌ Ticket non trovato</p>
-        <Button onClick={() => router.push('/support')} variant="outline">
+        <Button onClick={() => router.push('/admin/support')} variant="outline">
           Torna al supporto
         </Button>
       </div>
@@ -143,7 +142,7 @@ export default function TicketChatPage() {
       {/* HEADER */}
       <div className="border-b border-zinc-800 px-6 py-4 flex items-center gap-3 bg-zinc-900">
         <Button
-          onClick={() => router.push('/support')}
+          onClick={() => router.push('/admin/support')}
           variant="ghost"
           className="text-gray-400 hover:text-white"
         >

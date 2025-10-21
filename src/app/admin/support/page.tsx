@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { adminApi } from "@/lib/adminApi";
+import Link from "next/link";
 
 interface SupportTicket {
   id: string;
@@ -114,6 +115,14 @@ export default function AdminSupportPage() {
                   <p className="text-xs text-gray-500">
                     Creato: {new Date(ticket.createdAt).toLocaleString("it-IT")}
                   </p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Link
+                    href={`/admin/support/chat/${ticket.id}`}
+                    className="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 transition-colors"
+                  >
+                    💬 Chat
+                  </Link>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className={`px-2 py-1 rounded text-xs font-medium ${
