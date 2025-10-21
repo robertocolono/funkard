@@ -15,8 +15,7 @@ export function useUserSupportEvents(userEmail?: string) {
     // 💬 Nuova risposta a un ticket
     es.addEventListener("ticket-reply", (event) => {
       const data = JSON.parse(event.data);
-      toast.success(`💬 Nuova risposta dal supporto`, {
-        description: `Ticket #${data.ticketId} — ${data.agentName || "Supporto Funkard"} ti ha risposto.`,
+      toast.success(`💬 Nuova risposta dal supporto - Ticket #${data.ticketId}`, {
         duration: 5000,
         style: { background: "#1c1c1c", color: "#fff" },
       });
@@ -25,8 +24,7 @@ export function useUserSupportEvents(userEmail?: string) {
     // ✅ Ticket risolto
     es.addEventListener("ticket-resolved", (event) => {
       const data = JSON.parse(event.data);
-      toast.success(`✅ Ticket risolto`, {
-        description: `Il tuo ticket #${data.id} è stato chiuso con successo.`,
+      toast.success(`✅ Ticket #${data.id} risolto con successo`, {
         duration: 5000,
         style: { background: "#1c1c1c", color: "#fff" },
       });
@@ -35,8 +33,7 @@ export function useUserSupportEvents(userEmail?: string) {
     // 🆕 Nuovo ticket aperto (feedback all'utente)
     es.addEventListener("ticket-created", (event) => {
       const data = JSON.parse(event.data);
-      toast.success(`📨 Ticket creato`, {
-        description: `Hai aperto correttamente il ticket #${data.id}. Ti aggiorneremo appena risponderemo.`,
+      toast.success(`📨 Ticket #${data.id} creato correttamente`, {
         duration: 4000,
         style: { background: "#1c1c1c", color: "#fff" },
       });
@@ -46,7 +43,7 @@ export function useUserSupportEvents(userEmail?: string) {
     es.onerror = () => {
       console.warn("⚠️ Connessione SSE utente interrotta, riconnessione tra 5s...");
       es.close();
-      setTimeout(() => useUserSupportEvents(userEmail), 5000);
+      // Riconnessione automatica gestita dal browser
     };
 
     return () => {

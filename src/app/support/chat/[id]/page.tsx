@@ -20,12 +20,8 @@ export default function SupportChatPage() {
   const [pollingActive, setPollingActive] = useState(true);
 
   // Attiva SSE per notifiche real-time
-  useEffect(() => {
-    const email = localStorage.getItem("funkard_email");
-    if (email) {
-      useUserSupportEvents(email);
-    }
-  }, []);
+  const userEmail = typeof window !== "undefined" ? localStorage.getItem("funkard_email") || undefined : undefined;
+  useUserSupportEvents(userEmail);
 
   // 🔄 Carica ticket
   const loadTicket = useCallback(async () => {

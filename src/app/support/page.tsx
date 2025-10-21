@@ -62,19 +62,17 @@ export default function SupportPage() {
   useEffect(() => {
     // Controlla se l'utente è autenticato
     const token = localStorage.getItem("funkard_token");
-    const email = localStorage.getItem("funkard_email");
     if (!token) {
       router.push("/register");
       return;
     }
     setIsAuthenticated(true);
     setCheckingAuth(false);
-    
-    // Attiva SSE per notifiche real-time
-    if (email) {
-      useUserSupportEvents(email);
-    }
   }, [router]);
+
+  // Attiva SSE per notifiche real-time
+  const userEmail = typeof window !== "undefined" ? localStorage.getItem("funkard_email") || undefined : undefined;
+  useUserSupportEvents(userEmail);
 
   useEffect(() => {
     if (email.length > 5) loadTickets();
