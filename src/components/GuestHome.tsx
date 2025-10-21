@@ -5,7 +5,7 @@ import Image from "next/image";
 import Features from "@/components/Features";
 import GradeLensMock from "@/components/GradeLensMock";
 import { ProductCard } from "@/components/Marketplace/ProductCard";
-import { useTheme } from "@/context/ThemeContext";
+import { useTheme } from "next-themes";
 
 // Mock data per prodotti in evidenza
 const featuredProducts = [
@@ -26,7 +26,7 @@ const featuredProducts = [
       handle: "pokemon_master",
       paese: "Italia",
       verified: true,
-      tipoUtente: "BUSINESS"
+      tipoUtente: "BUSINESS" as const
     }
   },
   {
@@ -46,7 +46,7 @@ const featuredProducts = [
       handle: "mtg_collector",
       paese: "USA",
       verified: true,
-      tipoUtente: "BUSINESS"
+      tipoUtente: "BUSINESS" as const
     }
   }
 ];

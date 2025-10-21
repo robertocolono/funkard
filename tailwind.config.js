@@ -3,6 +3,7 @@ module.exports = {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
@@ -27,6 +28,9 @@ module.exports = {
         },
         success: "#22c55e",
         error: "#ef4444",
+        funkard: {
+          yellow: "#f2b237",
+        },
       },
       fontFamily: {
         inter: ["Inter", "sans-serif"],
@@ -35,6 +39,10 @@ module.exports = {
       boxShadow: {
         funkard: "0 0 15px rgba(242,178,55,0.25)",
         soft: "0 0 8px rgba(255,255,255,0.05)",
+        card: "0 1px 4px rgba(0,0,0,0.08)",
+      },
+      borderRadius: {
+        xl: "16px",
       },
     },
   },

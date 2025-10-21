@@ -1,10 +1,10 @@
 import "./globals.css";
-import Navbar from "@/components/Navbar";
+import { ThemeProvider } from "next-themes";
+import { Navbar } from "@/components/Navbar";
 import MobileNavbar from "@/components/layout/MobileNavbar";
 import { Toaster } from "sonner";
 import { Toaster as HotToaster } from "react-hot-toast";
 import { NotificationProvider } from "@/context/NotificationContext";
-import { ThemeProvider } from "@/context/ThemeContext";
 
 export const metadata = {
   title: "Funkard — Il Marketplace dei Collezionisti",
@@ -13,9 +13,9 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="it">
-      <body className="bg-[#0b0b0b] text-white font-sans">
-        <ThemeProvider>
+    <html suppressHydrationWarning lang="it">
+      <body className="min-h-screen antialiased transition-colors duration-500">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NotificationProvider>
             {/* Desktop Navbar */}
             <div className="hidden md:block">

@@ -1,103 +1,95 @@
 "use client";
-
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Image from "next/image";
-import { useNotifications } from "@/context/NotificationContext";
-import { useTheme } from "@/context/ThemeContext";
+import { useEffect, useState } from "react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
-export default function Navbar() {
-  const router = useRouter();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const { unreadCount } = useNotifications();
-  const { theme, toggleTheme } = useTheme();
-
+function useAuth() {
+  const [isAuth, setIsAuth] = useState<boolean>(false);
   useEffect(() => {
-    const token = localStorage.getItem("funkard_token");
-    setIsLoggedIn(!!token);
+    setIsAuth(!!localStorage.getItem("funkard_token"));
+  }, []);
+  return isAuth;
+}
+
+export function Navbar() {
+  const isAuth = useAuth();
+  const [notifCount, setNotifCount] = useState<number>(0);
+
+  // Semplice canale per badge (puoi collegarlo al tuo store/SSE)
+  useEffect(() => {
+    // TODO: sostituisci con selettore reale (SSE/store)
+    const stored = Number(localStorage.getItem("funkard_notif") || 0);
+    setNotifCount(stored);
   }, []);
 
-  // In questa versione semplificata non includiamo ancora il pulsante di logout.
-
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-black/90 backdrop-blur-md border-b border-neutral-800 text-white">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 h-16">
-
-        {/* 👈 Sinistra: logo */}
-        <div className="flex items-center gap-2 cursor-pointer" onClick={() => router.push("/")}>
+    <header
+      className="sticky top-0 z-50 border-b bg-[var(--bg)]/80 backdrop-blur"
+      style={{ borderColor: "var(--border)" }}
+    >
+      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
+        <Link href="/" className="flex items-center gap-3">
           <Image
-            src={theme === 'dark' ? '/smile-closed.png' : '/smile-closed.png'}
-            alt="Funkard logo"
-            width={40}
-            height={40}
-            className="hover:scale-105 transition-transform"
+            src={"/logo2.png"} // light
+            alt="Funkard"
+            width={120}
+            height={32}
+            className="block dark:hidden"
           />
-          <span className="hidden sm:block font-extrabold text-xl">
-            <span className="text-yellow-400">FUN</span>KARD
-          </span>
-        </div>
+          <Image
+            src={"/logo.png"} // dark
+            alt="Funkard"
+            width={120}
+            height={32}
+            className="hidden dark:block"
+          />
+        </Link>
 
-        {/* 👉 Destra: link principali */}
-        <div className="flex items-center gap-8 text-sm font-medium">
-          <button
-            onClick={() => router.push("/marketplace")}
-            className="hover:text-yellow-400 transition-colors"
-          >
-            Marketplace
-          </button>
-          <button
-            onClick={() => router.push("/collection")}
-            className="hover:text-yellow-400 transition-colors"
-          >
-            Collezione
-          </button>
-          <button
-            onClick={() => router.push("/gradelens")}
-            className="hover:text-yellow-400 transition-colors"
-          >
-            GradeLens
-          </button>
-          <div className="relative">
-            <button
-              onClick={() => router.push("/support")}
-              className="hover:text-yellow-400 transition-colors"
-            >
-              Support
-            </button>
-            {unreadCount > 0 && (
-              <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-pulse">
-                {unreadCount > 9 ? '9+' : unreadCount}
-              </span>
-            )}
-          </div>
+        {/* Desktop */}
+        <div className="hidden items-center gap-6 md:flex">
+          {!isAuth ? (
+            <>
+              <Link className="hover:text-[var(--accent)]" href="/marketplace">Esplora le collezioni</Link>
+              <Link className="hover:text-[var(--accent)]" href="/collection">Gestisci la tua collezione</Link>
+              <Link className="hover:text-[var(--accent)]" href="/gradelens">Valuta le tue carte</Link>
+              <Link className="hover:text-[var(--accent)]" href="/support">Supporto</Link>
+              <Link className="hover:text-[var(--accent)]" href="/about">FAQ</Link>
+            </>
+          ) : (
+            <>
+              {/* utente loggato: menù snello */}
+              <Link className="hover:text-[var(--accent)]" href="/marketplace">Marketplace</Link>
+              <Link className="hover:text-[var(--accent)]" href="/support">Supporto</Link>
+              <Link className="relative hover:text-[var(--accent)]" href="/support">
+                Notifiche
+                {notifCount > 0 && (
+                  <span className="absolute -right-3 -top-2 rounded-full bg-[var(--accent)] px-2 py-0.5 text-[10px] font-semibold text-black">
+                    {notifCount}
+                  </span>
+                )}
+              </Link>
+              <Link className="hover:text-[var(--accent)]" href="/profile">Profilo</Link>
+            </>
+          )}
 
-          {/* 🌙 Toggle Tema */}
-          <button
-            onClick={toggleTheme}
-            className="hover:text-yellow-400 transition-colors text-lg"
-            title={`Passa a modalità ${theme === 'dark' ? 'chiara' : 'scura'}`}
-          >
-            {theme === 'dark' ? '☀️' : '🌙'}
-          </button>
-
-          {/* 🧠 Account */}
-          {!isLoggedIn ? (
-            <button
-              onClick={() => router.push("/register")}
-              className="bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-1.5 rounded-md font-semibold"
+          {!isAuth && (
+            <Link
+              href="/register"
+              className="rounded-lg bg-[var(--accent)] px-4 py-2 font-medium text-black shadow-sm hover:opacity-90"
             >
               Registrati
-            </button>
-          ) : (
-            <button
-              onClick={() => router.push("/profile")}
-              className="border border-yellow-500 text-yellow-400 hover:bg-yellow-500 hover:text-black px-4 py-1.5 rounded-md font-semibold"
-            >
-              Profilo
-            </button>
+            </Link>
           )}
+
+          <ThemeToggle />
         </div>
-      </div>
-    </nav>
+
+        {/* Mobile trigger: tieni la tua MobileNavbar esistente */}
+        <div className="md:hidden">
+          {/* qui il bottone che apre il drawer mobile già esistente */}
+        </div>
+      </nav>
+    </header>
   );
 }
