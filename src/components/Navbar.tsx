@@ -24,72 +24,49 @@ export function Navbar() {
   }, []);
 
   return (
-    <header
-      className="sticky top-0 z-50 border-b bg-[var(--bg)]/80 backdrop-blur"
-      style={{ borderColor: "var(--border)" }}
-    >
-      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
-        <Link href="/" className="flex items-center gap-3">
-          <Image
-            src={"/logo2.png"} // light
-            alt="Funkard"
-            width={120}
-            height={32}
-            className="block dark:hidden"
-          />
-          <Image
-            src={"/logo.png"} // dark
-            alt="Funkard"
-            width={120}
-            height={32}
-            className="hidden dark:block"
-          />
-        </Link>
+    <nav className="flex justify-between items-center px-6 py-3 border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-gray-800 dark:text-gray-100 transition-colors">
+      {/* LOGO */}
+      <div className="text-2xl font-bold">
+        <span className="text-black dark:text-white">FUN</span>
+        <span className="text-[var(--funkard-yellow)]">KARD</span>
+      </div>
 
-        {/* Desktop */}
-        <div className="hidden items-center gap-6 md:flex">
-          {!isAuth ? (
-            <>
-              <Link className="hover:text-[var(--accent)]" href="/marketplace">Esplora le collezioni</Link>
-              <Link className="hover:text-[var(--accent)]" href="/collection">Gestisci la tua collezione</Link>
-              <Link className="hover:text-[var(--accent)]" href="/gradelens">Valuta le tue carte</Link>
-              <Link className="hover:text-[var(--accent)]" href="/support">Supporto</Link>
-              <Link className="hover:text-[var(--accent)]" href="/about">FAQ</Link>
-            </>
-          ) : (
-            <>
-              {/* utente loggato: menù snello */}
-              <Link className="hover:text-[var(--accent)]" href="/marketplace">Marketplace</Link>
-              <Link className="hover:text-[var(--accent)]" href="/support">Supporto</Link>
-              <Link className="relative hover:text-[var(--accent)]" href="/support">
-                Notifiche
-                {notifCount > 0 && (
-                  <span className="absolute -right-3 -top-2 rounded-full bg-[var(--accent)] px-2 py-0.5 text-[10px] font-semibold text-black">
-                    {notifCount}
-                  </span>
-                )}
-              </Link>
-              <Link className="hover:text-[var(--accent)]" href="/profile">Profilo</Link>
-            </>
-          )}
+      {/* NAV LINKS */}
+      <div className="hidden md:flex items-center gap-6">
+        {!isAuth ? (
+          <>
+            <a href="/marketplace" className="hover:text-[var(--funkard-yellow)] transition">Esplora le collezioni</a>
+            <a href="/collection" className="hover:text-[var(--funkard-yellow)] transition">Gestisci la tua collezione</a>
+            <a href="/gradelens" className="hover:text-[var(--funkard-yellow)] transition">Valuta le tue carte</a>
+            <a href="/support" className="hover:text-[var(--funkard-yellow)] transition">Supporto</a>
+            <a href="/faq" className="hover:text-[var(--funkard-yellow)] transition">FAQ</a>
+          </>
+        ) : (
+          <>
+            <a href="/marketplace" className="hover:text-[var(--funkard-yellow)] transition">Marketplace</a>
+            <a href="/support" className="hover:text-[var(--funkard-yellow)] transition">Supporto</a>
+            <a href="/support" className="relative hover:text-[var(--funkard-yellow)] transition">
+              Notifiche
+              {notifCount > 0 && (
+                <span className="absolute -right-3 -top-2 rounded-full bg-[var(--funkard-yellow)] px-2 py-0.5 text-[10px] font-semibold text-black">
+                  {notifCount}
+                </span>
+              )}
+            </a>
+            <a href="/profile" className="hover:text-[var(--funkard-yellow)] transition">Profilo</a>
+          </>
+        )}
+      </div>
 
-          {!isAuth && (
-            <Link
-              href="/register"
-              className="rounded-lg bg-[var(--accent)] px-4 py-2 font-medium text-black shadow-sm hover:opacity-90"
-            >
-              Registrati
-            </Link>
-          )}
-
-          <ThemeToggle />
-        </div>
-
-        {/* Mobile trigger: tieni la tua MobileNavbar esistente */}
-        <div className="md:hidden">
-          {/* qui il bottone che apre il drawer mobile già esistente */}
-        </div>
-      </nav>
-    </header>
+      {/* CTA + THEME TOGGLE */}
+      <div className="flex items-center gap-3">
+        {!isAuth && (
+          <button className="px-4 py-2 bg-[var(--funkard-yellow)] text-black rounded-md font-semibold hover:opacity-90 transition">
+            Registrati
+          </button>
+        )}
+        <ThemeToggle />
+      </div>
+    </nav>
   );
 }

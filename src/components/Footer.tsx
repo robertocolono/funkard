@@ -1,36 +1,23 @@
-"use client";
-import Link from "next/link";
-import type { SyntheticEvent } from "react";
-export default function Footer() {
+export function Footer() {
   return (
-    <footer className="bg-[#0C0C0C] text-gray-400 text-center py-10 relative overflow-hidden">
-      {/* bordo superiore con effetto cartoon */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#FFB300] via-[#FF7A00] to-[#FFB300] animate-pulse"></div>
+    <footer className="mt-20 bg-neutral-100 dark:bg-neutral-950 text-gray-700 dark:text-gray-300 border-t border-neutral-200 dark:border-neutral-800 transition-colors">
+      <div className="grid md:grid-cols-2 gap-10 py-10 px-8 max-w-6xl mx-auto">
+        <div>
+          <h3 className="font-semibold mb-2 text-gray-900 dark:text-gray-100">Supporto</h3>
+          <p>Hai domande o problemi? Il nostro team è a disposizione.</p>
+          <a href="/support" className="text-[var(--funkard-yellow)] font-semibold mt-2 inline-block">Vai al supporto →</a>
+        </div>
 
-      {/* contenuto */}
-      <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/logo_sorriso.png"
-          alt="Funkard Smile"
-          className="w-12 h-auto opacity-90 hover:rotate-12 transition-transform duration-300"
-          onError={(e: SyntheticEvent<HTMLImageElement, Event>) => {
-            const img = e.currentTarget;
-            img.onerror = null;
-            img.src = "/logo.png"; // fallback al logo principale se il sorriso manca
-          }}
-        />
-        <nav className="flex gap-6 text-sm font-medium">
-          <Link href="/about" className="hover:text-[#FFB300] transition-colors">About</Link>
-          <Link href="/support" className="hover:text-[#FFB300] transition-colors">Supporto</Link>
-          <Link href="/terms" className="hover:text-[#FFB300] transition-colors">Termini</Link>
-        </nav>
+        <div>
+          <h3 className="font-semibold mb-2 text-gray-900 dark:text-gray-100">Community</h3>
+          <p>Scopri guide, consigli e condividi esperienze con altri collezionisti.</p>
+          <a href="/community" className="text-[var(--funkard-yellow)] font-semibold mt-2 inline-block">Entra in community →</a>
+        </div>
       </div>
 
-      <p className="text-xs mt-6 opacity-70">
-        © 2025 Funkard — Collect. Connect. Play.
-      </p>
+      <div className="text-center pb-8 text-sm text-gray-600 dark:text-gray-400">
+        Funkard © 2025 — Da collezionisti per collezionisti.
+      </div>
     </footer>
   );
 }
- 

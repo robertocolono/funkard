@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { Hero } from "@/components/Hero";
 import HomeGuest from "@/components/home/HomeGuest";
 import HomeUser from "@/components/home/HomeUser";
 
@@ -9,6 +10,12 @@ export default function Page() {
     setIsAuth(!!localStorage.getItem("funkard_token"));
   }, []);
   if (isAuth === null) return null;
-  return isAuth ? <HomeUser /> : <HomeGuest />;
+  
+  return (
+    <>
+      <Hero />
+      {isAuth ? <HomeUser /> : <HomeGuest />}
+    </>
+  );
 }
 

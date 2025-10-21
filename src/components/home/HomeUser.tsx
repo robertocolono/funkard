@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { ProductCard } from "@/components/Marketplace/ProductCard";
-import SupportCommunity from "@/components/sections/SupportCommunity";
+import { Footer } from "@/components/Footer";
 
 type Card = {
   id: string;
@@ -61,8 +61,8 @@ export default function HomeUser() {
         )}
       </section>
 
-      {/* SUPPORTO & COMMUNITY */}
-      <SupportCommunity />
+      {/* FOOTER */}
+      <Footer />
     </main>
   );
 }

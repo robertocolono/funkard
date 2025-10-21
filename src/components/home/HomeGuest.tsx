@@ -2,9 +2,9 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ProductCard } from "@/components/Marketplace/ProductCard";
-import Features from "@/components/Features"; // esiste già
-import GradeLensMock from "@/components/GradeLensMock"; // showcase compatto o link
-import SupportCommunity from "@/components/sections/SupportCommunity";
+import { Features } from "@/components/Features";
+import { GradeLensShowcase } from "@/components/GradeLensShowcase";
+import { Footer } from "@/components/Footer";
 
 type Card = {
   id: string;
@@ -45,17 +45,6 @@ export default function HomeGuest() {
 
   return (
     <main className="mx-auto max-w-7xl px-4 pb-16 pt-10">
-      {/* HERO */}
-      <section className="mb-10 text-center">
-        <div className="mx-auto max-w-2xl">
-          <h1 className="mb-2 text-3xl font-bold tracking-tight">
-            Esplora, compra, vendi e scambia la tua collezione con un semplice click!
-          </h1>
-          <p className="text-[var(--text-muted)]">
-            Esplora collezioni leggendarie, scambia con la community e diventa un collezionista esperto o amatoriale con il nostro supporto.
-          </p>
-        </div>
-      </section>
 
       {/* ANTEPRIMA MARKETPLACE */}
       <section className="mb-12">
@@ -79,34 +68,14 @@ export default function HomeGuest() {
       </section>
 
       {/* FEATURES */}
-      <section className="mb-12">
-        <Features />
-      </section>
+      <Features />
 
-      {/* GRADELENS SHOWCASE (compatto) */}
-      <section className="mb-12 rounded-xl border bg-[var(--card)] p-6 shadow-card" style={{ borderColor: "var(--border)" }}>
-        <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-xl font-semibold">Valuta le tue carte (GradeLens)</h2>
-          <Link href="/gradelens" className="text-[var(--accent)] hover:opacity-80">Prova ora →</Link>
-        </div>
-        <GradeLensMock />
-      </section>
+      {/* GRADELENS SHOWCASE */}
+      <GradeLensShowcase />
 
-      {/* SUPPORTO & COMMUNITY */}
-      <SupportCommunity />
+      {/* FOOTER */}
+      <Footer />
 
-      {/* CTA FINALE */}
-      <section className="mt-12 text-center">
-        <Link
-          href="/register"
-          className="rounded-lg bg-[var(--accent)] px-6 py-3 font-semibold text-black shadow-sm hover:opacity-90"
-        >
-          Registrati ora
-        </Link>
-        <p className="mt-6 text-sm text-[var(--text-muted)]">
-          Funkard © 2025 — Da collezionisti per collezionisti.
-        </p>
-      </section>
     </main>
   );
 }
