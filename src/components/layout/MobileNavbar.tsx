@@ -2,9 +2,11 @@
 import Link from 'next/link';
 import { Home, ShoppingBag, FolderKanban, Search, MessageCircle } from 'lucide-react';
 import { useNotifications } from '@/context/NotificationContext';
+import { useTheme } from '@/context/ThemeContext';
 
 export default function MobileNavbar() {
   const { unreadCount } = useNotifications();
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <nav className="fixed bottom-0 left-0 w-full bg-zinc-950 border-t border-zinc-800 flex justify-around items-center py-3 z-50">
@@ -36,8 +38,18 @@ export default function MobileNavbar() {
             {unreadCount > 9 ? '9+' : unreadCount}
           </span>
         )}
-        <span className="text-[11px] mt-1">Supporto</span>
-      </Link>
-    </nav>
-  );
-}
+            <span className="text-[11px] mt-1">Supporto</span>
+          </Link>
+
+          {/* 🌙 Toggle Tema */}
+          <button
+            onClick={toggleTheme}
+            className="flex flex-col items-center text-gray-400 hover:text-yellow-400 transition"
+            title={`Passa a modalità ${theme === 'dark' ? 'chiara' : 'scura'}`}
+          >
+            <span className="text-lg">{theme === 'dark' ? '☀️' : '🌙'}</span>
+            <span className="text-[11px] mt-1">Tema</span>
+          </button>
+        </nav>
+      );
+    }

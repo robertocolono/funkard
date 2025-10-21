@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useNotifications } from "@/context/NotificationContext";
+import { useTheme } from "@/context/ThemeContext";
 
 export default function Navbar() {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { unreadCount } = useNotifications();
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const token = localStorage.getItem("funkard_token");
@@ -24,7 +26,7 @@ export default function Navbar() {
         {/* 👈 Sinistra: logo */}
         <div className="flex items-center gap-2 cursor-pointer" onClick={() => router.push("/")}>
           <Image
-            src="/smile-closed.png"
+            src={theme === 'dark' ? '/smile-closed.png' : '/smile-closed.png'}
             alt="Funkard logo"
             width={40}
             height={40}
@@ -68,6 +70,15 @@ export default function Navbar() {
               </span>
             )}
           </div>
+
+          {/* 🌙 Toggle Tema */}
+          <button
+            onClick={toggleTheme}
+            className="hover:text-yellow-400 transition-colors text-lg"
+            title={`Passa a modalità ${theme === 'dark' ? 'chiara' : 'scura'}`}
+          >
+            {theme === 'dark' ? '☀️' : '🌙'}
+          </button>
 
           {/* 🧠 Account */}
           {!isLoggedIn ? (

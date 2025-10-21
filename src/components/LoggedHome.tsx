@@ -4,7 +4,9 @@ import { useRouter } from "next/navigation";
 import Features from "@/components/Features";
 import GradeLensMock from "@/components/GradeLensMock";
 import { ProductCard } from "@/components/Marketplace/ProductCard";
+import { useTheme } from "@/context/ThemeContext";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 // Mock data per prodotti in evidenza
 const featuredProducts = [
@@ -52,6 +54,7 @@ const featuredProducts = [
 
 export default function LoggedHome() {
   const router = useRouter();
+  const { theme } = useTheme();
   const [userEmail, setUserEmail] = useState<string>("");
 
   useEffect(() => {

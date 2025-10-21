@@ -5,6 +5,7 @@ import Image from "next/image";
 import Features from "@/components/Features";
 import GradeLensMock from "@/components/GradeLensMock";
 import { ProductCard } from "@/components/Marketplace/ProductCard";
+import { useTheme } from "@/context/ThemeContext";
 
 // Mock data per prodotti in evidenza
 const featuredProducts = [
@@ -52,6 +53,7 @@ const featuredProducts = [
 
 export default function GuestHome() {
   const router = useRouter();
+  const { theme } = useTheme();
 
   return (
     <main className="min-h-screen bg-neutral-950 text-white">
@@ -64,7 +66,7 @@ export default function GuestHome() {
             👋 Benvenuto su Funkard
           </h1>
           <Image
-            src="/logo.png"
+            src={theme === 'dark' ? '/logo.png' : '/logo2.png'}
             alt="Funkard logo"
             width={320}
             height={100}
