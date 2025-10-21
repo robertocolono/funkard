@@ -40,7 +40,7 @@ export default function HomeUser() {
   }, []);
 
   return (
-    <main className="mx-auto max-w-7xl px-4 pb-16 pt-10">
+    <main className="mx-auto max-w-7xl pb-16 pt-10">
       {/* CARTE IN EVIDENZA */}
       <section className="mb-12">
         <div className="mb-4">

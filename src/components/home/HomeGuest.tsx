@@ -44,7 +44,7 @@ export default function HomeGuest() {
   }, []);
 
   return (
-    <main className="mx-auto max-w-7xl px-4 pb-16 pt-10">
+    <main className="mx-auto max-w-7xl pb-16 pt-10">
 
       {/* ANTEPRIMA MARKETPLACE */}
       <section className="mb-12">

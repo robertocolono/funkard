@@ -1,7 +1,7 @@
 export function GradeLensShowcase() {
   return (
-    <section className="py-16 px-6">
-      <div className="max-w-3xl mx-auto bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-md p-8 transition-colors">
+    <section className="py-12 sm:py-16 px-4 sm:px-6">
+      <div className="max-w-3xl mx-auto bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-md p-6 sm:p-8 transition-colors">
         <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
           🧠 GradeLens – Scansione simulata
         </h2>
@@ -9,7 +9,7 @@ export function GradeLensShowcase() {
           Analizza la tua carta in modo istantaneo con la nostra tecnologia AI.
         </p>
 
-        <button className="w-full py-3 bg-[var(--funkard-yellow)] text-black font-semibold rounded-lg hover:opacity-90 transition">
+        <button className="w-full py-2.5 sm:py-3 bg-[var(--funkard-yellow)] text-black font-semibold rounded-lg hover:opacity-90 transition">
           Analizza la carta
         </button>
       </div>

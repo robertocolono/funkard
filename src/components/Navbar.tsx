@@ -15,6 +15,7 @@ function useAuth() {
 export function Navbar() {
   const isAuth = useAuth();
   const [notifCount, setNotifCount] = useState<number>(0);
+  const [isOpen, setIsOpen] = useState(false);
 
   // Semplice canale per badge (puoi collegarlo al tuo store/SSE)
   useEffect(() => {
@@ -24,7 +25,7 @@ export function Navbar() {
   }, []);
 
   return (
-    <nav className="flex justify-between items-center px-6 py-3 border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-gray-800 dark:text-gray-100 transition-colors">
+    <nav className="relative md:static flex justify-between items-center px-6 py-3 border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-gray-800 dark:text-gray-100 transition-colors">
       {/* LOGO */}
       <div className="text-2xl font-bold">
         <span className="text-black dark:text-white">FUN</span>
@@ -67,6 +68,30 @@ export function Navbar() {
         )}
         <ThemeToggle />
       </div>
+
+      {/* MOBILE MENU TOGGLE */}
+      <div className="md:hidden flex items-center gap-2">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="p-2 rounded-md border border-gray-300 dark:border-gray-700"
+        >
+          ☰
+        </button>
+      </div>
+
+      {/* MOBILE MENU CONTENT */}
+      {isOpen && (
+        <div className="absolute top-14 left-0 w-full bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800 flex flex-col gap-3 p-4 text-center">
+          <a href="/marketplace" className="hover:text-[var(--funkard-yellow)]">Esplora le collezioni</a>
+          <a href="/collection" className="hover:text-[var(--funkard-yellow)]">Gestisci la tua collezione</a>
+          <a href="/gradelens" className="hover:text-[var(--funkard-yellow)]">Valuta le tue carte</a>
+          <a href="/support" className="hover:text-[var(--funkard-yellow)]">Supporto</a>
+          <a href="/faq" className="hover:text-[var(--funkard-yellow)]">FAQ</a>
+          <button className="mt-2 px-4 py-2 bg-[var(--funkard-yellow)] text-black rounded-md font-semibold">
+            Registrati
+          </button>
+        </div>
+      )}
     </nav>
   );
 }

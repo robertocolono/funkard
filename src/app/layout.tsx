@@ -28,14 +28,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Navbar />
               <div className="h-14" />
               <div className="pb-16">
-                {children}
+                <main className="px-4 sm:px-6 lg:px-8">
+                  {children}
+                </main>
               </div>
               <MobileNavbar />
             </div>
             
             {/* Desktop Content */}
             <div className="hidden md:block">
-              {children}
+              <main className="px-4 sm:px-6 lg:px-8">
+                {children}
+              </main>
             </div>
             
             <Toaster richColors position="top-center" />
