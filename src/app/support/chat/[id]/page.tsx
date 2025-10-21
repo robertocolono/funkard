@@ -59,8 +59,9 @@ export default function SupportChatPage() {
             toast.success(`✅ Il ticket "${data.subject}" è stato risolto`);
           }
           if (data.event === "REOPENED") {
-            toast.info(`🔄 Il ticket "${data.subject}" è stato riaperto`);
-            setTicket((prev) => ({ ...prev, status: "OPEN" }));
+            toast.success(`🔄 Il ticket "${data.subject}" è stato riaperto`);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            setTicket((prev: any) => ({ ...prev, status: "OPEN" }));
           }
           // ⚫ Ignora CLOSED: non serve mostrare nulla
         });
