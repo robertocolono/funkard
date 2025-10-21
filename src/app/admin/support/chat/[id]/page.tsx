@@ -97,10 +97,10 @@ export default function AdminTicketChatPage() {
 
           if (data.content) {
             // È un messaggio di chat
-            setTicket(prev => ({ ...prev, messages: [...prev.messages, data] }));
+            setTicket(prev => prev ? ({ ...prev, messages: [...prev.messages, data] }) : prev);
           } else {
             // È un aggiornamento del ticket
-            setTicket(prev => ({ ...prev, ...data }));
+            setTicket(prev => prev ? ({ ...prev, ...data }) : prev);
           }
         });
       },
