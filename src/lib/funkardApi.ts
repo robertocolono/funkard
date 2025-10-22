@@ -1,4 +1,24 @@
 export const API_BASE = process.env.NEXT_PUBLIC_API_URL || "https://funkard-backend.onrender.com";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://funkard-backend.onrender.com/api';
+
+// ✅ Funzione helper per richieste
+async function apiFetch(path: string, options: RequestInit = {}) {
+  const res = await fetch(`${API_BASE_URL}${path}`, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      'X-User-Id': localStorage.getItem('funkard_user_id') || '', // ID utente locale o da JWT
+      ...options.headers,
+    },
+  });
+
+  if (!res.ok) {
+    const msg = await res.text();
+    throw new Error(msg || 'Errore API');
+  }
+
+  return res.status === 204 ? null : res.json();
+}
 
 export async function analyzeGradeLens(frontImageUrl: string, backImageUrl: string) {
   const res = await fetch(`${API_BASE}/gradelens/analyze`, {
@@ -230,4 +250,55 @@ export async function setDefaultShippingAddress(id: string): Promise<void> {
   if (!response.ok) {
     throw new Error("Errore durante l'impostazione dell'indirizzo predefinito");
   }
+}
+
+/* ───────────────────────────────────────────────
+ * 📦 SHIPPING ADDRESS API (Nuova versione)
+ * ─────────────────────────────────────────────── */
+export async function fetchShippingAddresses() {
+  return apiFetch('/user/addresses', { method: 'GET' });
+}
+
+export async function createShippingAddress(data: any) {
+  return apiFetch('/user/addresses', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
+
+export async function updateShippingAddress(id: string, data: any) {
+  return apiFetch(`/user/addresses/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(data),
+  });
+}
+
+export async function deleteShippingAddress(id: string) {
+  return apiFetch(`/user/addresses/${id}`, { method: 'DELETE' });
+}
+
+export async function setDefaultShippingAddress(id: string) {
+  return apiFetch(`/user/addresses/${id}/default`, { method: 'PATCH' });
+}
+
+/* ───────────────────────────────────────────────
+ * 💳 PAYMENT METHODS API
+ * ─────────────────────────────────────────────── */
+export async function fetchPaymentMethods() {
+  return apiFetch('/user/payments', { method: 'GET' });
+}
+
+export async function addPaymentMethod(data: any) {
+  return apiFetch('/user/payments', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
+
+export async function deletePaymentMethod(id: string) {
+  return apiFetch(`/user/payments/${id}`, { method: 'DELETE' });
+}
+
+export async function setDefaultPaymentMethod(id: string) {
+  return apiFetch(`/user/payments/${id}/default`, { method: 'PATCH' });
 }

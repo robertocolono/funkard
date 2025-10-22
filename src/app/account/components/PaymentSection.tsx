@@ -1,9 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Trash2, Star, CreditCard } from 'lucide-react';
 import PaymentFormModal from './PaymentFormModal';
+import { 
+  fetchPaymentMethods, 
+  addPaymentMethod, 
+  deletePaymentMethod, 
+  setDefaultPaymentMethod 
+} from '@/lib/funkardApi';
 
 interface PaymentMethod {
   id: string;
@@ -17,22 +23,57 @@ interface PaymentMethod {
 export default function PaymentSection() {
   const [methods, setMethods] = useState<PaymentMethod[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleAdd = (data: PaymentMethod) => {
-    setMethods(prev => [...prev, { ...data, id: crypto.randomUUID() }]);
-    setIsModalOpen(false);
-  };
+  // Carica metodi al mount
+  useEffect(() => {
+    loadMethods();
+  }, []);
 
-  const handleDelete = (id: string) => {
-    if (confirm('Eliminare questo metodo di pagamento?')) {
-      setMethods(prev => prev.filter(m => m.id !== id));
+  const loadMethods = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await fetchPaymentMethods();
+      setMethods(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Errore nel caricamento');
+    } finally {
+      setLoading(false);
     }
   };
 
-  const setDefault = (id: string) => {
-    setMethods(prev =>
-      prev.map(m => ({ ...m, isDefault: m.id === id }))
-    );
+  const handleAdd = async (data: PaymentMethod) => {
+    try {
+      const newMethod = await addPaymentMethod(data);
+      setMethods(prev => [...prev, newMethod]);
+      setIsModalOpen(false);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Errore nell\'aggiunta');
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    if (confirm('Eliminare questo metodo di pagamento?')) {
+      try {
+        await deletePaymentMethod(id);
+        setMethods(prev => prev.filter(m => m.id !== id));
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Errore nell\'eliminazione');
+      }
+    }
+  };
+
+  const setDefault = async (id: string) => {
+    try {
+      await setDefaultPaymentMethod(id);
+      setMethods(prev =>
+        prev.map(m => ({ ...m, isDefault: m.id === id }))
+      );
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Errore nell\'impostazione predefinito');
+    }
   };
 
   return (
@@ -47,7 +88,24 @@ export default function PaymentSection() {
         </button>
       </div>
 
-      {methods.length === 0 ? (
+      {error && (
+        <div className="mb-4 p-3 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-lg text-red-700 dark:text-red-400 text-sm">
+          {error}
+          <button 
+            onClick={loadMethods}
+            className="ml-2 underline hover:no-underline"
+          >
+            Riprova
+          </button>
+        </div>
+      )}
+
+      {loading ? (
+        <div className="flex items-center justify-center py-8">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-funkard-yellow"></div>
+          <span className="ml-2 text-zinc-500">Caricamento metodi...</span>
+        </div>
+      ) : methods.length === 0 ? (
         <p className="text-sm text-zinc-500">
           Nessun metodo salvato. Aggiungine uno per iniziare.
         </p>

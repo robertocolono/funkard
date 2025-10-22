@@ -5,8 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Edit, Trash2, Star } from 'lucide-react';
 import ShippingFormModal from './ShippingFormModal';
 import { 
-  getShippingAddresses, 
-  addShippingAddress, 
+  fetchShippingAddresses,
+  createShippingAddress,
   updateShippingAddress, 
   deleteShippingAddress, 
   setDefaultShippingAddress,
@@ -29,7 +29,7 @@ export default function ShippingSection() {
     try {
       setLoading(true);
       setError(null);
-      const data = await getShippingAddresses();
+      const data = await fetchShippingAddresses();
       setAddresses(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Errore nel caricamento');
@@ -40,7 +40,7 @@ export default function ShippingSection() {
 
   const handleAdd = async (data: Omit<ShippingAddress, 'id'>) => {
     try {
-      const newAddress = await addShippingAddress(data);
+      const newAddress = await createShippingAddress(data);
       setAddresses(prev => [...prev, newAddress]);
       setIsModalOpen(false);
     } catch (err) {
