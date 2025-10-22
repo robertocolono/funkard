@@ -1,23 +1,39 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { createSupportTicket, fetchUserTickets } from '@/lib/funkardApi';
 import { useSession } from '@/lib/context/SessionContext';
+
+interface Ticket {
+  id: string;
+  subject: string;
+  description: string;
+  status: 'NEW' | 'IN_PROGRESS' | 'RESOLVED' | 'ARCHIVED';
+  priority: string;
+  category: string;
+  createdAt: string;
+}
+
+interface User {
+  id: string;
+  email: string;
+  username?: string;
+}
 
 const STATUS_COLOR = {
   NEW: 'bg-red-600/20 text-red-400',
   IN_PROGRESS: 'bg-orange-500/20 text-orange-400',
   RESOLVED: 'bg-green-500/20 text-green-400',
   ARCHIVED: 'bg-neutral-600/20 text-neutral-400',
-};
+} as const;
 
 export default function SupportPage() {
   const { user, isAuthenticated } = useSession();
   const router = useRouter();
   
-  const [tickets, setTickets] = useState([]);
+  const [tickets, setTickets] = useState<Ticket[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [newTicket, setNewTicket] = useState({
@@ -38,15 +54,15 @@ export default function SupportPage() {
   const loadTickets = useCallback(async () => {
     try {
       setLoading(true);
-      const data = await fetchUserTickets();
-      setTickets(data);
+      const data = await fetchUserTickets(user?.email || '');
+      setTickets(data || []);
     } catch (err) {
       setError('Errore nel caricamento dei ticket');
       console.error('Error loading tickets:', err);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [user?.email]);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -54,7 +70,7 @@ export default function SupportPage() {
     }
   }, [isAuthenticated, loadTickets]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newTicket.subject.trim() || !newTicket.description.trim()) {
       setError('Compila tutti i campi obbligatori');
@@ -66,9 +82,9 @@ export default function SupportPage() {
       setError('');
       
       const ticketData = {
-        ...newTicket,
-        userEmail: user?.email || '',
-        userName: user?.name || 'Utente'
+        email: user?.email || '',
+        subject: newTicket.subject,
+        message: newTicket.description
       };
 
       await createSupportTicket(ticketData);
@@ -92,7 +108,7 @@ export default function SupportPage() {
     }
   };
 
-  const handleInputChange = (field, value) => {
+  const handleInputChange = (field: string, value: string) => {
     setNewTicket(prev => ({ ...prev, [field]: value }));
     if (error) setError('');
   };
@@ -131,11 +147,11 @@ export default function SupportPage() {
               </div>
             ) : (
               <div className="space-y-4">
-                {tickets.map((ticket) => (
+                {tickets.map((ticket: Ticket) => (
                   <div key={ticket.id} className="bg-card border rounded-lg p-4 hover:shadow-md transition-shadow">
                     <div className="flex justify-between items-start mb-2">
                       <h3 className="font-semibold text-lg">{ticket.subject}</h3>
-                      <span className={`px-2 py-1 rounded text-xs font-medium ${STATUS_COLOR[ticket.status]}`}>
+                      <span className={`px-2 py-1 rounded text-xs font-medium ${STATUS_COLOR[ticket.status as keyof typeof STATUS_COLOR]}`}>
                         {ticket.status}
                       </span>
                     </div>
