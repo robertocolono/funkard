@@ -40,9 +40,22 @@ module.exports = {
         funkard: "0 0 15px rgba(242,178,55,0.25)",
         soft: "0 0 8px rgba(255,255,255,0.05)",
         card: "0 1px 4px rgba(0,0,0,0.08)",
+        // Design System shadows
+        "light-soft": "0 2px 8px rgba(0, 0, 0, 0.05)",
+        "dark-glow": "0 0 30px rgba(242, 178, 55, 0.25)",
       },
       borderRadius: {
         xl: "16px",
+      },
+      // Design System spacing
+      spacing: {
+        "section": "5rem",
+        "section-mobile": "3rem",
+      },
+      // Design System transitions
+      transitionDuration: {
+        "fast": "0.25s",
+        "slow": "0.4s",
       },
     },
   },
