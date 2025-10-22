@@ -71,7 +71,10 @@ export default function ShippingSection({ data = [], onUpdate }: { data: any[]; 
 
               <div className="flex flex-col gap-2 text-right">
                 <button
-                  onClick={() => setEditData(a) || setIsModalOpen(true)}
+                  onClick={() => {
+                    setEditData(a);
+                    setIsModalOpen(true);
+                  }}
                   className="text-zinc-400 hover:text-yellow-500 text-sm"
                 >
                   Modifica

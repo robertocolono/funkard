@@ -72,7 +72,7 @@ export default function AdminNotificationsArchivePage() {
   const getTypeColor = (type: string) => {
     switch (type) {
       case "ERROR": return "bg-red-500/20 text-red-400 border-red-500/30";
-      case "WARNING": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
+      case "WARNING": return "bg-funkard-yellow/20 text-yellow-400 border-funkard-yellow/30";
       case "INFO": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
       default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
     }

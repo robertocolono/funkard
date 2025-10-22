@@ -30,7 +30,7 @@ export default function PaymentSection({ data = [], onUpdate }: { data: any[], o
     setMethods(data);
   }, [data]);
 
-  const handleAdd = async (formData: PaymentMethod) => {
+  const handleAdd = async (formData: Omit<PaymentMethod, 'id'>) => {
     try {
       await addPaymentMethod(formData);
       await onUpdate(); // aggiorna la pagina intera

@@ -31,6 +31,8 @@ module.exports = {
         funkard: {
           yellow: "#f2b237",
         },
+        'funkard-yellow': "#f2b237",
+        'funkard': "#f2b237",
         // Design System CSS Variables
         background: 'var(--background)',
         foreground: 'var(--foreground)',

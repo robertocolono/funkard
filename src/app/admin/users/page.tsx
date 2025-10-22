@@ -95,14 +95,14 @@ export default function AdminUsersPage() {
             placeholder="Cerca per email o handle..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-yellow-500"
+            className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-funkard-yellow"
           />
         </div>
         <div>
           <select
             value={filterType}
             onChange={(e) => setFilterType(e.target.value as "all" | "PRIVATO" | "BUSINESS")}
-            className="p-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white focus:outline-none focus:border-yellow-500"
+            className="p-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white focus:outline-none focus:border-funkard-yellow"
           >
             <option value="all">Tutti i tipi</option>
             <option value="PRIVATO">Privati</option>

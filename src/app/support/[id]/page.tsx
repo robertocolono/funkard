@@ -200,7 +200,7 @@ export default function SupportChatPage() {
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
                 placeholder="Scrivi il tuo messaggio..."
-                className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-yellow-500"
+                className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-funkard-yellow"
                 rows={3}
               />
               <div className="flex justify-end">

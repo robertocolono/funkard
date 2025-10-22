@@ -100,7 +100,7 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
                   toast.dismiss(t.id);
                   window.location.href = `/support/chat/${data.ticketId}`;
                 }}
-                className="cursor-pointer bg-zinc-900 border border-zinc-700 text-white rounded-lg px-4 py-3 shadow-lg flex flex-col gap-1 hover:border-yellow-500 transition"
+                className="cursor-pointer bg-zinc-900 border border-zinc-700 text-white rounded-lg px-4 py-3 shadow-lg flex flex-col gap-1 hover:border-funkard-yellow transition"
               >
                 <div className="flex items-center justify-between">
                   <span className="text-yellow-400 text-sm font-semibold">💬 Nuova risposta</span>

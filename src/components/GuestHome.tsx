@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import Features from "@/components/Features";
+import { Features } from "@/components/Features";
 import GradeLensMock from "@/components/GradeLensMock";
 import { ProductCard } from "@/components/Marketplace/ProductCard";
 import { useTheme } from "next-themes";

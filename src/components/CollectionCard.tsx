@@ -31,7 +31,7 @@ export default function CollectionCard({ card, onClick }: Props) {
       onClick={onClick}
       className="cursor-pointer"
     >
-      <div className="bg-neutral-900 border border-neutral-800 hover:border-yellow-500/60 transition-all rounded-2xl overflow-hidden">
+      <div className="bg-neutral-900 border border-neutral-800 hover:border-funkard-yellow/60 transition-all rounded-2xl overflow-hidden">
         <div className="p-3">
           <div className="aspect-[3/4] w-full overflow-hidden rounded-lg border border-neutral-800 bg-neutral-950">
             <Image

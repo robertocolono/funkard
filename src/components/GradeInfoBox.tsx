@@ -63,7 +63,7 @@ export default function GradeInfoBox({
   const label = getLabel(grade);
 
   return (
-    <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-5 text-gray-200 w-full max-w-md mx-auto shadow-md transition-all hover:border-yellow-500/50">
+    <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-5 text-gray-200 w-full max-w-md mx-auto shadow-md transition-all hover:border-funkard-yellow/50">
       <h3 className={`text-2xl font-bold mb-2 ${info.color}`}>
         {service} {grade.toFixed(1)}{" "}
         <span className="text-gray-400 font-medium">/ {label}</span>

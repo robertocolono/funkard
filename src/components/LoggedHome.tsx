@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from "next/navigation";
-import Features from "@/components/Features";
+import { Features } from "@/components/Features";
 import GradeLensMock from "@/components/GradeLensMock";
 import { ProductCard } from "@/components/Marketplace/ProductCard";
 import { useState, useEffect } from "react";

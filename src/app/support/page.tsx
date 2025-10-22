@@ -168,7 +168,7 @@ export default function SupportPage() {
                     key={s}
                     onClick={() => toggleStatus(s)}
                     className={`px-3 py-2 rounded-lg text-sm border transition
-                      ${active ? 'border-yellow-500 text-yellow-300 bg-yellow-500/10' : 'border-zinc-700 text-gray-400 hover:text-gray-200'}`}
+                      ${active ? 'border-funkard-yellow text-yellow-300 bg-funkard-yellow/10' : 'border-zinc-700 text-gray-400 hover:text-gray-200'}`}
                     title={s}
                   >
                     {s.replace('_', ' ')}
@@ -263,7 +263,7 @@ export default function SupportPage() {
                       <div className="mt-4 flex items-center gap-3">
                         <Link
                           href={`/support/chat/${t.id}`}
-                          className="px-3 py-2 rounded-lg bg-zinc-800 border border-zinc-700 hover:border-yellow-500/50 transition text-sm"
+                          className="px-3 py-2 rounded-lg bg-zinc-800 border border-zinc-700 hover:border-funkard-yellow/50 transition text-sm"
                         >
                           Apri chat / Dettagli →
                         </Link>

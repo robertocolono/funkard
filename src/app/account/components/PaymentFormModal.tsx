@@ -5,7 +5,7 @@ import { X } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface PaymentMethod {
-  id?: string;
+  id: string;
   cardHolder: string;
   cardNumber: string;
   expiryDate: string;
@@ -19,9 +19,9 @@ export default function PaymentFormModal({
 }: {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: PaymentMethod) => void;
+  onSubmit: (data: Omit<PaymentMethod, 'id'>) => void;
 }) {
-  const [form, setForm] = useState<PaymentMethod>({
+  const [form, setForm] = useState<Omit<PaymentMethod, 'id'>>({
     cardHolder: '',
     cardNumber: '',
     expiryDate: '',
