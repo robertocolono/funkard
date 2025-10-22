@@ -1,7 +1,8 @@
 "use client";
+
 import { useSession } from "@/lib/context/SessionContext";
-import HomeMarketing from "@/components/HomeMarketing";
-import HomeUser from "@/components/HomeUser";
+import LoggedHome from "@/components/LoggedHome";
+import GuestHome from "@/components/GuestHome";
 
 export default function HomePage() {
   const { isAuthenticated, loading } = useSession();
@@ -16,8 +17,7 @@ export default function HomePage() {
 
   return (
     <main className="bg-background text-foreground">
-      {isAuthenticated ? <HomeUser /> : <HomeMarketing />}
+      {isAuthenticated ? <LoggedHome /> : <GuestHome />}
     </main>
   );
 }
-

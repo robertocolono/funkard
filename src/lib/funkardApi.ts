@@ -213,3 +213,66 @@ export async function deletePaymentMethod(id: string) {
 export async function setDefaultPaymentMethod(id: string) {
   return apiFetch(`/user/payments/${id}/default`, { method: 'PATCH' });
 }
+
+// ===== USER PROFILE API =====
+
+export async function getUserProfile() {
+  const res = await fetch(`${API_BASE_URL}/user/me`, { 
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("funkard_token")}`,
+    }
+  });
+  if (!res.ok) throw new Error("Errore nel caricamento profilo");
+  return res.json();
+}
+
+export async function updateUserProfile(data: any) {
+  const res = await fetch(`${API_BASE_URL}/user/me`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("funkard_token")}`,
+    },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error("Errore nell'aggiornamento profilo");
+  return res.json();
+}
+
+// ===== USER ADDRESSES API (Alternative endpoints) =====
+
+export async function getUserAddresses() {
+  const res = await fetch(`${API_BASE_URL}/user/address`, { 
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("funkard_token")}`,
+    }
+  });
+  if (!res.ok) throw new Error("Errore nel caricamento indirizzi");
+  return res.json();
+}
+
+export async function addUserAddress(data: any) {
+  const res = await fetch(`${API_BASE_URL}/user/address`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("funkard_token")}`,
+    },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error("Errore nel salvataggio indirizzo");
+  return res.json();
+}
+
+export async function deleteUserAddress(id: number) {
+  const res = await fetch(`${API_BASE_URL}/user/address/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("funkard_token")}`,
+    },
+  });
+  if (!res.ok) throw new Error("Errore nella rimozione indirizzo");
+}
