@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { createSupportTicket, fetchUserTickets } from '@/lib/funkardApi';
+import { useSession } from '@/lib/context/SessionContext';
 
 const STATUS_COLOR = {
   NEW: 'bg-red-600/20 text-red-400',
@@ -23,6 +24,7 @@ function useDebouncedValue(value: string, delay = 350) {
 
 export default function SupportPage() {
   const router = useRouter();
+  const { user } = useSession();
 
   const [email, setEmail] = useState('');
   const [subject, setSubject] = useState('');
@@ -35,8 +37,6 @@ export default function SupportPage() {
     createdAt: string;
   }>>([]);
   const [loading, setLoading] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [checkingAuth, setCheckingAuth] = useState(true);
 
   // ricerca + filtri + ordinamento
   const [search, setSearch] = useState('');
@@ -47,6 +47,13 @@ export default function SupportPage() {
 
   // 🔴 nuove risposte
   const [unreadTickets, setUnreadTickets] = useState<Record<string, boolean>>({});
+
+  // Auto-compila email se utente loggato
+  useEffect(() => {
+    if (user?.email) {
+      setEmail(user.email);
+    }
+  }, [user]);
 
   // 🔁 carica stato salvato
   useEffect(() => {
@@ -90,15 +97,6 @@ export default function SupportPage() {
   };
 
   // Auth
-  useEffect(() => {
-    const token = localStorage.getItem('funkard_token');
-    if (!token) {
-      router.push('/register');
-      return;
-    }
-    setIsAuthenticated(true);
-    setCheckingAuth(false);
-  }, [router]);
 
   // 🔄 Polling automatico (light)
   useEffect(() => {
@@ -141,30 +139,6 @@ export default function SupportPage() {
     );
   };
 
-  if (checkingAuth) {
-    return (
-      <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center">
-        <div className="text-gray-400">Verifica accesso...</div>
-      </div>
-    );
-  }
-
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-gray-400 mb-4">🔒 Accesso richiesto</div>
-          <div className="text-gray-400 mb-6">Devi essere registrato per accedere al supporto</div>
-          <Link
-            href="/register"
-            className="bg-yellow-500 hover:bg-yellow-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors"
-          >
-            Crea un account
-          </Link>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white">

@@ -1,25 +1,23 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useSession } from "@/lib/context/SessionContext";
 import HomeMarketing from "@/components/HomeMarketing";
 import HomeUser from "@/components/HomeUser";
 
 export default function HomePage() {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const { isAuthenticated, loading } = useSession();
 
-  useEffect(() => {
-    const token = localStorage.getItem('funkard_token');
-    setIsAuthenticated(!!token);
-  }, []);
-
-  if (isAuthenticated === null) {
-    // Evita flash visivi durante il controllo
+  if (loading) {
     return (
-      <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
-        <span className="text-sm text-gray-400">Caricamento...</span>
+      <div className="min-h-screen flex items-center justify-center text-gray-400">
+        Caricamento...
       </div>
     );
   }
 
-  return isAuthenticated ? <HomeUser /> : <HomeMarketing />;
+  return (
+    <main className="bg-background text-foreground">
+      {isAuthenticated ? <HomeUser /> : <HomeMarketing />}
+    </main>
+  );
 }
 
