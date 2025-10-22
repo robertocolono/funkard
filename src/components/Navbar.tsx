@@ -18,6 +18,7 @@ export default function Navbar() {
   const isAuth = useAuth();
   const { theme } = useTheme();
   const [notifCount, setNotifCount] = useState<number>(0);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   // Badge notifiche (puoi collegarlo al tuo store/SSE)
   useEffect(() => {
@@ -27,10 +28,10 @@ export default function Navbar() {
 
   return (
     <header
-      className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur"
+      className="sticky top-0 z-50 border-b bg-white/80 dark:bg-neutral-900/80 backdrop-blur"
       style={{ borderColor: "var(--border)" }}
     >
-      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
+      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 relative md:static">
         <Link href="/" className="flex items-center gap-3">
           <Image
             src={theme === "light" ? "/logo2.png" : "/logo.png"}
@@ -103,14 +104,34 @@ export default function Navbar() {
           <ThemeToggle />
         </div>
 
-        {/* Mobile trigger */}
-        <div className="md:hidden">
-          <button className="p-2">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
+        {/* Mobile Menu Toggle */}
+        <div className="md:hidden flex items-center gap-2">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="p-2 rounded-md border border-gray-300 dark:border-gray-700"
+          >
+            ☰
           </button>
         </div>
+
+        {/* Mobile Menu Content */}
+        {isOpen && (
+          <div className="absolute top-14 left-0 w-full bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800 flex flex-col gap-3 p-4 text-center">
+            <Link href="/marketplace" className="hover:text-funkard-yellow transition">Esplora le collezioni</Link>
+            <Link href="/collection" className="hover:text-funkard-yellow transition">Gestisci la tua collezione</Link>
+            <Link href="/gradelens" className="hover:text-funkard-yellow transition">Valuta le tue carte</Link>
+            <Link href="/support" className="hover:text-funkard-yellow transition">Supporto</Link>
+            <Link href="/faq" className="hover:text-funkard-yellow transition">FAQ</Link>
+            {!isAuth && (
+              <button className="mt-2 px-4 py-2 bg-funkard-yellow text-black rounded-md font-semibold">
+                Registrati
+              </button>
+            )}
+            <div className="flex justify-center mt-2">
+              <ThemeToggle />
+            </div>
+          </div>
+        )}
       </nav>
     </header>
   );

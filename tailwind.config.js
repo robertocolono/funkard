@@ -1,10 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: "class",
+  darkMode: ["class", '[data-theme="dark"]'],
   content: [
-    "./app/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
-    "./lib/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{ts,tsx,js,jsx}",
+    "./components/**/*.{ts,tsx,js,jsx}",
+    "./app/**/*.{ts,tsx,js,jsx}",
   ],
   safelist: [
     // shadows & borders usate nelle card
@@ -30,33 +30,84 @@ module.exports = {
   ],
   theme: {
     extend: {
+      /* === COLOR SYSTEM === */
       colors: {
-        'funkard-yellow': '#f2b237',
-        'funkard-black': '#0b0b0b',
-        'funkard-gray': '#1a1a1a',
-        background: 'var(--background)',
-        foreground: 'var(--foreground)',
-        card: 'var(--card)',
-        border: 'var(--border)',
-        muted: 'var(--muted)',
-        'muted-foreground': 'var(--muted-foreground)',
+        funkard: {
+          yellow: "#f2b237",
+          black: "#0b0b0b",
+          white: "#ffffff",
+          gray: {
+            50: "#f9f9f9",
+            100: "#f4f4f4",
+            200: "#e6e6e6",
+            300: "#d1d1d1",
+            400: "#999999",
+            500: "#666666",
+            600: "#444444",
+            700: "#2a2a2a",
+            800: "#181818",
+            900: "#111111",
+          },
+        },
+        light: {
+          bg: "#ffffff",
+          text: "#0b0b0b",
+          muted: "#555555",
+          border: "#e6e6e6",
+        },
+        dark: {
+          bg: "#0b0b0b",
+          text: "#f1f1f1",
+          muted: "#b3b3b3",
+          border: "#2a2a2a",
+        },
       },
+
+      /* === FONT SYSTEM === */
       fontFamily: {
-        inter: ['Inter', 'sans-serif'],
-        luckiest: ['"Luckiest Guy"', 'cursive'],
+        sans: ["Inter", "system-ui", "sans-serif"],
+        display: ["Luckiest Guy", "cursive"],
       },
+
+      /* === SHADOW SYSTEM === */
       boxShadow: {
-        'dark-glow': '0 0 15px rgba(242, 178, 55, 0.6)',
-        'light-soft': '0 4px 10px rgba(0, 0, 0, 0.1)',
-        'card': '0 1px 4px rgba(0,0,0,0.08)',
+        sm: "0 1px 2px rgba(0,0,0,0.05)",
+        DEFAULT: "0 2px 6px rgba(0,0,0,0.08)",
+        md: "0 4px 10px rgba(0,0,0,0.1)",
+        lg: "0 6px 15px rgba(0,0,0,0.15)",
+        xl: "0 10px 25px rgba(0,0,0,0.2)",
+        "funkard-glow": "0 0 20px rgba(242,178,55,0.25)",
       },
+
+      /* === TRANSITIONS === */
       transitionDuration: {
-        fast: '150ms',
-        normal: '300ms',
-        slow: '500ms',
+        fast: "200ms",
+        normal: "300ms",
+        slow: "500ms",
       },
+
+      /* === BORDER RADIUS === */
+      borderRadius: {
+        sm: "0.25rem",
+        md: "0.5rem",
+        lg: "1rem",
+        xl: "1.5rem",
+        "2xl": "2rem",
+      },
+
+      /* === SPACING === */
       spacing: {
-        section: '6rem',
+        18: "4.5rem",
+        22: "5.5rem",
+        30: "7.5rem",
+      },
+
+      /* === GRADIENTS === */
+      backgroundImage: {
+        "funkard-gradient":
+          "linear-gradient(135deg, #f2b237 0%, #ffd36e 100%)",
+        "dark-gradient":
+          "linear-gradient(135deg, #0b0b0b 0%, #1a1a1a 100%)",
       },
     },
   },

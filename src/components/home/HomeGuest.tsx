@@ -48,12 +48,23 @@ export default function HomeGuest() {
       {/* HERO */}
       <section className="mb-10 text-center">
         <div className="mx-auto max-w-2xl">
-          <h1 className="mb-2 text-3xl font-bold tracking-tight">
+          <h1 className="mb-2 text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
             Esplora, compra, vendi e scambia la tua collezione con un semplice click!
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-gray-700 dark:text-gray-300 mb-8 text-base sm:text-lg">
             Esplora collezioni leggendarie, scambia con la community e diventa un collezionista esperto o amatoriale con il nostro supporto.
           </p>
+          <img
+            src="/logo.png"
+            alt="Funkard Logo"
+            className="w-28 sm:w-40 mx-auto mb-6"
+          />
+          <Link
+            href="/marketplace"
+            className="inline-block px-5 py-2 sm:px-6 sm:py-3 bg-funkard-yellow text-black font-semibold rounded-lg hover:opacity-90 transition"
+          >
+            Esplora il Marketplace →
+          </Link>
         </div>
       </section>
 
@@ -86,14 +97,14 @@ export default function HomeGuest() {
 
       {/* FEATURES */}
       <section className="mb-12">
-        <h2 className="text-3xl font-bold text-funkard-yellow mb-4 text-center drop-shadow-[0_0_15px_rgba(242,178,55,0.7)]">
+        <h2 className="text-3xl font-bold text-funkard-yellow mb-4 text-center glow-yellow">
           Diventa un collezionista e divertiti!
         </h2>
-        <p className="text-muted-foreground mb-12 text-center">
+        <p className="text-gray-600 dark:text-gray-400 mb-12 text-center">
           Scopri tutte le funzionalità del mondo Funkard.
         </p>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
           {[
             {
               title: "Marketplace intuitivo",
@@ -113,52 +124,29 @@ export default function HomeGuest() {
           ].map((item, i) => (
             <div
               key={i}
-              className="bg-card border rounded-2xl p-6 shadow-card hover:scale-[1.02] transition-transform"
-              style={{ borderColor: "var(--border)" }}
+              className="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-6 shadow-md glow-yellow transition-all hover:scale-[1.01]"
             >
               <div className="text-3xl mb-3">{item.icon}</div>
-              <h3 className="text-funkard-yellow text-xl font-semibold mb-2">
-                {item.title}
-              </h3>
-              <p className="text-muted-foreground text-sm">{item.desc}</p>
+              <h3 className="text-funkard-yellow font-semibold mb-2">{item.title}</h3>
+              <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">{item.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* GRADELENS SHOWCASE */}
-      <section className="mb-12 rounded-xl border bg-card p-6 shadow-card" style={{ borderColor: "var(--border)" }}>
-        <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-xl font-semibold">Valuta le tue carte (GradeLens)</h2>
-          <Link href="/gradelens" className="text-funkard-yellow hover:opacity-80 transition">
-            Prova ora →
-          </Link>
-        </div>
-        
-        <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-light-soft">
-          <h3 className="text-2xl font-bold mb-4 text-gray-800">
-            <span className="text-funkard-yellow">GradeLens</span> – Scansione simulata
-          </h3>
-          <button className="bg-gray-700 hover:bg-gray-600 text-white px-5 py-2 rounded-lg transition mb-6">
+      <section className="py-12 sm:py-16 px-4 sm:px-6">
+        <div className="max-w-3xl mx-auto bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-md p-6 sm:p-8 transition-colors">
+          <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
+            🧠 GradeLens – Scansione simulata
+          </h2>
+          <p className="text-gray-700 dark:text-gray-300 mb-6">
+            Analizza la tua carta in modo istantaneo con la nostra tecnologia AI.
+          </p>
+
+          <button className="w-full py-2.5 sm:py-3 bg-funkard-yellow text-black font-semibold rounded-lg hover:opacity-90 transition">
             Analizza la carta
           </button>
-
-          <div className="border border-yellow-600/30 bg-yellow-500/10 rounded-md p-4 text-left text-sm">
-            <p className="font-semibold text-yellow-400 mb-1">⚠️ Importante</p>
-            <p className="text-gray-300">
-              Il punteggio assegnato da GradeLens è una stima simulata basata su
-              parametri tecnici e/o valutazione manuale. Non rappresenta una
-              certificazione ufficiale di condizione o valore.
-            </p>
-            <p className="text-gray-400 mt-2">
-              Le valutazioni possono differire da quelle di enti di grading
-              professionali (PSA, BGS, CGC, ecc.).
-            </p>
-          </div>
-
-          <p className="mt-4 text-xs text-gray-500 italic">
-            *Valutazione simulata non ufficiale. Le carte possono differire da grading professionali.
-          </p>
         </div>
       </section>
 
