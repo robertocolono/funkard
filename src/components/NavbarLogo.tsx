@@ -1,12 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import { useTheme } from 'next-themes';
+import { useTheme } from '@/lib/context/ThemeContext';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export default function NavbarLogo() {
-  const { resolvedTheme } = useTheme();
+  const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
@@ -21,7 +21,7 @@ export default function NavbarLogo() {
   return (
     <Link href="/" className="flex items-center gap-2">
       <Image
-        src={resolvedTheme === 'light' ? '/logo2.png' : '/logo.png'}
+        src={theme === 'light' ? '/logo2.png' : '/logo.png'}
         alt="Funkard Logo"
         width={100}
         height={30}

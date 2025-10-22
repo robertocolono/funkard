@@ -1,14 +1,14 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { useTheme } from "@/lib/context/ThemeContext";
+import { Moon, Sun } from "lucide-react";
 import NavbarLogo from "@/components/NavbarLogo";
 import { useSession } from "@/lib/context/SessionContext";
 
 export function Navbar() {
   const { isAuthenticated, user, logout } = useSession();
-  const { resolvedTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
   const [notifCount, setNotifCount] = useState<number>(0);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -50,7 +50,17 @@ export function Navbar() {
             Registrati
           </a>
         )}
-        <ThemeToggle />
+        <button
+          onClick={toggleTheme}
+          className="p-2 rounded-lg hover:bg-muted transition-colors"
+          aria-label="Toggle theme"
+        >
+          {theme === 'light' ? (
+            <Moon className="w-5 h-5 text-zinc-700" />
+          ) : (
+            <Sun className="w-5 h-5 text-yellow-400" />
+          )}
+        </button>
       </div>
 
       {/* MOBILE MENU TOGGLE */}

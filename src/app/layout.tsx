@@ -1,11 +1,11 @@
 import "./globals.css";
-import { ThemeProvider } from "next-themes";
 import { Navbar } from "@/components/Navbar";
 import MobileNavbar from "@/components/layout/MobileNavbar";
 import { Toaster } from "sonner";
 import { Toaster as HotToaster } from "react-hot-toast";
 import { NotificationProvider } from "@/context/NotificationContext";
 import { SessionProvider } from "@/lib/context/SessionContext";
+import { ThemeProvider } from "@/lib/context/ThemeContext";
 
 export const metadata = {
   title: "Funkard — Il Marketplace dei Collezionisti",
@@ -15,9 +15,9 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html suppressHydrationWarning lang="it">
-      <body className="min-h-screen antialiased transition-colors duration-500">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <SessionProvider>
+      <body className="min-h-screen antialiased transition-colors duration-500 bg-background text-foreground">
+        <SessionProvider>
+          <ThemeProvider>
             <NotificationProvider>
               {/* Desktop Navbar */}
               <div className="hidden md:block">
@@ -47,8 +47,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Toaster richColors position="top-center" />
               <HotToaster position="bottom-right" />
             </NotificationProvider>
-          </SessionProvider>
-        </ThemeProvider>
+          </ThemeProvider>
+        </SessionProvider>
       </body>
     </html>
   );

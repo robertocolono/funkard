@@ -1,10 +1,10 @@
 "use client";
 import Image from 'next/image';
-import { useTheme } from 'next-themes';
+import { useTheme } from '@/lib/context/ThemeContext';
 import { useEffect, useState } from 'react';
 
 export function Hero() {
-  const { resolvedTheme } = useTheme();
+  const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
@@ -14,7 +14,7 @@ export function Hero() {
     <section className="flex flex-col items-center justify-center text-center py-section px-4">
       {/* Logo grande dinamico */}
       <Image
-        src={resolvedTheme === 'light' ? '/logo2.png' : '/logo.png'}
+        src={theme === 'light' ? '/logo2.png' : '/logo.png'}
         alt="Funkard Logo"
         width={260}
         height={80}
