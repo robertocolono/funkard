@@ -1,106 +1,156 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 export default function RegisterPage() {
-  const router = useRouter();
-  const [form, setForm] = useState({ email: "", password: "", nome: "", paese: "" });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const router = useRouter()
 
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    preferredCurrency: "EUR",
+  })
 
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
+  const [success, setSuccess] = useState(false)
+
+  const handleChange = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }))
+    if (error) setError("")
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    if (!formData.username || !formData.email || !formData.password) {
+      setError("Tutti i campi sono obbligatori")
+      return
+    }
+    if (formData.password !== formData.confirmPassword) {
+      setError("Le password non coincidono")
+      return
+    }
+
+    setLoading(true)
     try {
-      const res = await fetch("https://funkard-api.onrender.com/api/auth/register", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: form.email,
-          passwordHash: form.password, // il backend si aspetta passwordHash
-          nome: form.nome,
-          paese: form.paese,
-          accettaTermini: true,
-        }),
-      });
+        body: JSON.stringify(formData),
+      })
 
-      const data = await res.json();
-      setLoading(false);
+      if (!res.ok) throw new Error("Errore durante la registrazione")
 
-      if (!res.ok) {
-        setError(data || "Errore durante la registrazione");
-        return;
-      }
-
-      localStorage.setItem("funkard_token", data.token);
-      router.push("/");
-    } catch {
-      setLoading(false);
-      setError("Errore di connessione al server");
+      setSuccess(true)
+      setTimeout(() => router.push("/login"), 2000)
+    } catch (err: any) {
+      console.error(err)
+      setError("Errore durante la registrazione")
+    } finally {
+      setLoading(false)
     }
-  };
+  }
 
   return (
-    <main className="min-h-screen bg-black text-white flex flex-col items-center justify-center px-6">
-      <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-8 w-full max-w-md text-center shadow-lg">
-        <h1 className="text-2xl font-bold mb-6 text-yellow-400">🧩 Crea un nuovo account</h1>
-        <form onSubmit={handleRegister} className="flex flex-col gap-4">
+    <div className="min-h-screen bg-zinc-950 flex items-center justify-center text-white">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-2xl shadow-lg p-8 space-y-5"
+      >
+        <h1 className="text-2xl font-bold text-center mb-2">Crea un account Funkard</h1>
+        <p className="text-gray-400 text-center mb-6">
+          Esplora, compra e scambia carte da collezione
+        </p>
+
+        {/* Username */}
+        <div>
+          <label className="block mb-1 text-sm text-gray-400">Username</label>
           <input
             type="text"
-            placeholder="Nome utente"
-            value={form.nome}
-            onChange={(e) => setForm({ ...form, nome: e.target.value })}
-            required
-            className="p-3 rounded-md bg-neutral-800 border border-neutral-700 text-white"
+            value={formData.username}
+            onChange={(e) => handleChange("username", e.target.value)}
+            className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-yellow-500"
           />
+        </div>
+
+        {/* Email */}
+        <div>
+          <label className="block mb-1 text-sm text-gray-400">Email</label>
           <input
             type="email"
-            placeholder="Email"
-            value={form.email}
-            onChange={(e) => setForm({ ...form, email: e.target.value })}
-            required
-            className="p-3 rounded-md bg-neutral-800 border border-neutral-700 text-white"
+            value={formData.email}
+            onChange={(e) => handleChange("email", e.target.value)}
+            className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-yellow-500"
           />
+        </div>
+
+        {/* Password */}
+        <div>
+          <label className="block mb-1 text-sm text-gray-400">Password</label>
           <input
             type="password"
-            placeholder="Password"
-            value={form.password}
-            onChange={(e) => setForm({ ...form, password: e.target.value })}
-            required
-            className="p-3 rounded-md bg-neutral-800 border border-neutral-700 text-white"
+            value={formData.password}
+            onChange={(e) => handleChange("password", e.target.value)}
+            className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-yellow-500"
           />
+        </div>
+
+        {/* Conferma Password */}
+        <div>
+          <label className="block mb-1 text-sm text-gray-400">Conferma Password</label>
           <input
-            type="text"
-            placeholder="Paese"
-            value={form.paese}
-            onChange={(e) => setForm({ ...form, paese: e.target.value })}
-            className="p-3 rounded-md bg-neutral-800 border border-neutral-700 text-white"
+            type="password"
+            value={formData.confirmPassword}
+            onChange={(e) => handleChange("confirmPassword", e.target.value)}
+            className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-yellow-500"
           />
+        </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="border border-yellow-500 text-yellow-400 hover:bg-yellow-500 hover:text-black font-semibold px-6 py-3 rounded-xl transition-all duration-200"
+        {/* Selezione valuta */}
+        <div>
+          <label className="block mb-1 text-sm text-gray-400">Valuta preferita</label>
+          <select
+            value={formData.preferredCurrency}
+            onChange={(e) => handleChange("preferredCurrency", e.target.value)}
+            className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-yellow-500"
           >
-            {loading ? "Registrazione..." : "Registrati"}
-          </button>
+            <option value="EUR">Euro (€)</option>
+            <option value="USD">Dollaro ($)</option>
+            <option value="GBP">Sterlina (£)</option>
+            <option value="JPY">Yen (¥)</option>
+            <option value="CHF">Franco Svizzero (CHF)</option>
+            <option value="CAD">Dollaro Canadese (C$)</option>
+            <option value="AUD">Dollaro Australiano (A$)</option>
+          </select>
+        </div>
 
-          {error && <p className="text-red-500 mt-3 text-sm">{error}</p>}
-        </form>
+        {/* Messaggi */}
+        {error && <p className="text-red-400 text-sm">{error}</p>}
+        {success && <p className="text-green-400 text-sm">✅ Registrazione completata!</p>}
 
-        <p className="mt-6 text-gray-400 text-sm">
+        {/* Submit */}
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-yellow-500 hover:bg-yellow-600 disabled:bg-yellow-500/50 text-black font-semibold py-3 rounded-lg transition-colors"
+        >
+          {loading ? "Creazione account..." : "Registrati"}
+        </button>
+
+        <p className="text-center text-gray-500 text-sm mt-4">
           Hai già un account?{" "}
-          <button
+          <span
             onClick={() => router.push("/login")}
-            className="text-yellow-400 hover:underline"
+            className="text-yellow-400 hover:text-yellow-300 cursor-pointer"
           >
-            Accedi
-          </button>
+            Accedi qui
+          </span>
         </p>
-      </div>
-    </main>
-  );
+      </form>
+    </div>
+  )
 }
