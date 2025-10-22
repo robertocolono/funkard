@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { validateAddressForm } from '@/lib/validateAddressForm';
+import { getPostalCodePlaceholder } from '@/lib/getPostalCodePlaceholder';
 
 export default function ShippingFormModal({
   isOpen,
@@ -20,6 +22,7 @@ export default function ShippingFormModal({
     postalCode: '',
     country: '',
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
     if (editData) setForm(editData);
@@ -27,10 +30,16 @@ export default function ShippingFormModal({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    setErrors((prev) => ({ ...prev, [e.target.name]: '' })); // pulisce errore
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const validationErrors = validateAddressForm(form);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return; // blocca invio se non valido
+    }
     onSubmit(form);
   };
 
@@ -44,41 +53,34 @@ export default function ShippingFormModal({
         </h3>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            name="fullName"
-            placeholder="Nome completo"
-            value={form.fullName}
-            onChange={handleChange}
-            className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 outline-none"
-          />
-          <input
-            name="addressLine"
-            placeholder="Indirizzo"
-            value={form.addressLine}
-            onChange={handleChange}
-            className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-lg"
-          />
-          <input
-            name="city"
-            placeholder="Città"
-            value={form.city}
-            onChange={handleChange}
-            className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-lg"
-          />
-          <input
-            name="postalCode"
-            placeholder="CAP"
-            value={form.postalCode}
-            onChange={handleChange}
-            className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-lg"
-          />
-          <input
-            name="country"
-            placeholder="Paese"
-            value={form.country}
-            onChange={handleChange}
-            className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-lg"
-          />
+          {['fullName', 'addressLine', 'city', 'postalCode', 'country'].map((field) => (
+            <div key={field}>
+              <input
+                name={field}
+                placeholder={
+                  field === 'fullName'
+                    ? 'Nome completo'
+                    : field === 'addressLine'
+                    ? 'Indirizzo'
+                    : field === 'city'
+                    ? 'Città'
+                    : field === 'postalCode'
+                    ? getPostalCodePlaceholder(form.country)
+                    : 'Paese'
+                }
+                value={(form as any)[field]}
+                onChange={handleChange}
+                className={`w-full p-3 bg-zinc-800 border rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 outline-none ${
+                  errors[field]
+                    ? 'border-red-500 focus:ring-red-500'
+                    : 'border-zinc-700'
+                }`}
+              />
+              {errors[field] && (
+                <p className="text-xs text-red-400 mt-1">{errors[field]}</p>
+              )}
+            </div>
+          ))}
 
           <div className="flex justify-end gap-2 mt-4">
             <button
