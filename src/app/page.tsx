@@ -2,13 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import Navbar from "@/components/Navbar";
 
 export default function HomePage() {
   return (
-    <>
-      <Navbar />
-      <main className="min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-8 bg-background text-foreground">
+    <main className="min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-8 bg-background text-foreground">
         {/* Hero */}
         <section className="pt-24 pb-16">
           <div className="flex flex-col items-center">
@@ -96,7 +93,6 @@ export default function HomePage() {
             </Link>
           </div>
         </footer>
-      </main>
-    </>
+    </main>
   );
 }

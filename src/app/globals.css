@@ -207,3 +207,8 @@ textarea:focus {
 .transition-slow {
   transition: all var(--transition-slow);
 }
+
+/* === REMOVE UNWANTED BORDERS === */
+main, section, div {
+  border: none !important;
+}
