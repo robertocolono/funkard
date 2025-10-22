@@ -20,7 +20,6 @@
   --foreground: #ffffff;
 }
 
-/* ---------- BASE ---------- */
 html, body {
   font-family: 'Inter', sans-serif;
   background-color: var(--funkard-black);
@@ -28,42 +27,16 @@ html, body {
   scroll-behavior: smooth;
 }
 
-/* ---------- UTILITIES ---------- */
-.bg-funkard-yellow {
-  background-color: var(--funkard-yellow);
-}
+.bg-funkard-yellow { background-color: var(--funkard-yellow); }
+.text-funkard-yellow { color: var(--funkard-yellow); }
+.shadow-dark-glow { box-shadow: var(--shadow-dark-glow); }
+.shadow-light-soft { box-shadow: var(--shadow-light-soft); }
+.bg-funkard-black { background-color: var(--funkard-black); }
+.bg-funkard-gray { background-color: var(--funkard-gray); }
 
-.text-funkard-yellow {
-  color: var(--funkard-yellow);
-}
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-thumb { background: #f2b237; border-radius: 4px; }
 
-.shadow-dark-glow {
-  box-shadow: var(--shadow-dark-glow);
-}
-
-.shadow-light-soft {
-  box-shadow: var(--shadow-light-soft);
-}
-
-.bg-funkard-black {
-  background-color: var(--funkard-black);
-}
-
-.bg-funkard-gray {
-  background-color: var(--funkard-gray);
-}
-
-/* ---------- SCROLLBAR ---------- */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #f2b237;
-  border-radius: 4px;
-}
-
-/* ---------- LIGHT THEME ---------- */
 html.light body {
   background-color: #fafafa;
   color: #111;

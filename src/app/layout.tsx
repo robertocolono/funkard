@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <Navbar />
                 <div className="h-14" />
               </div>
-              
+
               {/* Mobile Layout */}
               <div className="md:hidden">
                 <Navbar />
@@ -36,14 +36,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 </div>
                 <MobileNavbar />
               </div>
-              
+
               {/* Desktop Content */}
               <div className="hidden md:block">
                 <main className="px-4 sm:px-6 lg:px-8">
                   {children}
                 </main>
               </div>
-              
+
               <Toaster richColors position="top-center" />
               <HotToaster position="bottom-right" />
             </NotificationProvider>
