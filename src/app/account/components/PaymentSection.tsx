@@ -20,34 +20,20 @@ interface PaymentMethod {
   isDefault?: boolean;
 }
 
-export default function PaymentSection() {
-  const [methods, setMethods] = useState<PaymentMethod[]>([]);
+export default function PaymentSection({ data = [], onUpdate }: { data: any[], onUpdate: () => void }) {
+  const [methods, setMethods] = useState<PaymentMethod[]>(data);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Carica metodi al mount
+  // Aggiorna methods quando data cambia
   useEffect(() => {
-    loadMethods();
-  }, []);
+    setMethods(data);
+  }, [data]);
 
-  const loadMethods = async () => {
+  const handleAdd = async (formData: PaymentMethod) => {
     try {
-      setLoading(true);
-      setError(null);
-      const data = await fetchPaymentMethods();
-      setMethods(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Errore nel caricamento');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleAdd = async (data: PaymentMethod) => {
-    try {
-      const newMethod = await addPaymentMethod(data);
-      setMethods(prev => [...prev, newMethod]);
+      await addPaymentMethod(formData);
+      await onUpdate(); // aggiorna la pagina intera
       setIsModalOpen(false);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Errore nell\'aggiunta');
@@ -58,7 +44,7 @@ export default function PaymentSection() {
     if (confirm('Eliminare questo metodo di pagamento?')) {
       try {
         await deletePaymentMethod(id);
-        setMethods(prev => prev.filter(m => m.id !== id));
+        await onUpdate();
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Errore nell\'eliminazione');
       }
@@ -68,9 +54,7 @@ export default function PaymentSection() {
   const setDefault = async (id: string) => {
     try {
       await setDefaultPaymentMethod(id);
-      setMethods(prev =>
-        prev.map(m => ({ ...m, isDefault: m.id === id }))
-      );
+      await onUpdate();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Errore nell\'impostazione predefinito');
     }
@@ -91,21 +75,10 @@ export default function PaymentSection() {
       {error && (
         <div className="mb-4 p-3 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-lg text-red-700 dark:text-red-400 text-sm">
           {error}
-          <button 
-            onClick={loadMethods}
-            className="ml-2 underline hover:no-underline"
-          >
-            Riprova
-          </button>
         </div>
       )}
 
-      {loading ? (
-        <div className="flex items-center justify-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-funkard-yellow"></div>
-          <span className="ml-2 text-zinc-500">Caricamento metodi...</span>
-        </div>
-      ) : methods.length === 0 ? (
+      {methods.length === 0 ? (
         <p className="text-sm text-zinc-500">
           Nessun metodo salvato. Aggiungine uno per iniziare.
         </p>
