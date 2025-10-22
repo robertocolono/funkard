@@ -13,278 +13,235 @@ const STATUS_COLOR = {
   ARCHIVED: 'bg-neutral-600/20 text-neutral-400',
 };
 
-function useDebouncedValue(value: string, delay = 350) {
-  const [debounced, setDebounced] = useState(value);
-  useEffect(() => {
-    const id = setTimeout(() => setDebounced(value), delay);
-    return () => clearTimeout(id);
-  }, [value, delay]);
-  return debounced;
-}
-
 export default function SupportPage() {
+  const { user, isAuthenticated } = useSession();
   const router = useRouter();
-  const { user } = useSession();
+  
+  const [tickets, setTickets] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [newTicket, setNewTicket] = useState({
+    subject: '',
+    description: '',
+    priority: 'MEDIUM',
+    category: 'GENERAL'
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [email, setEmail] = useState('');
-  const [subject, setSubject] = useState('');
-  const [message, setMessage] = useState('');
-  const [tickets, setTickets] = useState<Array<{
-    id: string;
-    subject: string;
-    message: string;
-    status: string;
-    createdAt: string;
-  }>>([]);
-  const [loading, setLoading] = useState(false);
-
-  // ricerca + filtri + ordinamento
-  const [search, setSearch] = useState('');
-  const debouncedSearch = useDebouncedValue(search, 300);
-  const [selectedStatuses, setSelectedStatuses] = useState(['NEW', 'IN_PROGRESS', 'RESOLVED', 'ARCHIVED']);
-  const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'status'>('newest');
-  const [expanded, setExpanded] = useState<string | null>(null);
-
-  // 🔴 nuove risposte
-  const [unreadTickets, setUnreadTickets] = useState<Record<string, boolean>>({});
-
-  // Auto-compila email se utente loggato
+  // Redirect se non autenticato
   useEffect(() => {
-    if (user?.email) {
-      setEmail(user.email);
+    if (!isAuthenticated) {
+      router.push('/register');
     }
-  }, [user]);
-
-  // 🔁 carica stato salvato
-  useEffect(() => {
-    const stored = localStorage.getItem('funkard_unreadTickets');
-    if (stored) setUnreadTickets(JSON.parse(stored));
-  }, []);
-
-  // 💾 salva stato
-  useEffect(() => {
-    localStorage.setItem('funkard_unreadTickets', JSON.stringify(unreadTickets));
-  }, [unreadTickets]);
+  }, [isAuthenticated, router]);
 
   const loadTickets = useCallback(async () => {
-    if (!email) return;
     try {
-      const data = await fetchUserTickets(email);
-      setTickets(Array.isArray(data) ? data : []);
-    } catch (e) {
-      console.error(e);
-      alert('Errore nel caricamento dei ticket');
-    }
-  }, [email]);
-
-  const handleSubmit = async () => {
-    if (!email || !subject || !message) {
-      alert('Compila tutti i campi');
-      return;
-    }
-    setLoading(true);
-    try {
-      await createSupportTicket({ email, subject, message });
-      alert('Ticket inviato ✅ Riceverai risposta a breve.');
-      setSubject('');
-      setMessage('');
-      await loadTickets();
-    } catch {
-      alert("Errore durante l'invio");
+      setLoading(true);
+      const data = await fetchUserTickets();
+      setTickets(data);
+    } catch (err) {
+      setError('Errore nel caricamento dei ticket');
+      console.error('Error loading tickets:', err);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  // Auth
-
-  // 🔄 Polling automatico (light)
   useEffect(() => {
-    if (!email) return;
-    const interval = setInterval(() => {
+    if (isAuthenticated) {
       loadTickets();
-    }, 30000); // ogni 30 secondi
-    return () => clearInterval(interval);
-  }, [email, loadTickets]);
-
-  useEffect(() => {
-    if (email && email.length > 5 && email.includes('@')) loadTickets();
-  }, [email, loadTickets]);
-
-  // SSE gestito dal NotificationContext globale
-
-  const filteredSorted = useMemo(() => {
-    const text = debouncedSearch.trim().toLowerCase();
-    let list = tickets.filter(t =>
-      selectedStatuses.includes(t.status) &&
-      (text.length === 0 ||
-        t.subject?.toLowerCase().includes(text) ||
-        t.message?.toLowerCase().includes(text))
-    );
-
-    if (sortBy === 'newest') {
-      list = list.sort((a, b) => +new Date(b.createdAt) - +new Date(a.createdAt));
-    } else if (sortBy === 'oldest') {
-      list = list.sort((a, b) => +new Date(a.createdAt) - +new Date(b.createdAt));
-    } else if (sortBy === 'status') {
-      const order = ['NEW', 'IN_PROGRESS', 'RESOLVED', 'ARCHIVED'];
-      list = list.sort((a, b) => order.indexOf(a.status) - order.indexOf(b.status));
     }
-    return list;
-  }, [tickets, debouncedSearch, selectedStatuses, sortBy]);
+  }, [isAuthenticated, loadTickets]);
 
-  const toggleStatus = (s: string) => {
-    setSelectedStatuses(prev =>
-      prev.includes(s) ? prev.filter(x => x !== s) : [...prev, s]
-    );
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!newTicket.subject.trim() || !newTicket.description.trim()) {
+      setError('Compila tutti i campi obbligatori');
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      setError('');
+      
+      const ticketData = {
+        ...newTicket,
+        userEmail: user?.email || '',
+        userName: user?.name || 'Utente'
+      };
+
+      await createSupportTicket(ticketData);
+      
+      // Reset form
+      setNewTicket({
+        subject: '',
+        description: '',
+        priority: 'MEDIUM',
+        category: 'GENERAL'
+      });
+      
+      // Reload tickets
+      await loadTickets();
+      
+    } catch (err) {
+      setError('Errore nella creazione del ticket');
+      console.error('Error creating ticket:', err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
+  const handleInputChange = (field, value) => {
+    setNewTicket(prev => ({ ...prev, [field]: value }));
+    if (error) setError('');
+  };
+
+  if (!isAuthenticated) {
+    return null; // Redirect in corso
+  }
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-white">
-      <div className="max-w-6xl mx-auto px-6 py-8">
-        <div className="mb-6 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-          <div>
-            <h1 className="text-3xl font-bold mb-1">💬 Supporto Funkard</h1>
-            <p className="text-gray-400">Apri un ticket o gestisci le tue richieste.</p>
-          </div>
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold mb-2">Supporto</h1>
+          <p className="text-muted-foreground">
+            Gestisci i tuoi ticket di supporto o creane uno nuovo.
+          </p>
         </div>
 
-        {/* Barra strumenti */}
-        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 mb-8">
-          <div className="flex flex-col md:flex-row gap-3">
-            <input
-              type="text"
-              placeholder="Cerca per oggetto o contenuto…"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="flex-1 p-3 bg-zinc-800 border border-zinc-700 rounded-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-            />
-            <div className="flex flex-wrap gap-2">
-              {['NEW','IN_PROGRESS','RESOLVED','ARCHIVED'].map(s => {
-                const active = selectedStatuses.includes(s);
-                return (
-                  <button
-                    key={s}
-                    onClick={() => toggleStatus(s)}
-                    className={`px-3 py-2 rounded-lg text-sm border transition
-                      ${active ? 'border-funkard-yellow text-yellow-300 bg-funkard-yellow/10' : 'border-zinc-700 text-gray-400 hover:text-gray-200'}`}
-                    title={s}
-                  >
-                    {s.replace('_', ' ')}
-                  </button>
-                );
-              })}
-            </div>
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as 'newest' | 'oldest' | 'status')}
-              className="p-3 bg-zinc-800 border border-zinc-700 rounded-lg text-sm"
-            >
-              <option value="newest">Più recenti</option>
-              <option value="oldest">Meno recenti</option>
-              <option value="status">Per stato</option>
-            </select>
-          </div>
-        </div>
-
-        {/* Form nuovo ticket */}
-        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-4">Apri un nuovo ticket</h2>
-          <div className="space-y-4">
-            <input
-              type="email"
-              placeholder="La tua email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-            />
-            <input
-              type="text"
-              placeholder="Oggetto"
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
-              className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-lg placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-            />
-            <textarea
-              placeholder="Descrivi il problema o la richiesta..."
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-lg placeholder-gray-500 min-h-[120px] focus:outline-none focus:ring-2 focus:ring-yellow-500"
-            />
-            <button
-              onClick={handleSubmit}
-              disabled={loading}
-              className="w-full bg-yellow-500 hover:bg-yellow-600 disabled:bg-yellow-500/50 text-black font-semibold px-6 py-3 rounded-lg transition-colors"
-            >
-              {loading ? 'Invio...' : 'Invia richiesta'}
-            </button>
-          </div>
-        </div>
-
-        {/* Lista ticket */}
-        {filteredSorted.length > 0 ? (
-          <div className="space-y-3">
+        <div className="grid lg:grid-cols-2 gap-8">
+          {/* Lista Ticket */}
+          <div className="space-y-6">
             <h2 className="text-xl font-semibold">I tuoi ticket</h2>
-            {filteredSorted.map((t) => {
-              const open = expanded === t.id;
-              const unread = unreadTickets[t.id];
-
-              return (
-                <div key={t.id} className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden">
-                  <button
-                    onClick={() => {
-                      setExpanded(open ? null : t.id);
-                      setUnreadTickets(prev => ({ ...prev, [t.id]: false }));
-                    }}
-                    className="w-full text-left px-4 py-4 hover:bg-zinc-900/60 transition flex items-start gap-3"
-                    aria-expanded={open}
-                  >
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between gap-4">
-                        <h3 className="font-medium flex items-center gap-2">
-                          {t.subject || '(Senza oggetto)'}
-                          {unread && (
-                            <span className="ml-1 inline-block w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse" title="Nuova risposta" />
-                          )}
-                        </h3>
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${STATUS_COLOR[t.status as keyof typeof STATUS_COLOR] || 'bg-gray-500/20 text-gray-400'}`}>
-                          {t.status}
-                        </span>
-                      </div>
-                      <p className="text-sm text-gray-400 line-clamp-1 mt-1">{t.message}</p>
-                      <p className="text-xs text-gray-500 mt-1">{new Date(t.createdAt).toLocaleString('it-IT')}</p>
+            
+            {loading ? (
+              <div className="space-y-4">
+                {[...Array(3)].map((_, i) => (
+                  <div key={i} className="bg-card border rounded-lg p-4 animate-pulse">
+                    <div className="h-4 bg-muted rounded w-3/4 mb-2"></div>
+                    <div className="h-3 bg-muted rounded w-1/2"></div>
+                  </div>
+                ))}
+              </div>
+            ) : tickets.length === 0 ? (
+              <div className="bg-card border rounded-lg p-8 text-center">
+                <p className="text-muted-foreground">Nessun ticket trovato</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {tickets.map((ticket) => (
+                  <div key={ticket.id} className="bg-card border rounded-lg p-4 hover:shadow-md transition-shadow">
+                    <div className="flex justify-between items-start mb-2">
+                      <h3 className="font-semibold text-lg">{ticket.subject}</h3>
+                      <span className={`px-2 py-1 rounded text-xs font-medium ${STATUS_COLOR[ticket.status]}`}>
+                        {ticket.status}
+                      </span>
                     </div>
-                  </button>
-
-                  {open && (
-                    <div className="px-4 pb-4 pt-2 border-t border-zinc-800">
-                      <div className="text-sm text-gray-300 whitespace-pre-line">{t.message}</div>
-                      <div className="mt-4 flex items-center gap-3">
-                        <Link
-                          href={`/support/chat/${t.id}`}
-                          className="px-3 py-2 rounded-lg bg-zinc-800 border border-zinc-700 hover:border-funkard-yellow/50 transition text-sm"
-                        >
-                          Apri chat / Dettagli →
-                        </Link>
-                      </div>
+                    <p className="text-muted-foreground text-sm mb-3 line-clamp-2">
+                      {ticket.description}
+                    </p>
+                    <div className="flex justify-between items-center text-sm text-muted-foreground">
+                      <span>#{ticket.id}</span>
+                      <span>{new Date(ticket.createdAt).toLocaleDateString('it-IT')}</span>
                     </div>
-                  )}
-                </div>
-              );
-            })}
+                    <div className="mt-3 pt-3 border-t">
+                      <Link 
+                        href={`/support/chat/${ticket.id}`}
+                        className="text-funkard-yellow hover:opacity-80 font-medium text-sm"
+                      >
+                        Apri chat / Dettagli →
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-        ) : (
-          <div className="text-gray-400">Nessun ticket trovato.</div>
-        )}
 
-        <div className="mt-10 text-center">
-          <Link
-            href="/support/history"
-            className="text-yellow-400 hover:text-yellow-300 transition-colors"
-          >
-            Vedi storico ticket chiusi →
-          </Link>
+          {/* Form Nuovo Ticket */}
+          <div className="space-y-6">
+            <h2 className="text-xl font-semibold">Nuovo ticket</h2>
+            
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">
+                  Oggetto *
+                </label>
+                <input
+                  type="text"
+                  value={newTicket.subject}
+                  onChange={(e) => handleInputChange('subject', e.target.value)}
+                  className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:border-funkard-yellow focus:outline-none"
+                  placeholder="Descrivi brevemente il problema"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">
+                  Descrizione *
+                </label>
+                <textarea
+                  value={newTicket.description}
+                  onChange={(e) => handleInputChange('description', e.target.value)}
+                  rows={4}
+                  className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:border-funkard-yellow focus:outline-none"
+                  placeholder="Fornisci dettagli sul problema che stai riscontrando"
+                  required
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    Priorità
+                  </label>
+                  <select
+                    value={newTicket.priority}
+                    onChange={(e) => handleInputChange('priority', e.target.value)}
+                    className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:border-funkard-yellow focus:outline-none"
+                  >
+                    <option value="LOW">Bassa</option>
+                    <option value="MEDIUM">Media</option>
+                    <option value="HIGH">Alta</option>
+                    <option value="URGENT">Urgente</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    Categoria
+                  </label>
+                  <select
+                    value={newTicket.category}
+                    onChange={(e) => handleInputChange('category', e.target.value)}
+                    className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:border-funkard-yellow focus:outline-none"
+                  >
+                    <option value="GENERAL">Generale</option>
+                    <option value="TECHNICAL">Tecnico</option>
+                    <option value="BILLING">Fatturazione</option>
+                    <option value="ACCOUNT">Account</option>
+                  </select>
+                </div>
+              </div>
+
+              {error && (
+                <div className="bg-red-500/10 border border-red-500/20 rounded-md p-3 text-red-400 text-sm">
+                  {error}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-funkard-yellow text-black font-semibold py-2 px-4 rounded-md hover:opacity-90 disabled:opacity-50 transition"
+              >
+                {isSubmitting ? 'Creazione...' : 'Crea ticket'}
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
