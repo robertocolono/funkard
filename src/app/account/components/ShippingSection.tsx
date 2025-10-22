@@ -1,48 +1,86 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Edit, Trash2, Star } from 'lucide-react';
 import ShippingFormModal from './ShippingFormModal';
-
-interface Address {
-  id: string;
-  fullName: string;
-  addressLine1: string;
-  addressLine2?: string;
-  city: string;
-  postalCode: string;
-  country: string;
-  isDefault?: boolean;
-}
+import { 
+  getShippingAddresses, 
+  addShippingAddress, 
+  updateShippingAddress, 
+  deleteShippingAddress, 
+  setDefaultShippingAddress,
+  type ShippingAddress 
+} from '@/lib/funkardApi';
 
 export default function ShippingSection() {
-  const [addresses, setAddresses] = useState<Address[]>([]);
-  const [selected, setSelected] = useState<Address | null>(null);
+  const [addresses, setAddresses] = useState<ShippingAddress[]>([]);
+  const [selected, setSelected] = useState<ShippingAddress | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleAdd = (data: Address) => {
-    setAddresses(prev => [...prev, { ...data, id: crypto.randomUUID() }]);
-    setIsModalOpen(false);
-  };
+  // Carica indirizzi al mount
+  useEffect(() => {
+    loadAddresses();
+  }, []);
 
-  const handleUpdate = (updated: Address) => {
-    setAddresses(prev =>
-      prev.map(a => (a.id === updated.id ? updated : a))
-    );
-    setIsModalOpen(false);
-  };
-
-  const handleDelete = (id: string) => {
-    if (confirm('Eliminare questo indirizzo?')) {
-      setAddresses(prev => prev.filter(a => a.id !== id));
+  const loadAddresses = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await getShippingAddresses();
+      setAddresses(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Errore nel caricamento');
+    } finally {
+      setLoading(false);
     }
   };
 
-  const setDefault = (id: string) => {
-    setAddresses(prev =>
-      prev.map(a => ({ ...a, isDefault: a.id === id }))
-    );
+  const handleAdd = async (data: Omit<ShippingAddress, 'id'>) => {
+    try {
+      const newAddress = await addShippingAddress(data);
+      setAddresses(prev => [...prev, newAddress]);
+      setIsModalOpen(false);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Errore nell\'aggiunta');
+    }
+  };
+
+  const handleUpdate = async (updated: ShippingAddress) => {
+    try {
+      const { id, ...updateData } = updated;
+      const updatedAddress = await updateShippingAddress(id, updateData);
+      setAddresses(prev =>
+        prev.map(a => (a.id === updated.id ? updatedAddress : a))
+      );
+      setIsModalOpen(false);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Errore nell\'aggiornamento');
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    if (confirm('Eliminare questo indirizzo?')) {
+      try {
+        await deleteShippingAddress(id);
+        setAddresses(prev => prev.filter(a => a.id !== id));
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Errore nell\'eliminazione');
+      }
+    }
+  };
+
+  const setDefault = async (id: string) => {
+    try {
+      await setDefaultShippingAddress(id);
+      setAddresses(prev =>
+        prev.map(a => ({ ...a, isDefault: a.id === id }))
+      );
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Errore nell\'impostazione predefinito');
+    }
   };
 
   return (
@@ -57,7 +95,24 @@ export default function ShippingSection() {
         </button>
       </div>
 
-      {addresses.length === 0 ? (
+      {error && (
+        <div className="mb-4 p-3 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-lg text-red-700 dark:text-red-400 text-sm">
+          {error}
+          <button 
+            onClick={loadAddresses}
+            className="ml-2 underline hover:no-underline"
+          >
+            Riprova
+          </button>
+        </div>
+      )}
+
+      {loading ? (
+        <div className="flex items-center justify-center py-8">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-funkard-yellow"></div>
+          <span className="ml-2 text-zinc-500">Caricamento indirizzi...</span>
+        </div>
+      ) : addresses.length === 0 ? (
         <p className="text-sm text-zinc-500">
           Nessun indirizzo salvato. Aggiungine uno per iniziare.
         </p>

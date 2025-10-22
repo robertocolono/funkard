@@ -3,17 +3,7 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
 import { motion } from 'framer-motion';
-
-interface Address {
-  id?: string;
-  fullName: string;
-  addressLine1: string;
-  addressLine2?: string;
-  city: string;
-  postalCode: string;
-  country: string;
-  isDefault?: boolean;
-}
+import { type ShippingAddress } from '@/lib/funkardApi';
 
 export default function ShippingFormModal({
   isOpen,
@@ -23,17 +13,26 @@ export default function ShippingFormModal({
 }: {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: Address) => void;
-  defaultData?: Address | null;
+  onSubmit: (data: Omit<ShippingAddress, 'id'>) => void;
+  defaultData?: ShippingAddress | null;
 }) {
-  const [form, setForm] = useState<Address>(
-    defaultData || {
+  const [form, setForm] = useState<Omit<ShippingAddress, 'id'>>(
+    defaultData ? {
+      fullName: defaultData.fullName,
+      addressLine1: defaultData.addressLine1,
+      addressLine2: defaultData.addressLine2 || '',
+      city: defaultData.city,
+      postalCode: defaultData.postalCode,
+      country: defaultData.country,
+      isDefault: defaultData.isDefault,
+    } : {
       fullName: '',
       addressLine1: '',
       addressLine2: '',
       city: '',
       postalCode: '',
       country: '',
+      isDefault: false,
     }
   );
 

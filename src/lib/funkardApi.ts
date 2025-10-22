@@ -129,3 +129,105 @@ export async function reopenTicket(id: string) {
   if (!res.ok) throw new Error("Errore riapertura ticket");
   return res.json();
 }
+
+// ===== SHIPPING ADDRESSES API =====
+
+export interface ShippingAddress {
+  id: string;
+  fullName: string;
+  addressLine1: string;
+  addressLine2?: string;
+  city: string;
+  postalCode: string;
+  country: string;
+  isDefault: boolean;
+}
+
+export async function getShippingAddresses(): Promise<ShippingAddress[]> {
+  const token = localStorage.getItem("funkard_token");
+  if (!token) throw new Error("Token non trovato");
+
+  const response = await fetch(`${API_BASE}/api/user/addresses`, {
+    headers: {
+      "Authorization": `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Errore durante il caricamento degli indirizzi");
+  }
+
+  return response.json();
+}
+
+export async function addShippingAddress(address: Omit<ShippingAddress, 'id'>): Promise<ShippingAddress> {
+  const token = localStorage.getItem("funkard_token");
+  if (!token) throw new Error("Token non trovato");
+
+  const response = await fetch(`${API_BASE}/api/user/addresses`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+    },
+    body: JSON.stringify(address),
+  });
+
+  if (!response.ok) {
+    throw new Error("Errore durante l'aggiunta dell'indirizzo");
+  }
+
+  return response.json();
+}
+
+export async function updateShippingAddress(id: string, address: Omit<ShippingAddress, 'id'>): Promise<ShippingAddress> {
+  const token = localStorage.getItem("funkard_token");
+  if (!token) throw new Error("Token non trovato");
+
+  const response = await fetch(`${API_BASE}/api/user/addresses/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+    },
+    body: JSON.stringify(address),
+  });
+
+  if (!response.ok) {
+    throw new Error("Errore durante l'aggiornamento dell'indirizzo");
+  }
+
+  return response.json();
+}
+
+export async function deleteShippingAddress(id: string): Promise<void> {
+  const token = localStorage.getItem("funkard_token");
+  if (!token) throw new Error("Token non trovato");
+
+  const response = await fetch(`${API_BASE}/api/user/addresses/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Errore durante l'eliminazione dell'indirizzo");
+  }
+}
+
+export async function setDefaultShippingAddress(id: string): Promise<void> {
+  const token = localStorage.getItem("funkard_token");
+  if (!token) throw new Error("Token non trovato");
+
+  const response = await fetch(`${API_BASE}/api/user/addresses/${id}/default`, {
+    method: "PATCH",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Errore durante l'impostazione dell'indirizzo predefinito");
+  }
+}
