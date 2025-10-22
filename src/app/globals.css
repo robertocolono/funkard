@@ -6,6 +6,18 @@
   --funkard-yellow: #f2b237;
   --funkard-black: #0b0b0b;
   --funkard-gray: #1a1a1a;
+  --shadow-dark-glow: 0 0 15px rgba(242, 178, 55, 0.6);
+  --shadow-light-soft: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.light {
+  --background: #ffffff;
+  --foreground: #000000;
+}
+
+.dark {
+  --background: #000000;
+  --foreground: #ffffff;
 }
 
 /* ---------- BASE ---------- */
@@ -26,15 +38,19 @@ html, body {
 }
 
 .shadow-dark-glow {
-  box-shadow: 0 0 15px rgba(242, 178, 55, 0.6);
+  box-shadow: var(--shadow-dark-glow);
 }
 
 .shadow-light-soft {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-light-soft);
 }
 
 .bg-funkard-black {
   background-color: var(--funkard-black);
+}
+
+.bg-funkard-gray {
+  background-color: var(--funkard-gray);
 }
 
 /* ---------- SCROLLBAR ---------- */
