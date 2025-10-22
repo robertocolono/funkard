@@ -8,7 +8,7 @@ module.exports = {
   ],
   safelist: [
     // shadows & borders usate nelle card
-    'shadow-dark-glow', 'shadow-light-soft',
+    'shadow-dark-glow', 'shadow-light-soft', 'shadow-card',
     'border', 'border-gray-800', 'rounded-xl', 'rounded-2xl',
     // griglie e spacing
     'grid', 'grid-cols-1', 'md:grid-cols-3', 'gap-4', 'gap-6', 'gap-8',
@@ -34,6 +34,12 @@ module.exports = {
         'funkard-yellow': '#f2b237',
         'funkard-black': '#0b0b0b',
         'funkard-gray': '#1a1a1a',
+        background: 'var(--background)',
+        foreground: 'var(--foreground)',
+        card: 'var(--card)',
+        border: 'var(--border)',
+        muted: 'var(--muted)',
+        'muted-foreground': 'var(--muted-foreground)',
       },
       fontFamily: {
         inter: ['Inter', 'sans-serif'],
@@ -42,6 +48,7 @@ module.exports = {
       boxShadow: {
         'dark-glow': '0 0 15px rgba(242, 178, 55, 0.6)',
         'light-soft': '0 4px 10px rgba(0, 0, 0, 0.1)',
+        'card': '0 1px 4px rgba(0,0,0,0.08)',
       },
       transitionDuration: {
         fast: '150ms',
