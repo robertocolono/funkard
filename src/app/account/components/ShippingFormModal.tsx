@@ -1,40 +1,29 @@
 'use client';
 
-import { useState } from 'react';
-import { X } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { type ShippingAddress } from '@/lib/funkardApi';
+import { useState, useEffect } from 'react';
 
 export default function ShippingFormModal({
   isOpen,
   onClose,
   onSubmit,
-  defaultData,
+  editData,
 }: {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: Omit<ShippingAddress, 'id'>) => void;
-  defaultData?: ShippingAddress | null;
+  onSubmit: (data: any) => void;
+  editData?: any;
 }) {
-  const [form, setForm] = useState<Omit<ShippingAddress, 'id'>>(
-    defaultData ? {
-      fullName: defaultData.fullName,
-      addressLine1: defaultData.addressLine1,
-      addressLine2: defaultData.addressLine2 || '',
-      city: defaultData.city,
-      postalCode: defaultData.postalCode,
-      country: defaultData.country,
-      isDefault: defaultData.isDefault,
-    } : {
-      fullName: '',
-      addressLine1: '',
-      addressLine2: '',
-      city: '',
-      postalCode: '',
-      country: '',
-      isDefault: false,
-    }
-  );
+  const [form, setForm] = useState({
+    fullName: '',
+    addressLine: '',
+    city: '',
+    postalCode: '',
+    country: '',
+  });
+
+  useEffect(() => {
+    if (editData) setForm(editData);
+  }, [editData]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -45,86 +34,69 @@ export default function ShippingFormModal({
     onSubmit(form);
   };
 
-  return (
-    <motion.div
-      className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
-      <motion.div
-        initial={{ scale: 0.9 }}
-        animate={{ scale: 1 }}
-        className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-6 w-full max-w-md shadow-xl"
-      >
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-semibold">
-            {defaultData ? 'Modifica indirizzo' : 'Aggiungi indirizzo'}
-          </h3>
-          <button onClick={onClose} className="text-zinc-500 hover:text-zinc-700">
-            <X size={18} />
-          </button>
-        </div>
+  if (!isOpen) return null;
 
-        <form onSubmit={handleSubmit} className="space-y-3">
+  return (
+    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+      <div className="bg-zinc-900 border border-zinc-800 rounded-xl w-full max-w-md p-6 text-white">
+        <h3 className="text-lg font-semibold mb-4">
+          {editData ? 'Modifica indirizzo' : 'Aggiungi indirizzo'}
+        </h3>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
           <input
             name="fullName"
             placeholder="Nome completo"
             value={form.fullName}
             onChange={handleChange}
-            required
-            className="w-full p-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700"
+            className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 outline-none"
           />
           <input
-            name="addressLine1"
+            name="addressLine"
             placeholder="Indirizzo"
-            value={form.addressLine1}
+            value={form.addressLine}
             onChange={handleChange}
-            required
-            className="w-full p-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700"
+            className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-lg"
           />
           <input
-            name="addressLine2"
-            placeholder="Seconda linea (opzionale)"
-            value={form.addressLine2}
+            name="city"
+            placeholder="Città"
+            value={form.city}
             onChange={handleChange}
-            className="w-full p-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700"
+            className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-lg"
           />
-          <div className="grid grid-cols-2 gap-2">
-            <input
-              name="city"
-              placeholder="Città"
-              value={form.city}
-              onChange={handleChange}
-              required
-              className="p-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700"
-            />
-            <input
-              name="postalCode"
-              placeholder="CAP"
-              value={form.postalCode}
-              onChange={handleChange}
-              required
-              className="p-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700"
-            />
-          </div>
+          <input
+            name="postalCode"
+            placeholder="CAP"
+            value={form.postalCode}
+            onChange={handleChange}
+            className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-lg"
+          />
           <input
             name="country"
             placeholder="Paese"
             value={form.country}
             onChange={handleChange}
-            required
-            className="w-full p-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700"
+            className="w-full p-3 bg-zinc-800 border border-zinc-700 rounded-lg"
           />
 
-          <button
-            type="submit"
-            className="w-full bg-funkard-yellow text-black font-semibold py-2 rounded-lg hover:bg-yellow-400 transition"
-          >
-            {defaultData ? 'Salva modifiche' : 'Aggiungi indirizzo'}
-          </button>
+          <div className="flex justify-end gap-2 mt-4">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 text-sm text-gray-400 hover:text-gray-200 transition"
+            >
+              Annulla
+            </button>
+            <button
+              type="submit"
+              className="px-4 py-2 bg-funkard-yellow text-black font-semibold rounded-lg hover:bg-yellow-400 transition"
+            >
+              {editData ? 'Aggiorna' : 'Salva'}
+            </button>
+          </div>
         </form>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 }

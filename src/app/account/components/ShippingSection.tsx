@@ -1,68 +1,39 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Edit, Trash2, Star } from 'lucide-react';
-import ShippingFormModal from './ShippingFormModal';
-import { 
+import { useState } from 'react';
+import {
   fetchShippingAddresses,
   createShippingAddress,
-  updateShippingAddress, 
-  deleteShippingAddress, 
+  updateShippingAddress,
+  deleteShippingAddress,
   setDefaultShippingAddress,
-  type ShippingAddress 
 } from '@/lib/funkardApi';
+import ShippingFormModal from './ShippingFormModal';
 
-export default function ShippingSection({ data = [], onUpdate }: { data: any[], onUpdate: () => void }) {
-  const [addresses, setAddresses] = useState<ShippingAddress[]>(data);
-  const [selected, setSelected] = useState<ShippingAddress | null>(null);
+export default function ShippingSection({ data = [], onUpdate }: { data: any[]; onUpdate: () => void }) {
+  const [addresses, setAddresses] = useState(data);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [editData, setEditData] = useState<any | null>(null);
 
-  // Aggiorna addresses quando data cambia
-  useEffect(() => {
-    setAddresses(data);
-  }, [data]);
-
-  const handleAdd = async (formData: Omit<ShippingAddress, 'id'>) => {
-    try {
+  const handleAddOrEdit = async (formData: any) => {
+    if (editData) {
+      await updateShippingAddress(editData.id, formData);
+    } else {
       await createShippingAddress(formData);
-      await onUpdate(); // aggiorna la pagina intera
-      setIsModalOpen(false);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Errore nell\'aggiunta');
     }
-  };
-
-  const handleUpdate = async (updated: ShippingAddress) => {
-    try {
-      const { id, ...updateData } = updated;
-      await updateShippingAddress(id, updateData);
-      await onUpdate();
-      setIsModalOpen(false);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Errore nell\'aggiornamento');
-    }
+    await onUpdate();
+    setIsModalOpen(false);
+    setEditData(null);
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm('Eliminare questo indirizzo?')) {
-      try {
-        await deleteShippingAddress(id);
-        await onUpdate();
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Errore nell\'eliminazione');
-      }
-    }
+    await deleteShippingAddress(id);
+    await onUpdate();
   };
 
-  const setDefault = async (id: string) => {
-    try {
-      await setDefaultShippingAddress(id);
-      await onUpdate();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Errore nell\'impostazione predefinito');
-    }
+  const handleDefault = async (id: string) => {
+    await setDefaultShippingAddress(id);
+    await onUpdate();
   };
 
   return (
@@ -70,92 +41,68 @@ export default function ShippingSection({ data = [], onUpdate }: { data: any[], 
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-semibold">Indirizzi di spedizione</h2>
         <button
-          onClick={() => { setSelected(null); setIsModalOpen(true); }}
+          onClick={() => setIsModalOpen(true)}
           className="flex items-center gap-2 bg-funkard-yellow text-black font-semibold px-4 py-2 rounded-lg hover:bg-yellow-400 transition"
         >
-          <Plus size={18} /> Aggiungi indirizzo
+          Aggiungi indirizzo
         </button>
       </div>
 
-      {error && (
-        <div className="mb-4 p-3 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-lg text-red-700 dark:text-red-400 text-sm">
-          {error}
-        </div>
-      )}
-
       {addresses.length === 0 ? (
-        <p className="text-sm text-zinc-500">
-          Nessun indirizzo salvato. Aggiungine uno per iniziare.
-        </p>
+        <p className="text-sm text-zinc-500">Nessun indirizzo salvato.</p>
       ) : (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <AnimatePresence>
-            {addresses.map((addr) => (
-              <motion.div
-                key={addr.id}
-                layout
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                className={`border rounded-xl p-4 transition-colors ${
-                  addr.isDefault
-                    ? 'border-funkard-yellow bg-yellow-50 dark:bg-yellow-950/10'
-                    : 'border-zinc-200 dark:border-zinc-800'
-                }`}
-              >
-                <div className="flex justify-between items-start">
-                  <div>
-                    <p className="font-semibold">{addr.fullName}</p>
-                    <p className="text-sm text-zinc-500">
-                      {addr.addressLine1}
-                      {addr.addressLine2 && `, ${addr.addressLine2}`}
-                    </p>
-                    <p className="text-sm text-zinc-500">
-                      {addr.city}, {addr.postalCode}
-                    </p>
-                    <p className="text-sm text-zinc-500">{addr.country}</p>
-                    {addr.isDefault && (
-                      <p className="text-xs text-funkard-yellow font-medium mt-1">
-                        Indirizzo predefinito
-                      </p>
-                    )}
-                  </div>
+        <div className="grid sm:grid-cols-2 gap-4">
+          {addresses.map((a) => (
+            <div
+              key={a.id}
+              className={`border rounded-xl p-4 flex justify-between items-start ${
+                a.isDefault ? 'border-funkard-yellow bg-yellow-50/10' : 'border-zinc-800'
+              }`}
+            >
+              <div>
+                <p className="font-semibold">{a.fullName}</p>
+                <p className="text-sm text-zinc-400">{a.addressLine}</p>
+                <p className="text-sm text-zinc-400">{a.city}, {a.postalCode}</p>
+                <p className="text-sm text-zinc-400">{a.country}</p>
+                {a.isDefault && (
+                  <p className="text-xs text-funkard-yellow mt-1">Predefinito</p>
+                )}
+              </div>
 
-                  <div className="flex flex-col gap-2 items-end">
-                    <button
-                      onClick={() => { setSelected(addr); setIsModalOpen(true); }}
-                      className="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300"
-                    >
-                      <Edit size={18} />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(addr.id)}
-                      className="text-zinc-400 hover:text-red-500"
-                    >
-                      <Trash2 size={18} />
-                    </button>
-                    <button
-                      onClick={() => setDefault(addr.id)}
-                      className={`text-zinc-400 hover:text-yellow-500 transition ${
-                        addr.isDefault ? 'text-funkard-yellow' : ''
-                      }`}
-                    >
-                      <Star size={18} />
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+              <div className="flex flex-col gap-2 text-right">
+                <button
+                  onClick={() => setEditData(a) || setIsModalOpen(true)}
+                  className="text-zinc-400 hover:text-yellow-500 text-sm"
+                >
+                  Modifica
+                </button>
+                <button
+                  onClick={() => handleDefault(a.id)}
+                  className="text-zinc-400 hover:text-yellow-500 text-sm"
+                >
+                  Imposta
+                </button>
+                <button
+                  onClick={() => handleDelete(a.id)}
+                  className="text-zinc-400 hover:text-red-500 text-sm"
+                >
+                  Elimina
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       )}
 
       {isModalOpen && (
         <ShippingFormModal
           isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          onSubmit={selected ? handleUpdate : handleAdd}
-          defaultData={selected}
+          onClose={() => {
+            setIsModalOpen(false);
+            setEditData(null);
+          }}
+          onSubmit={handleAddOrEdit}
+          editData={editData}
         />
       )}
     </div>
