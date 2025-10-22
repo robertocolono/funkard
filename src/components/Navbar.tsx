@@ -1,8 +1,9 @@
 "use client";
 import Link from "next/link";
-import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import NavbarLogo from "@/components/NavbarLogo";
 
 function useAuth() {
   const [isAuth, setIsAuth] = useState<boolean>(false);
@@ -14,6 +15,7 @@ function useAuth() {
 
 export function Navbar() {
   const isAuth = useAuth();
+  const { resolvedTheme } = useTheme();
   const [notifCount, setNotifCount] = useState<number>(0);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -26,11 +28,8 @@ export function Navbar() {
 
   return (
     <nav className="relative md:static flex justify-between items-center px-6 py-3 border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-gray-800 dark:text-gray-100 transition-colors">
-      {/* LOGO */}
-      <div className="text-2xl font-bold">
-        <span className="text-black dark:text-white">FUN</span>
-        <span className="text-[var(--funkard-yellow)]">KARD</span>
-      </div>
+      {/* LOGO DINAMICO */}
+      <NavbarLogo />
 
       {/* NAV LINKS */}
       <div className="hidden md:flex items-center gap-6">

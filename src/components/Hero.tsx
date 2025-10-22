@@ -1,25 +1,45 @@
+"use client";
+import Image from 'next/image';
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
+
 export function Hero() {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
+
   return (
-    <section className="text-center py-16 bg-gradient-to-b from-white to-neutral-100 dark:from-neutral-950 dark:to-neutral-900 transition-colors">
-      <div className="max-w-3xl mx-auto px-6">
-        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 leading-tight">
-          Esplora, compra, vendi e scambia la tua collezione con un semplice click!
-        </h1>
-        <p className="text-gray-700 dark:text-gray-300 mb-8 text-base sm:text-lg">
-          Esplora collezioni leggendarie, scambia con la community e diventa un collezionista esperto o amatoriale con il nostro supporto.
-        </p>
+    <section className="flex flex-col items-center justify-center text-center py-section px-4">
+      {/* Logo grande dinamico */}
+      <Image
+        src={resolvedTheme === 'light' ? '/logo2.png' : '/logo.png'}
+        alt="Funkard Logo"
+        width={260}
+        height={80}
+        priority
+        className="object-contain mb-8"
+      />
 
-        <img
-          src="/logo.png"
-          alt="Funkard Logo"
-          className="w-28 sm:w-40 mx-auto mb-6"
-        />
+      {/* Testo descrittivo */}
+      <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+        Esplora, compra, vendi e scambia la tua collezione con un semplice click!
+      </h1>
 
+      {/* CTA principale */}
+      <div className="mt-6 flex gap-4">
         <a
           href="/marketplace"
-          className="inline-block px-5 py-2 sm:px-6 sm:py-3 bg-[var(--funkard-yellow)] text-black font-semibold rounded-lg hover:opacity-90 transition"
+          className="bg-funkard-yellow text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors"
         >
-          Esplora il Marketplace →
+          Esplora il Marketplace
+        </a>
+        <a
+          href="/register"
+          className="border border-funkard-yellow text-funkard-yellow px-6 py-3 rounded-lg font-semibold hover:bg-funkard-yellow hover:text-black transition-colors"
+        >
+          Registrati ora
         </a>
       </div>
     </section>

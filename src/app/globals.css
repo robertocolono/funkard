@@ -40,6 +40,14 @@ body {
   --border-dark: #2a2a2a;
   --shadow-dark: rgba(242, 178, 55, 0.1);
 
+  /* Design System HSL Variables */
+  --background: 0 0% 100%;
+  --foreground: 240 10% 4%;
+  --card: 0 0% 98%;
+  --border: 240 5% 90%;
+  --muted: 240 5% 96%;
+  --muted-foreground: 240 4% 46%;
+
   /* Transitions */
   --transition-fast: 0.25s ease;
   --transition-slow: 0.4s ease;
@@ -62,6 +70,14 @@ html.dark {
   --text-muted: var(--text-muted-dark);
   --border: var(--border-dark);
   --shadow: var(--shadow-dark);
+  
+  /* Design System HSL Variables - Dark */
+  --background: 240 10% 4%;
+  --foreground: 0 0% 100%;
+  --card: 240 6% 10%;
+  --border: 240 6% 18%;
+  --muted: 240 6% 12%;
+  --muted-foreground: 240 4% 46%;
 }
 
 /* === UNIVERSAL ELEMENT STYLING === */
@@ -138,6 +154,18 @@ html.light .glow-yellow {
 .section {
   padding-top: 5rem;
   padding-bottom: 5rem;
+}
+
+.py-section {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .py-section {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
 }
 
 @media (max-width: 640px) {

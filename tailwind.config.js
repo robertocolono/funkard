@@ -31,6 +31,13 @@ module.exports = {
         funkard: {
           yellow: "#f2b237",
         },
+        // Design System CSS Variables
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        card: 'hsl(var(--card))',
+        border: 'hsl(var(--border))',
+        muted: 'hsl(var(--muted))',
+        'muted-foreground': 'hsl(var(--muted-foreground))',
       },
       fontFamily: {
         inter: ["Inter", "sans-serif"],

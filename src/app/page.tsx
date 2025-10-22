@@ -1,21 +1,25 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Hero } from "@/components/Hero";
-import HomeGuest from "@/components/home/HomeGuest";
-import HomeUser from "@/components/home/HomeUser";
+import HomeMarketing from "@/components/HomeMarketing";
+import HomeUser from "@/components/HomeUser";
 
-export default function Page() {
-  const [isAuth, setIsAuth] = useState<boolean | null>(null);
+export default function HomePage() {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+
   useEffect(() => {
-    setIsAuth(!!localStorage.getItem("funkard_token"));
+    const token = localStorage.getItem('funkard_token');
+    setIsAuthenticated(!!token);
   }, []);
-  if (isAuth === null) return null;
-  
-  return (
-    <>
-      <Hero />
-      {isAuth ? <HomeUser /> : <HomeGuest />}
-    </>
-  );
+
+  if (isAuthenticated === null) {
+    // Evita flash visivi durante il controllo
+    return (
+      <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
+        <span className="text-sm text-gray-400">Caricamento...</span>
+      </div>
+    );
+  }
+
+  return isAuthenticated ? <HomeUser /> : <HomeMarketing />;
 }
 
