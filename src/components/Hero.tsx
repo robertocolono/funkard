@@ -10,16 +10,18 @@ export function Hero() {
 
   if (!mounted) return null;
 
+  const logoSrc = theme === 'light' ? '/logo2.png' : '/logo.png';
+
   return (
     <section className="flex flex-col items-center justify-center text-center py-section px-4">
       {/* Logo grande dinamico */}
       <Image
-        src={theme === 'light' ? '/logo2.png' : '/logo.png'}
+        src={logoSrc}
         alt="Funkard Logo"
         width={260}
         height={80}
         priority
-        className="object-contain mb-8"
+        className="object-contain mb-8 transition-opacity duration-300"
       />
 
       {/* Testo descrittivo */}

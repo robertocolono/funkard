@@ -1,59 +1,61 @@
 "use client";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useTheme } from "@/lib/context/ThemeContext";
-import { Moon, Sun } from "lucide-react";
-import NavbarLogo from "@/components/NavbarLogo";
-import { useSession } from "@/lib/context/SessionContext";
+import Image from 'next/image';
+import Link from 'next/link';
+import { useTheme } from '@/lib/context/ThemeContext';
+import { useSession } from '@/lib/context/SessionContext';
+import { Moon, Sun } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export function Navbar() {
-  const { isAuthenticated, user, logout } = useSession();
   const { theme, toggleTheme } = useTheme();
-  const [notifCount, setNotifCount] = useState<number>(0);
-  const [isOpen, setIsOpen] = useState(false);
+  const { isAuthenticated } = useSession();
+  const router = useRouter();
 
-  // Semplice canale per badge (puoi collegarlo al tuo store/SSE)
-  useEffect(() => {
-    // TODO: sostituisci con selettore reale (SSE/store)
-    const stored = Number(localStorage.getItem("funkard_notif") || 0);
-    setNotifCount(stored);
-  }, []);
+  const logoSrc = theme === 'light' ? '/logo2.png' : '/logo.png';
+  const textColor = theme === 'light' ? 'text-black' : 'text-white';
 
   return (
-    <nav className="relative md:static flex justify-between items-center px-6 py-3 border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-gray-800 dark:text-gray-100 transition-colors">
-      {/* LOGO DINAMICO */}
-      <NavbarLogo />
-
-      {/* NAV LINKS */}
-      <div className="hidden md:flex items-center gap-6">
-        <a href="/marketplace" className="hover:text-[var(--funkard-yellow)] transition">Marketplace</a>
-        {isAuthenticated && <a href="/collection" className="hover:text-[var(--funkard-yellow)] transition">Collezione</a>}
-        <a href="/gradelens" className="hover:text-[var(--funkard-yellow)] transition">Valuta</a>
-        <a href="/support" className="hover:text-[var(--funkard-yellow)] transition">Supporto</a>
-        {!isAuthenticated && <a href="/faq" className="hover:text-[var(--funkard-yellow)] transition">FAQ</a>}
+    <nav className="flex items-center justify-between px-6 py-4 border-b border-border bg-background transition-colors duration-300">
+      {/* SX — Logo + testo */}
+      <div className="flex items-center gap-2 cursor-pointer" onClick={() => router.push('/')}>
+        <Image
+          src={logoSrc}
+          alt="Funkard Logo"
+          width={36}
+          height={36}
+          className="transition-opacity duration-300"
+        />
+        <span className={`text-xl font-bold tracking-tight ${textColor}`}>
+          Funkard
+        </span>
       </div>
 
-      {/* CTA + THEME TOGGLE */}
-      <div className="flex items-center gap-3">
+      {/* DX — Navigazione + pulsanti */}
+      <div className="flex items-center gap-6 text-sm font-medium">
+        <Link href="/marketplace" className="hover:text-funkard-yellow transition-colors">
+          Marketplace
+        </Link>
+        <Link href="/gradelens" className="hover:text-funkard-yellow transition-colors">
+          Valuta carte
+        </Link>
+        <Link href="/support" className="hover:text-funkard-yellow transition-colors">
+          Supporto
+        </Link>
+
         {isAuthenticated ? (
-          <button 
-            onClick={logout} 
-            className="text-[var(--funkard-yellow)] hover:underline transition"
-          >
-            Profilo ({user?.username || user?.email})
-          </button>
+          <Link href="/profile" className="hover:text-funkard-yellow transition-colors">
+            Profilo
+          </Link>
         ) : (
-          <a 
-            href="/register" 
-            className="bg-[var(--funkard-yellow)] text-black px-4 py-2 rounded-md font-semibold hover:opacity-90 transition"
-          >
+          <Link href="/register" className="bg-funkard-yellow text-black px-3 py-2 rounded-lg font-semibold hover:opacity-90 transition">
             Registrati
-          </a>
+          </Link>
         )}
+
         <button
           onClick={toggleTheme}
+          aria-label="Cambia tema"
           className="p-2 rounded-lg hover:bg-muted transition-colors"
-          aria-label="Toggle theme"
         >
           {theme === 'light' ? (
             <Moon className="w-5 h-5 text-zinc-700" />
@@ -63,41 +65,6 @@ export function Navbar() {
         </button>
       </div>
 
-      {/* MOBILE MENU TOGGLE */}
-      <div className="md:hidden flex items-center gap-2">
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="p-2 rounded-md border border-gray-300 dark:border-gray-700"
-        >
-          ☰
-        </button>
-      </div>
-
-      {/* MOBILE MENU CONTENT */}
-      {isOpen && (
-        <div className="absolute top-14 left-0 w-full bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800 flex flex-col gap-3 p-4 text-center">
-          <a href="/marketplace" className="hover:text-[var(--funkard-yellow)]">Marketplace</a>
-          {isAuthenticated && <a href="/collection" className="hover:text-[var(--funkard-yellow)]">Collezione</a>}
-          <a href="/gradelens" className="hover:text-[var(--funkard-yellow)]">Valuta</a>
-          <a href="/support" className="hover:text-[var(--funkard-yellow)]">Supporto</a>
-          {!isAuthenticated && <a href="/faq" className="hover:text-[var(--funkard-yellow)]">FAQ</a>}
-          {isAuthenticated ? (
-            <button 
-              onClick={logout} 
-              className="mt-2 px-4 py-2 text-[var(--funkard-yellow)] hover:underline"
-            >
-              Logout ({user?.username || user?.email})
-            </button>
-          ) : (
-            <a 
-              href="/register" 
-              className="mt-2 px-4 py-2 bg-[var(--funkard-yellow)] text-black rounded-md font-semibold"
-            >
-              Registrati
-            </a>
-          )}
-        </div>
-      )}
     </nav>
   );
 }
