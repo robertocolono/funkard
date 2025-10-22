@@ -7,30 +7,20 @@ module.exports = {
     "./app/**/*.{ts,tsx,js,jsx}",
   ],
   safelist: [
-    // shadows & borders usate nelle card
     'shadow-dark-glow', 'shadow-light-soft', 'shadow-card',
     'border', 'border-gray-800', 'rounded-xl', 'rounded-2xl',
-    // griglie e spacing
     'grid', 'grid-cols-1', 'md:grid-cols-3', 'gap-4', 'gap-6', 'gap-8',
-    // background e testi brand
     'bg-funkard-black', 'bg-funkard-gray', 'bg-funkard-yellow',
     'text-funkard-yellow',
-    // padding card
     'p-4','p-6','p-8','md:p-6',
-    // hover effects
     'hover:scale-[1.02]', 'transition-transform',
-    // text colors
     'text-gray-300', 'text-gray-400', 'text-gray-500',
-    // spacing
     'py-section', 'mb-3', 'mb-2', 'mb-4', 'mb-6', 'mb-12',
-    // layout
     'max-w-3xl', 'max-w-5xl', 'mx-auto', 'text-center',
-    // custom drop shadows
     'drop-shadow-[0_0_15px_rgba(242,178,55,0.7)]',
   ],
   theme: {
     extend: {
-      /* === COLOR SYSTEM === */
       colors: {
         funkard: {
           yellow: "#f2b237",
@@ -62,14 +52,10 @@ module.exports = {
           border: "#2a2a2a",
         },
       },
-
-      /* === FONT SYSTEM === */
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
         display: ["Luckiest Guy", "cursive"],
       },
-
-      /* === SHADOW SYSTEM === */
       boxShadow: {
         sm: "0 1px 2px rgba(0,0,0,0.05)",
         DEFAULT: "0 2px 6px rgba(0,0,0,0.08)",
@@ -78,15 +64,11 @@ module.exports = {
         xl: "0 10px 25px rgba(0,0,0,0.2)",
         "funkard-glow": "0 0 20px rgba(242,178,55,0.25)",
       },
-
-      /* === TRANSITIONS === */
       transitionDuration: {
         fast: "200ms",
         normal: "300ms",
         slow: "500ms",
       },
-
-      /* === BORDER RADIUS === */
       borderRadius: {
         sm: "0.25rem",
         md: "0.5rem",
@@ -94,20 +76,14 @@ module.exports = {
         xl: "1.5rem",
         "2xl": "2rem",
       },
-
-      /* === SPACING === */
       spacing: {
         18: "4.5rem",
         22: "5.5rem",
         30: "7.5rem",
       },
-
-      /* === GRADIENTS === */
       backgroundImage: {
-        "funkard-gradient":
-          "linear-gradient(135deg, #f2b237 0%, #ffd36e 100%)",
-        "dark-gradient":
-          "linear-gradient(135deg, #0b0b0b 0%, #1a1a1a 100%)",
+        "funkard-gradient": "linear-gradient(135deg, #f2b237 0%, #ffd36e 100%)",
+        "dark-gradient": "linear-gradient(135deg, #0b0b0b 0%, #1a1a1a 100%)",
       },
     },
   },
