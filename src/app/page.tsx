@@ -22,31 +22,20 @@ export default function HomePage() {
       } transition-colors duration-300`}
     >
       {/* HERO */}
-      <section className="flex flex-col items-center justify-center text-center py-20 px-4">
-        <Image
-          src={theme === "light" ? "/logo2.png" : "/logo.png"}
-          alt="Funkard Logo"
-          width={140}
-          height={140}
-          className="mb-6"
-        />
-
-        <h1 className="text-3xl md:text-4xl font-bold mb-4">
+      <section className="flex flex-col items-center justify-center text-center py-section">
+        <img src="/logo.png" alt="Funkard Logo" className="w-28 mb-4" />
+        <h1 className="text-2xl md:text-3xl font-bold mb-3">
           Esplora, compra, vendi e scambia la tua collezione con un semplice click!
         </h1>
-
-        <p className="text-gray-400 max-w-2xl mb-10">
+        <p className="max-w-2xl text-gray-300 mb-6">
           Esplora collezioni leggendarie, scambia con la community e diventa un collezionista esperto o amatoriale con il nostro supporto.
         </p>
-
-        {!isLoggedIn && (
-          <Link
-            href="/marketplace"
-            className="bg-funkard-yellow text-black font-medium px-6 py-3 rounded-xl hover:opacity-90 transition"
-          >
-            Esplora il marketplace →
-          </Link>
-        )}
+        <Link
+          href="/marketplace"
+          className="text-funkard-yellow hover:underline font-medium"
+        >
+          Esplora il marketplace →
+        </Link>
       </section>
 
       {/* SEZIONI GUEST */}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Navbar } from "@/components/Navbar";
+import Navbar from "@/components/Navbar";
 import ImageUploader from "@/components/ImageUploader";
 import { analyzeGradeLens, confirmGradeLens } from "@/lib/funkardApi";
 import type { GradeLensResponse } from "@/types/gradelens";

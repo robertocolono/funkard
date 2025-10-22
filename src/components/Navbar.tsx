@@ -1,70 +1,47 @@
 "use client";
-import Image from 'next/image';
-import Link from 'next/link';
-import { useTheme } from '@/lib/context/ThemeContext';
-import { useSession } from '@/lib/context/SessionContext';
-import { Moon, Sun } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 
-export function Navbar() {
-  const { theme, toggleTheme } = useTheme();
-  const { isAuthenticated } = useSession();
-  const router = useRouter();
+import Link from "next/link";
+import ThemeToggle from "./ThemeToggle";
 
-  const logoSrc = theme === 'light' ? '/logo2.png' : '/logo.png';
-  const textColor = theme === 'light' ? 'text-black' : 'text-white';
-
+export default function Navbar() {
   return (
-    <nav className="flex items-center justify-between px-6 py-4 border-b border-border bg-background transition-colors duration-300">
-      {/* SX — Logo + testo */}
-      <div className="flex items-center gap-2 cursor-pointer" onClick={() => router.push('/')}>
-        <Image
-          src={logoSrc}
-          alt="Funkard Logo"
-          width={36}
-          height={36}
-          className="transition-opacity duration-300"
-        />
-        <span className={`text-xl font-bold tracking-tight ${textColor}`}>
+    <nav className="flex items-center justify-between px-6 py-3 border-b border-gray-800 dark:border-gray-700 bg-funkard-black text-white">
+      {/* --- LEFT --- */}
+      <div className="flex items-center space-x-3">
+        <Link href="/" className="font-luckiest text-funkard-yellow text-lg tracking-wide">
           Funkard
-        </span>
+        </Link>
       </div>
 
-      {/* DX — Navigazione + pulsanti */}
-      <div className="flex items-center gap-6 text-sm font-medium">
+      {/* --- CENTER NAV LINKS --- */}
+      <div className="hidden md:flex items-center space-x-6 text-sm font-medium">
         <Link href="/marketplace" className="hover:text-funkard-yellow transition-colors">
-          Marketplace
+          Esplora le collezioni
+        </Link>
+        <Link href="/collection" className="hover:text-funkard-yellow transition-colors">
+          Gestisci la tua collezione
         </Link>
         <Link href="/gradelens" className="hover:text-funkard-yellow transition-colors">
-          Valuta carte
+          Valuta le tue carte
         </Link>
         <Link href="/support" className="hover:text-funkard-yellow transition-colors">
           Supporto
         </Link>
-
-        {isAuthenticated ? (
-          <Link href="/account" className="hover:text-funkard-yellow transition-colors">
-            Profilo
-          </Link>
-        ) : (
-          <Link href="/register" className="bg-funkard-yellow text-black px-3 py-2 rounded-lg font-semibold hover:opacity-90 transition">
-            Registrati
-          </Link>
-        )}
-
-        <button
-          onClick={toggleTheme}
-          aria-label="Cambia tema"
-          className="p-2 rounded-lg hover:bg-muted transition-colors"
-        >
-          {theme === 'light' ? (
-            <Moon className="w-5 h-5 text-zinc-700" />
-          ) : (
-            <Sun className="w-5 h-5 text-yellow-400" />
-          )}
-        </button>
+        <Link href="/faq" className="hover:text-funkard-yellow transition-colors">
+          FAQ
+        </Link>
       </div>
 
+      {/* --- RIGHT --- */}
+      <div className="flex items-center space-x-4">
+        <Link
+          href="/register"
+          className="bg-funkard-yellow text-black px-4 py-1.5 rounded-md font-semibold hover:brightness-110 transition-all"
+        >
+          Registrati
+        </Link>
+        <ThemeToggle />
+      </div>
     </nav>
   );
 }
