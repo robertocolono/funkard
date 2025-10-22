@@ -1,8 +1,119 @@
+'use client';
+
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Plus, Trash2, Star, CreditCard } from 'lucide-react';
+import PaymentFormModal from './PaymentFormModal';
+
+interface PaymentMethod {
+  id: string;
+  cardHolder: string;
+  cardNumber: string;
+  expiryDate: string;
+  brand: 'VISA' | 'MASTERCARD' | 'AMEX' | 'ALTRO';
+  isDefault?: boolean;
+}
+
 export default function PaymentSection() {
+  const [methods, setMethods] = useState<PaymentMethod[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleAdd = (data: PaymentMethod) => {
+    setMethods(prev => [...prev, { ...data, id: crypto.randomUUID() }]);
+    setIsModalOpen(false);
+  };
+
+  const handleDelete = (id: string) => {
+    if (confirm('Eliminare questo metodo di pagamento?')) {
+      setMethods(prev => prev.filter(m => m.id !== id));
+    }
+  };
+
+  const setDefault = (id: string) => {
+    setMethods(prev =>
+      prev.map(m => ({ ...m, isDefault: m.id === id }))
+    );
+  };
+
   return (
     <div>
-      <h2 className="text-xl font-semibold mb-4">Metodi di pagamento</h2>
-      <p className="text-sm text-zinc-500">Gestisci i tuoi metodi di pagamento salvati (Stripe in arrivo).</p>
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-xl font-semibold">Metodi di pagamento</h2>
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="flex items-center gap-2 bg-funkard-yellow text-black font-semibold px-4 py-2 rounded-lg hover:bg-yellow-400 transition"
+        >
+          <Plus size={18} /> Aggiungi metodo
+        </button>
+      </div>
+
+      {methods.length === 0 ? (
+        <p className="text-sm text-zinc-500">
+          Nessun metodo salvato. Aggiungine uno per iniziare.
+        </p>
+      ) : (
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <AnimatePresence>
+            {methods.map((method) => (
+              <motion.div
+                key={method.id}
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className={`border rounded-xl p-4 flex justify-between items-center transition-colors ${
+                  method.isDefault
+                    ? 'border-funkard-yellow bg-yellow-50 dark:bg-yellow-950/10'
+                    : 'border-zinc-200 dark:border-zinc-800'
+                }`}
+              >
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <CreditCard className="text-zinc-400" size={18} />
+                    <span className="font-semibold">{method.brand}</span>
+                  </div>
+                  <p className="text-sm text-zinc-500">
+                    •••• •••• •••• {method.cardNumber.slice(-4)}
+                  </p>
+                  <p className="text-xs text-zinc-500">
+                    Scadenza: {method.expiryDate}
+                  </p>
+                  {method.isDefault && (
+                    <p className="text-xs text-funkard-yellow font-medium mt-1">
+                      Metodo predefinito
+                    </p>
+                  )}
+                </div>
+
+                <div className="flex flex-col gap-2 items-end">
+                  <button
+                    onClick={() => handleDelete(method.id)}
+                    className="text-zinc-400 hover:text-red-500"
+                  >
+                    <Trash2 size={18} />
+                  </button>
+                  <button
+                    onClick={() => setDefault(method.id)}
+                    className={`text-zinc-400 hover:text-yellow-500 transition ${
+                      method.isDefault ? 'text-funkard-yellow' : ''
+                    }`}
+                  >
+                    <Star size={18} />
+                  </button>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+      )}
+
+      {isModalOpen && (
+        <PaymentFormModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onSubmit={handleAdd}
+        />
+      )}
     </div>
   );
 }
