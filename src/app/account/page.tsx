@@ -6,6 +6,13 @@ import { cn } from '@/lib/utils';
 import { useSession } from '@/lib/context/SessionContext';
 import { useRouter } from 'next/navigation';
 
+import AccountSection from './components/AccountSection';
+import PreferencesSection from './components/PreferencesSection';
+import HistorySection from './components/HistorySection';
+import SecuritySection from './components/SecuritySection';
+import ShippingSection from './components/ShippingSection';
+import PaymentSection from './components/PaymentSection';
+
 const tabs = [
   { id: 'account', label: 'Account' },
   { id: 'preferences', label: 'Preferenze' },
@@ -44,17 +51,17 @@ export default function AccountPage() {
   const renderSection = () => {
     switch (activeTab) {
       case 'account':
-        return <div>📄 Sezione Account (dati utente, email, nome, ecc.)</div>;
+        return <AccountSection />;
       case 'preferences':
-        return <div>⚙️ Sezione Preferenze (tema, lingua, notifiche)</div>;
+        return <PreferencesSection />;
       case 'history':
-        return <div>🧾 Storico attività (ticket, vendite, valutazioni)</div>;
+        return <HistorySection />;
       case 'security':
-        return <div>🔒 Sicurezza (password, sessioni attive, logout)</div>;
+        return <SecuritySection />;
       case 'shipping':
-        return <div>📦 Indirizzi di spedizione (multipli salvati)</div>;
+        return <ShippingSection />;
       case 'payment':
-        return <div>💳 Metodi di pagamento (coming soon)</div>;
+        return <PaymentSection />;
       default:
         return null;
     }
@@ -92,8 +99,8 @@ export default function AccountPage() {
         </div>
       </div>
 
-      {/* Contenuto sezione */}
-      <main className="max-w-5xl mx-auto px-4 py-8 space-y-6">
+      {/* Sezione dinamica */}
+      <main className="max-w-5xl mx-auto px-4 py-8">
         <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-6 shadow-sm">
           {renderSection()}
         </div>
