@@ -43,7 +43,7 @@ export function Navbar() {
         </Link>
 
         {isAuthenticated ? (
-          <Link href="/profile" className="hover:text-funkard-yellow transition-colors">
+          <Link href="/account" className="hover:text-funkard-yellow transition-colors">
             Profilo
           </Link>
         ) : (
