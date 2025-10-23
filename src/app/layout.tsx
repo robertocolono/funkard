@@ -26,11 +26,8 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <NotificationProvider>
-              {/* Navbar Globale */}
-              <Navbar />
-
               {/* Contenuto Pagina */}
-              <div className="pt-24">{children}</div>
+              {children}
             </NotificationProvider>
           </ThemeProvider>
         </SessionProvider>
