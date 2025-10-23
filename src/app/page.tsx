@@ -7,7 +7,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-black text-white">
       {/* HERO */}
-      <section className="relative pt-48 pb-40 text-center overflow-hidden">
+      <section className="relative pt-56 pb-48 text-center overflow-hidden">
         {/* Background Effects */}
         <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/15 via-black to-black" />
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-yellow-400/10 rounded-full blur-3xl" />
@@ -32,8 +32,14 @@ export default function HomePage() {
       {/* FEATURES */}
       <Features />
 
+      {/* SPACER */}
+      <div className="h-20 bg-gradient-to-b from-neutral-950 to-black" />
+
       {/* CTA */}
       <CTA />
+
+      {/* SPACER */}
+      <div className="h-20 bg-gradient-to-b from-black to-neutral-950" />
 
       {/* FOOTER */}
       <Footer />

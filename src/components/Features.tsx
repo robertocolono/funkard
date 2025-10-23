@@ -18,7 +18,7 @@ export function Features() {
   ];
 
   return (
-    <section className="py-32 bg-gradient-to-b from-black to-neutral-950 text-white">
+    <section className="py-40 bg-gradient-to-b from-black to-neutral-950 text-white">
       <div className="text-center mb-20">
         <h2 className="text-5xl font-bold mb-6 text-yellow-400 drop-shadow-[0_0_25px_#FFB300]">
           Diventa un collezionista e divertiti!
@@ -28,17 +28,17 @@ export function Features() {
         </p>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-16 max-w-7xl mx-auto px-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto px-8">
         {features.map((f) => (
           <div
             key={f.title}
-            className="bg-gradient-to-b from-neutral-900 to-neutral-800 border-2 border-yellow-400/30 rounded-3xl p-10 text-center shadow-2xl hover:shadow-[0_0_40px_#FFB300]/40 transition-all duration-500 hover:scale-105 hover:border-yellow-400/60 group"
+            className="bg-gradient-to-b from-neutral-900 to-neutral-800 border-2 border-yellow-400/30 rounded-3xl p-8 text-center shadow-2xl hover:shadow-[0_0_40px_#FFB300]/40 transition-all duration-500 hover:scale-105 hover:border-yellow-400/60 group"
           >
-            <div className="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">
+            <div className="text-5xl mb-6 group-hover:scale-110 transition-transform duration-300">
               {f.icon}
             </div>
-            <h3 className="text-2xl font-bold text-yellow-400 mb-4">{f.title}</h3>
-            <p className="text-gray-300 text-lg leading-relaxed">{f.desc}</p>
+            <h3 className="text-xl font-bold text-yellow-400 mb-4">{f.title}</h3>
+            <p className="text-gray-300 text-base leading-relaxed">{f.desc}</p>
           </div>
         ))}
       </div>
