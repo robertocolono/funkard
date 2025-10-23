@@ -1,49 +1,73 @@
+
+
 "use client";
-import Image from 'next/image';
-import { useTheme } from '@/lib/context/ThemeContext';
-import { useEffect, useState } from 'react';
 
-export function Hero() {
-  const { theme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+import Image from "next/image";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Search } from "lucide-react";
+import Link from "next/link";
 
-  if (!mounted) return null;
-
-  const logoSrc = theme === 'light' ? '/logo2.png' : '/logo.png';
-
+export default function Hero() {
   return (
-    <section className="flex flex-col items-center justify-center text-center py-section px-4">
-      {/* Logo grande dinamico */}
+    <section className="relative flex flex-col items-center justify-center text-center py-28 md:py-36 px-6 overflow-hidden bg-gradient-to-b from-black to-neutral-900 dark:from-black dark:to-neutral-950">
+      {/* BG IMMAGINI SFUMATE */}
+      <div className="absolute inset-0 overflow-hidden opacity-20 blur-2xl">
+        <Image
+          src="/images/sample/charizard.jpg"
+          alt="Charizard"
+          width={500}
+          height={500}
+          className="absolute top-10 left-10 rotate-[-8deg] opacity-30"
+        />
+        <Image
+          src="/images/sample/booster-box.jpg"
+          alt="Booster Box"
+          width={500}
+          height={500}
+          className="absolute bottom-10 right-10 rotate-[10deg] opacity-30"
+        />
+      </div>
+
+      {/* LOGO */}
       <Image
-        src={logoSrc}
+        src="/logo.png"
         alt="Funkard Logo"
-        width={260}
-        height={80}
-        priority
-        className="object-contain mb-8 transition-opacity duration-300"
+        width={120}
+        height={120}
+        className="z-10 mb-8 drop-shadow-lg"
       />
 
-      {/* Testo descrittivo */}
-      <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-        Esplora, compra, vendi e scambia la tua collezione con un semplice click!
+      {/* TITOLO */}
+      <h1 className="text-4xl md:text-6xl font-bold mb-4 z-10">
+        Cerca il tuo <span className="text-yellow-500">TCG</span> preferito
       </h1>
+      <p className="text-gray-400 max-w-2xl mb-10 z-10 text-base md:text-lg">
+        Scopri, acquista e vendi carte da collezione in sicurezza. Tutti i TCG,
+        un solo marketplace.
+      </p>
 
-      {/* CTA principale */}
-      <div className="mt-6 flex gap-4">
-        <a
+      {/* SEARCH BAR */}
+      <div className="flex w-full max-w-lg bg-neutral-900/70 rounded-full p-2 z-10 shadow-lg ring-1 ring-neutral-700">
+        <Input
+          placeholder="Digita un gioco o una carta..."
+          className="flex-1 bg-transparent border-none text-white placeholder-gray-500 focus-visible:ring-0"
+        />
+        <Button className="rounded-full bg-yellow-500 text-black font-semibold hover:bg-yellow-400 transition">
+          <Search className="mr-2 h-4 w-4" /> Cerca
+        </Button>
+      </div>
+
+      {/* CTA */}
+      <div className="mt-10 z-10">
+        <Link
           href="/marketplace"
-          className="bg-funkard-yellow text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors"
+          className="px-6 md:px-8 py-3 bg-yellow-500 text-black font-semibold rounded-full hover:bg-yellow-400 transition inline-block"
         >
-          Esplora il Marketplace
-        </a>
-        <a
-          href="/register"
-          className="border border-funkard-yellow text-funkard-yellow px-6 py-3 rounded-lg font-semibold hover:bg-funkard-yellow hover:text-black transition-colors"
-        >
-          Registrati ora
-        </a>
+          Vai al Marketplace
+        </Link>
       </div>
     </section>
   );
 }
+
