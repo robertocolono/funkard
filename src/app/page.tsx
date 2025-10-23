@@ -58,12 +58,12 @@ export default function HomePage() {
           </Button>
         </div>
 
-        <Button
-          asChild
-          className="mt-8 px-6 md:px-8 py-2 md:py-3 bg-yellow-500 text-black font-semibold rounded-full hover:bg-yellow-400 transition"
+        <Link
+          href="/marketplace"
+          className="mt-8 px-6 md:px-8 py-2 md:py-3 bg-yellow-500 text-black font-semibold rounded-full hover:bg-yellow-400 transition inline-block"
         >
-          <Link href="/marketplace">Vai al Marketplace</Link>
-        </Button>
+          Vai al Marketplace
+        </Link>
 
         {/* CATEGORIE - SCORRIMENTO MOBILE */}
         <div className="flex gap-6 mt-12 overflow-x-auto px-4 md:grid md:grid-cols-5 md:gap-8 md:overflow-visible md:px-0">
@@ -126,12 +126,12 @@ export default function HomePage() {
         </div>
 
         <div className="flex justify-center mt-10">
-          <Button
-            asChild
-            className="px-6 md:px-8 py-2 md:py-3 bg-yellow-500 text-black font-semibold rounded-full hover:bg-yellow-400 transition"
+          <Link
+            href="/marketplace"
+            className="px-6 md:px-8 py-2 md:py-3 bg-yellow-500 text-black font-semibold rounded-full hover:bg-yellow-400 transition inline-block"
           >
-            <Link href="/marketplace">Vai al Marketplace</Link>
-          </Button>
+            Vai al Marketplace
+          </Link>
         </div>
       </section>
 
@@ -149,12 +149,12 @@ export default function HomePage() {
           <p className="mb-4 text-gray-300 text-sm md:text-base">
             Funzionalità in fase beta — risultati basati su analisi reali.
           </p>
-          <Button
-            asChild
-            className="px-6 py-3 bg-yellow-500 text-black font-semibold rounded-full hover:bg-yellow-400 transition"
+          <Link
+            href="/gradelens"
+            className="px-6 py-3 bg-yellow-500 text-black font-semibold rounded-full hover:bg-yellow-400 transition inline-block"
           >
-            <Link href="/gradelens">Prova la scansione simulata</Link>
-          </Button>
+            Prova la scansione simulata
+          </Link>
         </div>
       </section>
 
@@ -163,12 +163,12 @@ export default function HomePage() {
         <h2 className="text-xl md:text-3xl font-semibold mb-4 leading-snug">
           Esplora, vendi, compra e scambia la tua collezione con quella di altri in tutto il mondo.
         </h2>
-        <Button
-          asChild
-          className="mt-4 px-8 py-3 bg-yellow-500 text-black font-semibold rounded-full hover:bg-yellow-400 transition"
+        <Link
+          href="/register"
+          className="mt-4 px-8 py-3 bg-yellow-500 text-black font-semibold rounded-full hover:bg-yellow-400 transition inline-block"
         >
-          <Link href="/register">Registrati ora</Link>
-        </Button>
+          Registrati ora
+        </Link>
         <p className="mt-6 text-gray-500 text-sm">Funkard — Da collezionisti per collezionisti</p>
       </section>
 
