@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Navbar from "@/components/Navbar";
 import ImageUploader from "@/components/ImageUploader";
 import { analyzeGradeLens, confirmGradeLens } from "@/lib/funkardApi";
 import type { GradeLensResponse } from "@/types/gradelens";
@@ -66,7 +65,6 @@ export default function GradeLensPage() {
 
   return (
     <main className="min-h-screen bg-black text-white flex flex-col items-center justify-start px-6 pb-20 pt-24 relative overflow-hidden">
-      <Navbar />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,204,0,0.1)_0%,transparent_70%)] blur-3xl pointer-events-none" />
 
       <div className="text-center relative z-10 w-full max-w-3xl">
