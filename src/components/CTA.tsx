@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function CTA() {
   return (
-    <section className="relative py-28 text-center bg-gradient-to-b from-yellow-500/20 via-black to-black">
+    <section className="relative py-28 text-center bg-gradient-radial from-yellow-500/20 via-black to-black">
       <div className="max-w-4xl mx-auto px-6">
         <h2 className="text-5xl font-extrabold text-yellow-400 mb-6 drop-shadow-[0_0_25px_#FFB300]">
           Pronto a iniziare la tua avventura?

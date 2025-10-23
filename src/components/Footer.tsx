@@ -8,7 +8,10 @@ export function Footer() {
           <div>
             <h3 className="text-xl font-semibold mb-2 text-yellow-400">Supporto</h3>
             <p>Hai domande o problemi? Il nostro team è a disposizione.</p>
-            <Link href="/support" className="text-yellow-400 hover:text-yellow-300 mt-2 inline-block">
+            <Link
+              href="/support"
+              className="text-yellow-400 hover:text-yellow-300 mt-2 inline-block"
+            >
               Vai al supporto →
             </Link>
           </div>
@@ -16,7 +19,10 @@ export function Footer() {
           <div>
             <h3 className="text-xl font-semibold mb-2 text-yellow-400">Community</h3>
             <p>Scopri guide, consigli e condividi esperienze con altri collezionisti.</p>
-            <Link href="/community" className="text-yellow-400 hover:text-yellow-300 mt-2 inline-block">
+            <Link
+              href="/community"
+              className="text-yellow-400 hover:text-yellow-300 mt-2 inline-block"
+            >
               Entra in community →
             </Link>
           </div>

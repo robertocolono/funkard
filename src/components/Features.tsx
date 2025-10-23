@@ -1,4 +1,19 @@
 export function Features() {
+  const features = [
+    {
+      title: "Marketplace intuitivo",
+      desc: "Compra e vendi carte in modo semplice, sicuro e moderno.",
+    },
+    {
+      title: "GradeLens AI",
+      desc: "Analizza e valuta le tue carte con intelligenza artificiale.",
+    },
+    {
+      title: "La tua collezione",
+      desc: "Gestisci e mostra le tue carte come un vero collezionista.",
+    },
+  ];
+
   return (
     <section className="py-28 bg-gradient-to-b from-black to-neutral-950 text-white">
       <div className="text-center mb-16">
@@ -11,17 +26,13 @@ export function Features() {
       </div>
 
       <div className="grid md:grid-cols-3 gap-12 max-w-6xl mx-auto px-8">
-        {[
-          { title: 'Marketplace intuitivo', desc: 'Compra e vendi carte in modo semplice, sicuro e moderno.' },
-          { title: 'GradeLens AI', desc: 'Analizza e valuta le tue carte con intelligenza artificiale.' },
-          { title: 'La tua collezione', desc: 'Gestisci e mostra le tue carte come un vero collezionista.' },
-        ].map((item) => (
+        {features.map((f) => (
           <div
-            key={item.title}
-            className="bg-gray-900 border border-yellow-400/30 rounded-2xl p-8 shadow-lg hover:border-yellow-400/60 hover:shadow-[0_0_25px_#FFB300]/30 transition-all duration-300 hover:scale-105"
+            key={f.title}
+            className="bg-neutral-900 border border-yellow-400/20 rounded-2xl p-8 text-center shadow-lg hover:shadow-[0_0_25px_#FFB300]/30 transition-all hover:scale-[1.02]"
           >
-            <h3 className="text-yellow-400 font-bold text-xl mb-4">{item.title}</h3>
-            <p className="text-gray-300 text-base leading-relaxed">{item.desc}</p>
+            <h3 className="text-xl font-semibold text-yellow-400 mb-3">{f.title}</h3>
+            <p className="text-gray-300 text-sm sm:text-base">{f.desc}</p>
           </div>
         ))}
       </div>
