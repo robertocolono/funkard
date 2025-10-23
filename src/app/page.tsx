@@ -9,6 +9,9 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import Hero from "@/components/Hero";
 
+// Forza rendering dinamico per evitare cache
+export const dynamic = "force-dynamic";
+
 export default function HomePage() {
   const [query, setQuery] = useState("");
 

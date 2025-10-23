@@ -17,7 +17,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html suppressHydrationWarning lang="it">
       <body className="min-h-screen antialiased bg-white text-black dark:bg-black dark:text-white transition-colors duration-300">
         <SessionProvider>
-          <ThemeProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem={true}
+            disableTransitionOnChange
+          >
             <NotificationProvider>
               <Navbar />
               <main className="pt-24 pb-16">
