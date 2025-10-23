@@ -1,5 +1,6 @@
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import MobileNavbar from "@/components/layout/MobileNavbar";
 import { Toaster } from "sonner";
 import { Toaster as HotToaster } from "react-hot-toast";
 import { NotificationProvider } from "@/context/NotificationContext";
@@ -19,9 +20,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ThemeProvider>
             <NotificationProvider>
               <Navbar />
-              <main className="pt-24">
+              <main className="pt-24 pb-16">
                 {children}
               </main>
+              <MobileNavbar />
               <Toaster richColors position="top-center" />
               <HotToaster position="bottom-right" />
             </NotificationProvider>
