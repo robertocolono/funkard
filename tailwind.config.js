@@ -8,7 +8,7 @@ module.exports = {
   ],
   safelist: [
     'shadow-dark-glow', 'shadow-light-soft', 'shadow-card',
-    'border', 'border-gray-800', 'rounded-xl', 'rounded-2xl',
+    'border', 'border-gray-800', 'rounded-xl', 'rounded-2xl', 'rounded-3xl',
     'grid', 'grid-cols-1', 'md:grid-cols-3', 'gap-4', 'gap-6', 'gap-8',
     'bg-funkard-black', 'bg-funkard-gray', 'bg-funkard-yellow',
     'text-funkard-yellow',
@@ -18,6 +18,19 @@ module.exports = {
     'py-section', 'mb-3', 'mb-2', 'mb-4', 'mb-6', 'mb-12',
     'max-w-3xl', 'max-w-5xl', 'mx-auto', 'text-center',
     'drop-shadow-[0_0_15px_rgba(242,178,55,0.7)]',
+    // Premium gradient classes
+    'bg-gradient-to-r', 'from-yellow-500', 'to-amber-400',
+    // Premium shadow classes
+    'shadow-[0_0_15px_rgba(255,200,0,0.2)]', 'shadow-[0_0_25px_rgba(255,200,0,0.4)]',
+    'shadow-[inset_0_0_10px_rgba(255,255,255,0.05)]',
+    // Premium background classes
+    'bg-neutral-900/80', 'bg-neutral-800/80',
+    // Premium text classes
+    'text-yellow-400', 'font-bold',
+    // Premium transition classes
+    'transition-all', 'duration-300',
+    // Premium backdrop classes
+    'backdrop-blur-md',
   ],
   theme: {
     extend: {

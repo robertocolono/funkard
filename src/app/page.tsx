@@ -13,6 +13,8 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-white text-black dark:bg-black dark:text-white relative pb-20 md:pb-0 transition-colors duration-300">
+      {/* TEST VISIVO - VERIFICA FILE CORRETTO */}
+      <div className="hidden" data-home="funkard-v1.1" />
       {/* NAVBAR DESKTOP */}
       <nav className="hidden md:flex fixed top-0 left-0 right-0 z-50 h-16 bg-white dark:bg-black border-b border-neutral-200 dark:border-neutral-800 items-center justify-between px-10 transition-colors duration-300">
         <div className="text-2xl font-bold">
