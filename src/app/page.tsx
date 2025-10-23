@@ -11,6 +11,7 @@ import Hero from "@/components/Hero";
 
 // Forza rendering dinamico per evitare cache
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default function HomePage() {
   const [query, setQuery] = useState("");
@@ -19,6 +20,8 @@ export default function HomePage() {
     <main className="min-h-screen bg-white text-black dark:bg-black dark:text-white relative pb-20 md:pb-0 transition-colors duration-300">
       {/* TEST VISIVO - VERIFICA FILE CORRETTO */}
       <div className="hidden" data-home="funkard-v1.1" />
+      {/* marker debug build */}
+      <div data-home-build="home-2025-10-23-15h" className="hidden" />
       
       {/* NAVBAR DESKTOP */}
       <nav className="hidden md:flex fixed top-0 left-0 right-0 z-50 h-16 bg-white dark:bg-black border-b border-neutral-200 dark:border-neutral-800 items-center justify-between px-10 transition-colors duration-300">
