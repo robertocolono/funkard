@@ -33,7 +33,7 @@ export default function SupportPage() {
   const { user, isAuthenticated } = useSession();
   const router = useRouter();
   
-  const [tickets, setTickets] = useState<Ticket[]>([]);
+  const [tickets, setTickets] = useState([] as Ticket[]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [newTicket, setNewTicket] = useState({
@@ -109,7 +109,7 @@ export default function SupportPage() {
   };
 
   const handleInputChange = (field: string, value: string) => {
-    setNewTicket(prev => ({ ...prev, [field]: value }));
+    setNewTicket((prev: any) => ({ ...prev, [field]: value }));
     if (error) setError('');
   };
 
