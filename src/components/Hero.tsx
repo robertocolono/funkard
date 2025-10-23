@@ -64,7 +64,7 @@ export default function Hero() {
           isDark ? "text-white" : "text-black"
         }`}
       >
-        FUNKARD TEST 123 🚀
+        Cerca il tuo <span className="text-yellow-500">TCG</span> preferito
       </h1>
 
       <p

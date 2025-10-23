@@ -11,7 +11,6 @@ import Hero from "@/components/Hero";
 
 // Forza rendering dinamico per evitare cache
 export const dynamic = "force-dynamic";
-export const revalidate = 0;
 
 export default function HomePage() {
   const [query, setQuery] = useState("");
