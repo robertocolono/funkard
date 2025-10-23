@@ -35,6 +35,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        // CSS Variables per next-themes
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        card: "hsl(var(--card))",
+        "card-foreground": "hsl(var(--card-foreground))",
+        border: "hsl(var(--border))",
+        muted: "hsl(var(--muted))",
+        "muted-foreground": "hsl(var(--muted-foreground))",
+        
         funkard: {
           yellow: "#f2b237",
           black: "#0b0b0b",

@@ -15,7 +15,7 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html suppressHydrationWarning lang="it">
-      <body className="min-h-screen antialiased bg-background text-foreground">
+      <body className="min-h-screen antialiased bg-white text-black dark:bg-black dark:text-white transition-colors duration-300">
         <SessionProvider>
           <ThemeProvider>
             <NotificationProvider>
