@@ -1,3 +1,5 @@
+// DISABILITATO TEMPORANEAMENTE - USA next-themes
+/*
 'use client';
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
@@ -50,3 +52,4 @@ export function useTheme() {
   if (!ctx) throw new Error('useTheme must be used within a ThemeProvider');
   return ctx;
 }
+*/
