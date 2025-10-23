@@ -1,36 +1,18 @@
 import "./globals.css";
-import { Navbar } from "@/components/Navbar";
-import { SessionProvider } from "@/lib/context/SessionContext";
-import { NotificationProvider } from "@/context/NotificationContext";
-import { ThemeProvider } from "next-themes";
+import { ReactNode } from "react";
+import Loader from "@/components/Loader";
 
 export const metadata = {
-  title: "Funkard — Il Marketplace dei Collezionisti",
-  description:
-    "Compra, vendi e valuta carte da collezione. Da collezionisti, per collezionisti.",
+  title: "Funkard - Marketplace TCG",
+  description: "Il collezionismo moderno, accessibile e divertente.",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="it" suppressHydrationWarning>
-      <body className="min-h-screen bg-black text-white transition-colors duration-300">
-        <SessionProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem={true}
-            disableTransitionOnChange
-          >
-            <NotificationProvider>
-              {/* Contenuto Pagina */}
-              {children}
-            </NotificationProvider>
-          </ThemeProvider>
-        </SessionProvider>
+    <html lang="it">
+      <body className="relative bg-[#0a0a0a] text-white">
+        <Loader />
+        {children}
       </body>
     </html>
   );

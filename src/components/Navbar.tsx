@@ -1,90 +1,107 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useState } from "react";
+import Image from "next/image";
+import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { useTheme } from "next-themes";
 
-export function Navbar() {
-  const [open, setOpen] = useState(false);
-  const { theme, setTheme } = useTheme();
+export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const links = [
+    { name: "Marketplace", href: "/marketplace" },
+    { name: "Collezione", href: "/collection" },
+    { name: "GradeLens", href: "/gradelens" },
+    { name: "Supporto", href: "/support" },
+  ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0a]/90 backdrop-blur-xl border-b border-yellow-400/20 transition-all">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-5">
-        {/* Logo */}
-        <Link href="/" className="text-2xl font-bold tracking-tight">
-          <span className="text-yellow-400">FUN</span>
-          <span className="text-white">KARD</span>
+    <motion.nav
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-[#0a0a0a]/95 backdrop-blur-md border-b border-yellow-400/20"
+          : "bg-transparent"
+      }`}
+      initial={{ y: -80 }}
+      animate={{ y: 0 }}
+    >
+      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        {/* LOGO */}
+        <Link href="/" className="flex items-center gap-2">
+          <Image
+            src="/logo.png"
+            alt="Funkard Logo"
+            width={32}
+            height={32}
+            className="rounded"
+          />
+          <span className="text-xl font-bold text-yellow-400 tracking-wide">
+            FUN<span className="text-white">KARD</span>
+          </span>
         </Link>
 
-        {/* Desktop Menu */}
+        {/* DESKTOP MENU */}
         <div className="hidden md:flex items-center gap-8">
-          <Link href="/marketplace" className="text-gray-300 hover:text-yellow-400 font-medium transition">
-            Marketplace
-          </Link>
-          <Link href="/collection" className="text-gray-300 hover:text-yellow-400 font-medium transition">
-            Collezione
-          </Link>
-          <Link href="/gradelens" className="text-gray-300 hover:text-yellow-400 font-medium transition">
-            GradeLens
-          </Link>
-          <Link href="/support" className="text-gray-300 hover:text-yellow-400 font-medium transition">
-            Supporto
-          </Link>
-
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="text-gray-300 hover:text-yellow-400 transition text-sm font-medium"
+            >
+              {link.name}
+            </Link>
+          ))}
           <Link
             href="/register"
-            className="ml-4 bg-yellow-400 text-black font-semibold px-5 py-2 rounded-lg hover:bg-yellow-300 transition shadow-[0_0_15px_#FFB300]/40"
+            className="ml-6 px-5 py-2 rounded-xl bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-semibold text-sm hover:opacity-90 transition"
           >
             Registrati
           </Link>
-
-          <button
-            onClick={toggleTheme}
-            className="ml-3 px-3 py-2 border border-gray-700 text-gray-300 rounded-lg hover:bg-gray-800 transition"
-          >
-            {theme === "dark" ? "☀️" : "🌙"}
-          </button>
         </div>
 
-        {/* Mobile Menu Button */}
+        {/* MOBILE MENU BUTTON */}
         <button
-          onClick={() => setOpen(!open)}
-          className="md:hidden text-gray-300 hover:text-yellow-400 transition"
+          onClick={() => setIsOpen(!isOpen)}
+          className="md:hidden text-yellow-400 focus:outline-none"
         >
-          {open ? <X size={26} /> : <Menu size={26} />}
+          {isOpen ? <X size={26} /> : <Menu size={26} />}
         </button>
       </div>
 
-      {/* Mobile Dropdown */}
-      {open && (
-        <div className="md:hidden bg-black/95 border-t border-yellow-500/20 px-6 py-6 space-y-5 text-center">
-          <Link href="/marketplace" className="block text-gray-300 hover:text-yellow-400 text-lg" onClick={() => setOpen(false)}>
-            Marketplace
-          </Link>
-          <Link href="/collection" className="block text-gray-300 hover:text-yellow-400 text-lg" onClick={() => setOpen(false)}>
-            Collezione
-          </Link>
-          <Link href="/gradelens" className="block text-gray-300 hover:text-yellow-400 text-lg" onClick={() => setOpen(false)}>
-            GradeLens
-          </Link>
-          <Link href="/support" className="block text-gray-300 hover:text-yellow-400 text-lg" onClick={() => setOpen(false)}>
-            Supporto
-          </Link>
+      {/* MOBILE MENU */}
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="md:hidden bg-[#0a0a0a]/95 border-t border-yellow-400/20 px-6 py-4 flex flex-col gap-4 text-center"
+        >
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="text-gray-200 hover:text-yellow-400 transition text-base"
+              onClick={() => setIsOpen(false)}
+            >
+              {link.name}
+            </Link>
+          ))}
           <Link
             href="/register"
-            className="block mt-4 bg-yellow-400 text-black font-bold py-3 rounded-lg hover:bg-yellow-300 shadow-[0_0_20px_#FFB300]/50 transition"
-            onClick={() => setOpen(false)}
+            className="mt-4 px-5 py-2 rounded-xl bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-semibold text-sm hover:opacity-90 transition"
+            onClick={() => setIsOpen(false)}
           >
             Registrati
           </Link>
-        </div>
+        </motion.div>
       )}
-    </nav>
+    </motion.nav>
   );
 }
