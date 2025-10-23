@@ -1,261 +1,200 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { Search } from "lucide-react";
+import { useState } from "react";
+import { Search, Store, Camera, LayoutGrid, HelpCircle, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
 
 export default function HomePage() {
-  const router = useRouter();
-
-  // Redirect automatico per utenti loggati
-  useEffect(() => {
-    const token = localStorage.getItem("funkard_token");
-    if (token) {
-      router.push("/marketplace");
-    }
-  }, [router]);
-
-  const categories = [
-    { name: "Pokémon", img: "/tcg/pokemon.jpg" },
-    { name: "Yu-Gi-Oh!", img: "/tcg/yugioh.jpg" },
-    { name: "Magic: The Gathering", img: "/tcg/mtg.jpg" },
-    { name: "One Piece", img: "/tcg/onepiece.jpg" },
-    { name: "Disney Lorcana", img: "/tcg/lorcana.jpg" },
-    { name: "Flesh and Blood", img: "/tcg/fab.jpg" },
-    { name: "Dragon Ball Super", img: "/tcg/dbs.jpg" },
-    { name: "Weiß Schwarz", img: "/tcg/weiss.jpg" },
-  ];
+  const [query, setQuery] = useState("");
 
   return (
-    <main className="min-h-screen bg-background text-foreground transition-colors duration-500">
-      
-      {/* HERO */}
-      <section className="pt-36 pb-24 text-center px-6 bg-background transition-colors duration-500">
-        <div className="max-w-3xl mx-auto">
-          <h1 className="text-5xl sm:text-6xl font-bold text-funkard-yellow mb-6 opacity-0 animate-fadeInSlow">
-            Cerca il tuo TCG preferito
-          </h1>
-
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-10 opacity-0 animate-fadeInSlow [animation-delay:0.2s]">
-            Scopri, acquista e vendi carte da collezione in sicurezza.  
-            Tutti i TCG, un solo marketplace.
-          </p>
-
-          {/* SEARCH BAR */}
-          <div className="max-w-xl mx-auto flex items-center bg-funkard-gray rounded-xl px-4 py-3 shadow-light-soft border border-gray-800 opacity-0 animate-fadeInSlow [animation-delay:0.4s]">
-            <Search className="text-funkard-yellow mr-3" size={22} />
-            <input
-              type="text"
-              placeholder="Digita un gioco o una carta..."
-              className="w-full bg-transparent border-none outline-none text-white placeholder-gray-400"
-            />
-            <Button className="ml-3 bg-funkard-yellow text-black font-semibold px-5 hover:opacity-90 transition">
-              Cerca
-            </Button>
-          </div>
-
-          <div className="mt-10 opacity-0 animate-fadeInSlow [animation-delay:0.6s]">
-            <Link href="/marketplace">
-              <Button className="bg-funkard-yellow text-black font-semibold px-8 py-4 rounded-lg hover:opacity-90 transition">
-                Vai al Marketplace
-              </Button>
-            </Link>
-          </div>
+    <main className="min-h-screen bg-black text-white relative pb-20 md:pb-0">
+      {/* DESKTOP NAVBAR */}
+      <nav className="hidden md:flex fixed top-0 left-0 right-0 z-50 h-16 bg-black border-b border-neutral-800 items-center justify-between px-10">
+        <div className="text-2xl font-bold">
+          <span className="text-yellow-500">FUN</span>KARD
         </div>
-      </section>
+        <div className="flex gap-10 text-lg font-medium">
+          <Link href="/marketplace" className="hover:text-yellow-400">Market</Link>
+          <Link href="/collection" className="hover:text-yellow-400">Collezione</Link>
+          <Link href="/gradelens" className="hover:text-yellow-400">GradeLens</Link>
+          <Link href="/support" className="hover:text-yellow-400">Support</Link>
+          <Link href="/register" className="hover:text-yellow-400">Registrati</Link>
+        </div>
+      </nav>
 
-      {/* CATEGORY SHOWCASE */}
-      <section className="w-full py-20 bg-background transition-colors duration-500 px-6">
-        <h2 className="text-3xl font-bold text-funkard-yellow mb-10 text-center">
-          Tutti i giochi, un solo posto.
-        </h2>
+      {/* HERO SECTION */}
+      <section className="flex flex-col items-center text-center pt-28 md:pt-32 pb-20 px-4">
+        <Image
+          src="/logo.png"
+          alt="Funkard Logo"
+          width={120}
+          height={120}
+          className="mb-6 opacity-90"
+        />
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
-          {categories.map((cat, i) => (
+        <h1 className="text-3xl md:text-5xl font-bold mb-4">
+          Cerca il tuo TCG preferito
+        </h1>
+        <p className="text-gray-400 max-w-xl mb-8 text-sm md:text-base">
+          Scopri, acquista e vendi carte da collezione in sicurezza. Tutti i TCG,
+          un solo marketplace.
+        </p>
+
+        <div className="flex w-full max-w-md bg-neutral-900 rounded-full p-2 shadow-md focus-within:ring-2 focus-within:ring-yellow-400 transition">
+          <Input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Digita un gioco o una carta..."
+            className="flex-1 bg-transparent border-none text-white placeholder-gray-500 px-4 text-sm md:text-base"
+          />
+          <Button className="rounded-full bg-yellow-500 text-black font-semibold hover:bg-yellow-400">
+            <Search className="mr-2 w-4 h-4" />
+            Cerca
+          </Button>
+        </div>
+
+        <Button
+          asChild
+          className="mt-8 px-6 md:px-8 py-2 md:py-3 bg-yellow-500 text-black font-semibold rounded-full hover:bg-yellow-400 transition"
+        >
+          <Link href="/marketplace">Vai al Marketplace</Link>
+        </Button>
+
+        {/* CATEGORIE - SCORRIMENTO MOBILE */}
+        <div className="flex gap-6 mt-12 overflow-x-auto px-4 md:grid md:grid-cols-5 md:gap-8 md:overflow-visible md:px-0">
+          {[
+            { src: "/images/sample/charizard.jpg", name: "Pokémon" },
+            { src: "/images/sample/booster-box.jpg", name: "Yu-Gi-Oh!" },
+            { src: "/images/sample/etb.jpg", name: "Magic" },
+            { src: "/images/sample/charizard.jpg", name: "Lorcana" },
+            { src: "/images/sample/booster-box.jpg", name: "One Piece" },
+          ].map((game, i) => (
             <div
-              key={cat.name}
-              className="relative rounded-2xl overflow-hidden group cursor-pointer"
+              key={i}
+              className="flex flex-col items-center hover:scale-105 transition flex-shrink-0"
             >
               <Image
-                src={cat.img}
-                alt={cat.name}
-                width={400}
-                height={400}
-                className="object-cover w-full h-48 sm:h-56 group-hover:scale-105 transition-transform duration-300"
+                src={game.src}
+                alt={game.name}
+                width={64}
+                height={64}
+                className="rounded-md mb-2"
               />
-              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition"></div>
-              <span className="absolute bottom-4 left-4 text-lg font-semibold text-white drop-shadow-lg">
-                {cat.name}
-              </span>
+              <span className="text-sm text-gray-400">{game.name}</span>
             </div>
           ))}
         </div>
       </section>
 
-      {/* LATEST CARDS PREVIEW */}
-      <section className="w-full py-20 bg-background border-t border-gray-800 transition-colors duration-500 px-6">
-        <h2 className="text-3xl font-bold text-funkard-yellow mb-12 text-center">
+      {/* ULTIME CARTE CARICATE */}
+      <section className="py-16 px-6 bg-neutral-950">
+        <h2 className="text-2xl md:text-3xl font-bold text-center mb-10">
           Ultime carte caricate
         </h2>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-          {[
-            {
-              name: "Charizard EX 2023",
-              price: "124,99 €",
-              game: "Pokémon",
-              condition: "Near Mint",
-              img: "/cards/charizard.jpg",
-            },
-            {
-              name: "Blue-Eyes White Dragon",
-              price: "89,00 €",
-              game: "Yu-Gi-Oh!",
-              condition: "Lightly Played",
-              img: "/cards/blueeyes.jpg",
-            },
-            {
-              name: "Black Lotus (Reprint)",
-              price: "299,00 €",
-              game: "Magic: The Gathering",
-              condition: "Near Mint",
-              img: "/cards/blacklotus.jpg",
-            },
-            {
-              name: "Monkey D. Luffy – OP-01",
-              price: "64,50 €",
-              game: "One Piece",
-              condition: "Mint",
-              img: "/cards/luffy.jpg",
-            },
-          ].map((card, i) => (
-            <div
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          {[...Array(4)].map((_, i) => (
+            <Card
               key={i}
-              className="group bg-funkard-gray border border-gray-800 rounded-2xl overflow-hidden hover:scale-[1.02] transition-transform duration-300 shadow-light-soft"
+              className="bg-neutral-900 border border-neutral-800 rounded-xl hover:scale-[1.02] transition"
             >
-              <div className="relative">
-                <Image
-                  src={card.img}
-                  alt={card.name}
-                  width={400}
-                  height={400}
-                  className="w-full h-56 object-cover group-hover:brightness-105 transition"
-                />
-              </div>
+              <Image
+                src={`/images/sample/charizard.jpg`}
+                alt="Carta"
+                width={300}
+                height={200}
+                className="rounded-t-xl"
+              />
               <div className="p-4">
-                <h3 className="font-semibold text-lg text-white truncate">{card.name}</h3>
-                <p className="text-sm text-gray-400">{card.game} • {card.condition}</p>
-                <p className="text-funkard-yellow font-bold mt-2">{card.price}</p>
+                <h3 className="font-semibold text-sm md:text-lg">
+                  Charizard EX 2023
+                </h3>
+                <p className="text-xs md:text-sm text-gray-400 mb-2">
+                  Pokémon • Near Mint
+                </p>
+                <p className="font-bold text-yellow-500 text-sm md:text-base">
+                  124,99 €
+                </p>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
 
-        <div className="text-center mt-12">
-          <Link href="/marketplace">
-            <Button className="bg-funkard-yellow text-black font-semibold px-8 py-3 rounded-xl hover:opacity-90 transition">
-              Vai al Marketplace
-            </Button>
-          </Link>
-        </div>
-      </section>
-
-      {/* WHY FUNKARD */}
-      <section className="w-full py-24 bg-background border-t border-gray-800 transition-colors duration-500">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center text-funkard-yellow mb-16">
-          Perché scegliere Funkard?
-        </h2>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto px-6">
-          {/* SICUREZZA */}
-          <div className="bg-funkard-gray p-8 rounded-2xl border border-gray-800 shadow-dark-glow hover:scale-[1.03] transition-transform duration-300">
-            <h3 className="text-xl font-semibold text-funkard-yellow mb-3 text-center">
-              Sicurezza e Trasparenza
-            </h3>
-            <p className="text-gray-300 text-center leading-relaxed">
-              Ogni transazione è protetta con <span className="text-funkard-yellow font-medium">SafeTrade</span>.  
-              Pagamenti verificati, protezione venditore e acquirente: su Funkard non ci sono sorprese.
-            </p>
-          </div>
-
-          {/* TECNOLOGIA */}
-          <div className="bg-funkard-gray p-8 rounded-2xl border border-gray-800 shadow-dark-glow hover:scale-[1.03] transition-transform duration-300">
-            <h3 className="text-xl font-semibold text-funkard-yellow mb-3 text-center">
-              Analisi e Valutazione
-            </h3>
-            <p className="text-gray-300 text-center leading-relaxed">
-              Con <span className="text-funkard-yellow font-medium">GradeLens</span> puoi scansionare le tue carte e ricevere una valutazione basata su dati reali.  
-              Nessuna AI: ogni risultato è controllato manualmente per garantirti precisione.
-            </p>
-          </div>
-
-          {/* COMMUNITY */}
-          <div className="bg-funkard-gray p-8 rounded-2xl border border-gray-800 shadow-dark-glow hover:scale-[1.03] transition-transform duration-300">
-            <h3 className="text-xl font-semibold text-funkard-yellow mb-3 text-center">
-              Community Reale
-            </h3>
-            <p className="text-gray-300 text-center leading-relaxed">
-              Niente account fake, solo <span className="text-funkard-yellow font-medium">collezionisti reali</span>.  
-              Funkard nasce da chi colleziona, per chi colleziona — senza abbonamenti, solo passione.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* GRADELENS */}
-      <section className="w-full py-28 px-6 transition-colors duration-500 bg-background text-foreground">
-        <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-funkard-yellow mb-6">
-            Analizza la tua carta con GradeLens
-          </h2>
-          <p className="text-gray-400 dark:text-gray-300 max-w-2xl mx-auto text-lg mb-14 leading-relaxed">
-            Scansiona, valuta e scopri lo stato della tua carta in pochi secondi.  
-            Ogni valutazione è basata su dati reali verificati.
-          </p>
-
-          <div className="mx-auto max-w-2xl p-10 rounded-3xl border border-border shadow-dark-glow transition-all duration-500 bg-[#1a1a1a]/80 dark:bg-[#1a1a1a]/80 light:bg-[#f5f5f5]/90 backdrop-blur-md">
-            <div className="relative w-60 sm:w-72 mx-auto aspect-[3/4] rounded-xl overflow-hidden mb-8 border border-funkard-yellow/50 bg-[#111] flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-14 h-14 text-funkard-yellow opacity-80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2zm0 0l9 6 9-6" />
-              </svg>
-            </div>
-
-            <Link href="/gradelens">
-              <button className="bg-funkard-yellow text-black font-semibold px-7 py-3 rounded-xl hover:opacity-90 transition">
-                Prova la scansione simulata
-              </button>
-            </Link>
-
-            <p className="text-xs text-gray-400 mt-5">
-              Funzionalità in fase beta — risultati basati su analisi reali.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* FINAL CTA */}
-      <section className="w-full py-24 bg-funkard-yellow text-black text-center border-t border-gray-800">
-        <div className="max-w-3xl mx-auto px-6">
-          <h2 className="text-3xl sm:text-4xl font-extrabold mb-6 leading-snug">
-            Esplora, vendi, compra e scambia <br className="hidden sm:block" />
-            la tua collezione con quella di altri in tutto il mondo.
-          </h2>
-
-          <Link
-            href="/register"
-            className="inline-block bg-black text-funkard-yellow text-lg font-semibold px-8 py-4 rounded-xl hover:opacity-90 transition shadow-[0_0_15px_rgba(0,0,0,0.2)]"
+        <div className="flex justify-center mt-10">
+          <Button
+            asChild
+            className="px-6 md:px-8 py-2 md:py-3 bg-yellow-500 text-black font-semibold rounded-full hover:bg-yellow-400 transition"
           >
-            Registrati ora
-          </Link>
-
-          <p className="text-sm sm:text-base text-black/80 mt-10 font-medium tracking-wide">
-            Funkard — Da collezionisti per collezionisti
-          </p>
+            <Link href="/marketplace">Vai al Marketplace</Link>
+          </Button>
         </div>
       </section>
+
+      {/* GRADELENS PREVIEW */}
+      <section className="py-20 px-6 bg-neutral-900 text-center">
+        <h2 className="text-2xl md:text-3xl font-bold mb-6">
+          Analizza la tua carta con GradeLens
+        </h2>
+        <p className="text-gray-400 max-w-2xl mx-auto mb-8 text-sm md:text-base">
+          Scansiona, valuta e scopri lo stato della tua carta in pochi secondi.
+          Ogni valutazione è basata su dati reali verificati.
+        </p>
+
+        <div className="bg-neutral-800 border border-neutral-700 rounded-2xl p-8 md:p-10 max-w-3xl mx-auto">
+          <p className="mb-4 text-gray-300 text-sm md:text-base">
+            Funzionalità in fase beta — risultati basati su analisi reali.
+          </p>
+          <Button
+            asChild
+            className="px-6 py-3 bg-yellow-500 text-black font-semibold rounded-full hover:bg-yellow-400 transition"
+          >
+            <Link href="/gradelens">Prova la scansione simulata</Link>
+          </Button>
+        </div>
+      </section>
+
+      {/* CTA FINALE */}
+      <section className="text-center py-16 px-6 bg-black">
+        <h2 className="text-xl md:text-3xl font-semibold mb-4 leading-snug">
+          Esplora, vendi, compra e scambia la tua collezione con quella di altri in tutto il mondo.
+        </h2>
+        <Button
+          asChild
+          className="mt-4 px-8 py-3 bg-yellow-500 text-black font-semibold rounded-full hover:bg-yellow-400 transition"
+        >
+          <Link href="/register">Registrati ora</Link>
+        </Button>
+        <p className="mt-6 text-gray-500 text-sm">Funkard — Da collezionisti per collezionisti</p>
+      </section>
+
+      {/* MOBILE NAVBAR */}
+      <nav className="fixed bottom-0 left-0 right-0 md:hidden bg-black border-t border-neutral-800 flex justify-around py-2 z-50">
+        <Link href="/marketplace" className="flex flex-col items-center text-gray-400 hover:text-yellow-400">
+          <Store size={20} />
+          <span className="text-xs">Market</span>
+        </Link>
+        <Link href="/collection" className="flex flex-col items-center text-gray-400 hover:text-yellow-400">
+          <LayoutGrid size={20} />
+          <span className="text-xs">Collezione</span>
+        </Link>
+        <Link href="/gradelens" className="flex flex-col items-center text-gray-400 hover:text-yellow-400">
+          <Camera size={20} />
+          <span className="text-xs">GradeLens</span>
+        </Link>
+        <Link href="/support" className="flex flex-col items-center text-gray-400 hover:text-yellow-400">
+          <HelpCircle size={20} />
+          <span className="text-xs">Support</span>
+        </Link>
+        <Link href="/register" className="flex flex-col items-center text-gray-400 hover:text-yellow-400">
+          <UserPlus size={20} />
+          <span className="text-xs">Profilo</span>
+        </Link>
+      </nav>
     </main>
   );
 }
