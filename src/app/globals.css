@@ -212,3 +212,13 @@ textarea:focus {
 main, section, div {
   border: none !important;
 }
+
+/* === ANIMATIONS === */
+@keyframes fadeInSlow {
+  0% { opacity: 0; transform: translateY(5px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeInSlow {
+  animation: fadeInSlow 1s ease forwards;
+}

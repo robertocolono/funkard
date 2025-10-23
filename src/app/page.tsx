@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -34,56 +33,38 @@ export default function HomePage() {
     <main className="min-h-screen bg-background text-foreground transition-colors duration-500">
       
       {/* HERO */}
-      <section className="pt-36 pb-24 text-center px-6">
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-5xl sm:text-6xl font-bold text-funkard-yellow mb-6"
-        >
-          Cerca il tuo TCG preferito
-        </motion.h1>
+      <section className="pt-36 pb-24 text-center px-6 bg-background transition-colors duration-500">
+        <div className="max-w-3xl mx-auto">
+          <h1 className="text-5xl sm:text-6xl font-bold text-funkard-yellow mb-6 opacity-0 animate-fadeInSlow">
+            Cerca il tuo TCG preferito
+          </h1>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="text-gray-400 text-lg max-w-2xl mx-auto mb-10"
-        >
-          Scopri, acquista e vendi carte da collezione in sicurezza. Tutti i TCG, un solo marketplace.
-        </motion.p>
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-10 opacity-0 animate-fadeInSlow [animation-delay:0.2s]">
+            Scopri, acquista e vendi carte da collezione in sicurezza.  
+            Tutti i TCG, un solo marketplace.
+          </p>
 
-        {/* SEARCH BAR */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="max-w-xl mx-auto flex items-center bg-funkard-gray rounded-xl px-4 py-3 shadow-dark-glow"
-        >
-          <Search className="text-funkard-yellow mr-3" size={22} />
-          <input
-            type="text"
-            placeholder="Digita un gioco o una carta..."
-            className="w-full bg-transparent border-none outline-none text-white placeholder-gray-400"
-          />
-          <Button className="ml-3 bg-funkard-yellow text-black font-semibold px-5 hover:opacity-90 transition">
-            Cerca
-          </Button>
-        </motion.div>
-
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="mt-10"
-        >
-          <Link href="/marketplace">
-            <Button className="bg-funkard-yellow text-black font-semibold px-8 py-4 rounded-lg hover:opacity-90 transition">
-              Vai al Marketplace
+          {/* SEARCH BAR */}
+          <div className="max-w-xl mx-auto flex items-center bg-funkard-gray rounded-xl px-4 py-3 shadow-light-soft border border-gray-800 opacity-0 animate-fadeInSlow [animation-delay:0.4s]">
+            <Search className="text-funkard-yellow mr-3" size={22} />
+            <input
+              type="text"
+              placeholder="Digita un gioco o una carta..."
+              className="w-full bg-transparent border-none outline-none text-white placeholder-gray-400"
+            />
+            <Button className="ml-3 bg-funkard-yellow text-black font-semibold px-5 hover:opacity-90 transition">
+              Cerca
             </Button>
-          </Link>
-        </motion.div>
+          </div>
+
+          <div className="mt-10 opacity-0 animate-fadeInSlow [animation-delay:0.6s]">
+            <Link href="/marketplace">
+              <Button className="bg-funkard-yellow text-black font-semibold px-8 py-4 rounded-lg hover:opacity-90 transition">
+                Vai al Marketplace
+              </Button>
+            </Link>
+          </div>
+        </div>
       </section>
 
       {/* CATEGORY SHOWCASE */}
@@ -94,11 +75,8 @@ export default function HomePage() {
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
           {categories.map((cat, i) => (
-            <motion.div
+            <div
               key={cat.name}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.05 }}
               className="relative rounded-2xl overflow-hidden group cursor-pointer"
             >
               <Image
@@ -112,8 +90,76 @@ export default function HomePage() {
               <span className="absolute bottom-4 left-4 text-lg font-semibold text-white drop-shadow-lg">
                 {cat.name}
               </span>
-            </motion.div>
+            </div>
           ))}
+        </div>
+      </section>
+
+      {/* LATEST CARDS PREVIEW */}
+      <section className="w-full py-20 bg-background border-t border-gray-800 transition-colors duration-500 px-6">
+        <h2 className="text-3xl font-bold text-funkard-yellow mb-12 text-center">
+          Ultime carte caricate
+        </h2>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          {[
+            {
+              name: "Charizard EX 2023",
+              price: "124,99 €",
+              game: "Pokémon",
+              condition: "Near Mint",
+              img: "/cards/charizard.jpg",
+            },
+            {
+              name: "Blue-Eyes White Dragon",
+              price: "89,00 €",
+              game: "Yu-Gi-Oh!",
+              condition: "Lightly Played",
+              img: "/cards/blueeyes.jpg",
+            },
+            {
+              name: "Black Lotus (Reprint)",
+              price: "299,00 €",
+              game: "Magic: The Gathering",
+              condition: "Near Mint",
+              img: "/cards/blacklotus.jpg",
+            },
+            {
+              name: "Monkey D. Luffy – OP-01",
+              price: "64,50 €",
+              game: "One Piece",
+              condition: "Mint",
+              img: "/cards/luffy.jpg",
+            },
+          ].map((card, i) => (
+            <div
+              key={i}
+              className="group bg-funkard-gray border border-gray-800 rounded-2xl overflow-hidden hover:scale-[1.02] transition-transform duration-300 shadow-light-soft"
+            >
+              <div className="relative">
+                <Image
+                  src={card.img}
+                  alt={card.name}
+                  width={400}
+                  height={400}
+                  className="w-full h-56 object-cover group-hover:brightness-105 transition"
+                />
+              </div>
+              <div className="p-4">
+                <h3 className="font-semibold text-lg text-white truncate">{card.name}</h3>
+                <p className="text-sm text-gray-400">{card.game} • {card.condition}</p>
+                <p className="text-funkard-yellow font-bold mt-2">{card.price}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="text-center mt-12">
+          <Link href="/marketplace">
+            <Button className="bg-funkard-yellow text-black font-semibold px-8 py-3 rounded-xl hover:opacity-90 transition">
+              Vai al Marketplace
+            </Button>
+          </Link>
         </div>
       </section>
 
