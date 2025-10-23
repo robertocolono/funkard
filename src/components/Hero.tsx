@@ -92,7 +92,7 @@ export default function Hero() {
               : "text-black placeholder-gray-400"
           }`}
         />
-        <Button className="rounded-full bg-yellow-500 text-black font-semibold hover:bg-yellow-400 transition">
+        <Button className="rounded-full bg-gradient-to-r from-yellow-500 to-amber-400 text-black font-bold shadow-[0_0_15px_rgba(255,200,0,0.2)] hover:shadow-[0_0_25px_rgba(255,200,0,0.4)] transition-all duration-300">
           <Search className="mr-2 h-4 w-4" /> Cerca
         </Button>
       </div>
@@ -101,7 +101,7 @@ export default function Hero() {
       <div className="mt-10 z-10">
         <Link
           href="/marketplace"
-          className="px-6 md:px-8 py-3 bg-yellow-500 text-black font-semibold rounded-full hover:bg-yellow-400 transition inline-block"
+          className="px-6 md:px-8 py-3 bg-gradient-to-r from-yellow-500 to-amber-400 text-black font-bold rounded-xl shadow-[0_0_15px_rgba(255,200,0,0.2)] hover:shadow-[0_0_25px_rgba(255,200,0,0.4)] transition-all duration-300 inline-block"
         >
           Vai al Marketplace
         </Link>

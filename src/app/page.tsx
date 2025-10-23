@@ -67,7 +67,7 @@ export default function HomePage() {
 
         <Link
           href="/marketplace"
-          className="mt-8 px-6 md:px-8 py-2 md:py-3 bg-yellow-500 text-black font-semibold rounded-full hover:bg-yellow-400 transition inline-block"
+          className="mt-8 px-6 md:px-8 py-3 bg-gradient-to-r from-yellow-500 to-amber-400 text-black font-bold rounded-xl shadow-[0_0_15px_rgba(255,200,0,0.2)] hover:shadow-[0_0_25px_rgba(255,200,0,0.4)] transition-all duration-300 inline-block"
         >
           Vai al Marketplace
         </Link>
@@ -133,7 +133,7 @@ export default function HomePage() {
         <div className="flex justify-center mt-10">
           <Link
             href="/marketplace"
-            className="px-6 md:px-8 py-2 md:py-3 bg-yellow-500 text-black font-semibold rounded-full hover:bg-yellow-400 transition inline-block"
+            className="px-6 md:px-8 py-3 bg-gradient-to-r from-yellow-500 to-amber-400 text-black font-bold rounded-xl shadow-[0_0_15px_rgba(255,200,0,0.2)] hover:shadow-[0_0_25px_rgba(255,200,0,0.4)] transition-all duration-300 inline-block"
           >
             Vai al Marketplace
           </Link>
@@ -150,15 +150,16 @@ export default function HomePage() {
           Ogni valutazione è basata su dati reali verificati.
         </p>
 
-        <div className="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-8 md:p-10 max-w-3xl mx-auto transition-colors duration-300">
-          <p className="mb-4 text-gray-600 dark:text-gray-300 text-sm md:text-base">
+        <div className="bg-neutral-900/80 dark:bg-neutral-800/80 border border-neutral-800 dark:border-neutral-700 rounded-3xl p-8 md:p-10 max-w-3xl mx-auto shadow-[inset_0_0_10px_rgba(255,255,255,0.05)] backdrop-blur-md transition-colors duration-300">
+          <h3 className="text-xl font-semibold text-yellow-400 mb-4">GradeLens – Scansione simulata</h3>
+          <p className="mb-6 text-gray-400 text-sm md:text-base">
             Funzionalità in fase beta — risultati basati su analisi reali.
           </p>
           <Link
             href="/gradelens"
-            className="px-6 py-3 bg-yellow-500 text-black font-semibold rounded-full hover:bg-yellow-400 transition inline-block"
+            className="px-6 py-3 bg-gradient-to-r from-yellow-500 to-amber-400 text-black font-bold rounded-full shadow-[0_0_15px_rgba(255,200,0,0.2)] hover:shadow-[0_0_25px_rgba(255,200,0,0.4)] transition-all duration-300 inline-block"
           >
-            Prova la scansione simulata
+            Analizza la carta
           </Link>
         </div>
       </section>
@@ -170,12 +171,12 @@ export default function HomePage() {
         </h2>
         <Link
           href="/register"
-          className="mt-4 px-8 py-3 bg-yellow-500 text-black font-semibold rounded-full hover:bg-yellow-400 transition inline-block"
+          className="mt-4 px-8 py-3 bg-gradient-to-r from-yellow-500 to-amber-400 text-black font-bold rounded-xl shadow-[0_0_15px_rgba(255,200,0,0.2)] hover:shadow-[0_0_25px_rgba(255,200,0,0.4)] transition-all duration-300 inline-block"
         >
           Registrati ora
         </Link>
         <p className="mt-6 text-gray-600 dark:text-gray-500 text-sm">
-          Funkard — Da collezionisti per collezionisti
+          Funkard — <span className="text-yellow-400 font-semibold">Da collezionisti per collezionisti</span>
         </p>
       </section>
 
