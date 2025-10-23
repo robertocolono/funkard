@@ -43,7 +43,7 @@ export default function HomePage() {
           Ultime carte caricate
         </h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-7xl mx-auto">
           {[...Array(4)].map((_, i) => (
             <Card
               key={i}

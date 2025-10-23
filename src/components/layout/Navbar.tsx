@@ -26,16 +26,16 @@ export default function Navbar() {
 
   return (
     <nav className={`fixed top-0 left-0 w-full z-50 backdrop-blur-lg border-b transition-colors duration-300
-      ${isDark ? "bg-black/70 border-neutral-800" : "bg-white/70 border-neutral-200"}
+      ${isDark ? "bg-black/80 border-neutral-800 shadow-[0_0_20px_rgba(242,178,55,0.1)]" : "bg-white/80 border-neutral-200 shadow-[0_0_20px_rgba(0,0,0,0.05)]"}
     `}>
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-6">
         {/* LOGO */}
         <Link href="/" className="flex items-center gap-2">
           <Image
             src={isDark ? "/logo.png" : "/logo2.png"}
             alt="Funkard Logo"
-            width={42}
-            height={42}
+            width={48}
+            height={48}
             className="transition-transform hover:scale-105"
           />
           <span className={`text-2xl font-bold tracking-tight ${isDark ? "text-white" : "text-black"}`}>

@@ -20,16 +20,16 @@ export default function Hero() {
 
   return (
     <section
-      className={`relative flex flex-col items-center justify-center text-center py-28 md:py-36 px-6 overflow-hidden transition-colors duration-500 ${
+      className={`relative flex flex-col items-center justify-center text-center py-28 md:py-36 px-6 overflow-hidden transition-colors duration-500 border-b ${
         isDark
-          ? "bg-gradient-to-b from-black to-neutral-900"
-          : "bg-gradient-to-b from-white to-neutral-100"
+          ? "bg-gradient-to-b from-black to-neutral-900 border-neutral-800"
+          : "bg-gradient-to-b from-white to-neutral-100 border-neutral-200"
       }`}
     >
       {/* BACKGROUND IMMAGINI BLUR */}
       <div
-        className={`absolute inset-0 overflow-hidden opacity-20 blur-2xl transition-opacity ${
-          isDark ? "opacity-20" : "opacity-10"
+        className={`absolute inset-0 overflow-hidden blur-2xl transition-opacity ${
+          isDark ? "opacity-30" : "opacity-20"
         }`}
       >
         <Image
