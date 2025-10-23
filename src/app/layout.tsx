@@ -5,7 +5,7 @@ import { Toaster } from "sonner";
 import { Toaster as HotToaster } from "react-hot-toast";
 import { NotificationProvider } from "@/context/NotificationContext";
 import { SessionProvider } from "@/lib/context/SessionContext";
-import { ThemeProvider } from "@/lib/context/ThemeContext";
+import { ThemeProvider } from "next-themes";
 
 export const metadata = {
   title: "Funkard — Il Marketplace dei Collezionisti",

@@ -7,6 +7,7 @@ import { Search, Store, Camera, LayoutGrid, HelpCircle, UserPlus } from "lucide-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
+import Hero from "@/components/Hero";
 
 export default function HomePage() {
   const [query, setQuery] = useState("");
@@ -15,6 +16,7 @@ export default function HomePage() {
     <main className="min-h-screen bg-white text-black dark:bg-black dark:text-white relative pb-20 md:pb-0 transition-colors duration-300">
       {/* TEST VISIVO - VERIFICA FILE CORRETTO */}
       <div className="hidden" data-home="funkard-v1.1" />
+      
       {/* NAVBAR DESKTOP */}
       <nav className="hidden md:flex fixed top-0 left-0 right-0 z-50 h-16 bg-white dark:bg-black border-b border-neutral-200 dark:border-neutral-800 items-center justify-between px-10 transition-colors duration-300">
         <div className="text-2xl font-bold">
@@ -29,76 +31,8 @@ export default function HomePage() {
         </div>
       </nav>
 
-      {/* HERO */}
-      <section className="flex flex-col items-center text-center pt-28 md:pt-32 pb-20 px-4">
-        <Image
-          src="/logo.png"
-          alt="Funkard Logo"
-          width={120}
-          height={120}
-          className="mb-6 opacity-90 dark:hidden"
-        />
-        <Image
-          src="/logo2.png"
-          alt="Funkard Logo Light"
-          width={120}
-          height={120}
-          className="mb-6 opacity-90 hidden dark:block"
-        />
-
-        <h1 className="text-3xl md:text-5xl font-bold mb-4">
-          Cerca il tuo TCG preferito
-        </h1>
-        <p className="text-gray-600 dark:text-gray-400 max-w-xl mb-8 text-sm md:text-base">
-          Scopri, acquista e vendi carte da collezione in sicurezza. Tutti i TCG,
-          un solo marketplace.
-        </p>
-
-        <div className="flex w-full max-w-md bg-gray-100 dark:bg-neutral-900 rounded-full p-2 shadow-md focus-within:ring-2 focus-within:ring-yellow-400 transition">
-          <Input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Digita un gioco o una carta..."
-            className="flex-1 bg-transparent border-none text-black dark:text-white placeholder-gray-500 px-4 text-sm md:text-base"
-          />
-          <Button className="rounded-full bg-yellow-500 text-black font-semibold hover:bg-yellow-400">
-            <Search className="mr-2 w-4 h-4" />
-            Cerca
-          </Button>
-        </div>
-
-        <Link
-          href="/marketplace"
-          className="mt-8 px-6 md:px-8 py-3 bg-gradient-to-r from-yellow-500 to-amber-400 text-black font-bold rounded-xl shadow-[0_0_15px_rgba(255,200,0,0.2)] hover:shadow-[0_0_25px_rgba(255,200,0,0.4)] transition-all duration-300 inline-block"
-        >
-          Vai al Marketplace
-        </Link>
-
-        {/* CATEGORIE */}
-        <div className="flex gap-6 mt-12 overflow-x-auto px-4 md:grid md:grid-cols-5 md:gap-8 md:overflow-visible md:px-0 scrollbar-hide">
-          {[
-            { src: "/images/sample/charizard.jpg", name: "Pokémon" },
-            { src: "/images/sample/booster-box.jpg", name: "Yu-Gi-Oh!" },
-            { src: "/images/sample/etb.jpg", name: "Magic" },
-            { src: "/images/sample/charizard.jpg", name: "Lorcana" },
-            { src: "/images/sample/booster-box.jpg", name: "One Piece" },
-          ].map((game, i) => (
-            <div
-              key={i}
-              className="flex flex-col items-center hover:scale-105 transition flex-shrink-0"
-            >
-              <Image
-                src={game.src}
-                alt={game.name}
-                width={64}
-                height={64}
-                className="rounded-md mb-2"
-              />
-              <span className="text-sm text-gray-500 dark:text-gray-400">{game.name}</span>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* HERO DINAMICA CON TEMA */}
+      <Hero />
 
       {/* ULTIME CARTE */}
       <section className="py-16 px-6 bg-gray-50 dark:bg-neutral-950 transition-colors duration-300">
