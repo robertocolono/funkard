@@ -1,5 +1,5 @@
 "use client";
-import { Home, LayoutGrid, Camera, HelpCircle, User } from "lucide-react";
+import { Layers, Archive, Search, HelpCircle, User } from "lucide-react";
 
 export default function HomePage() {
   return (
@@ -87,7 +87,7 @@ export default function HomePage() {
           href="/marketplace"
           className="flex flex-col items-center text-zinc-400 hover:text-yellow-400 transition"
         >
-          <Home size={22} />
+          <Layers size={22} />
           <span className="text-xs mt-1">Market</span>
         </a>
 
@@ -95,7 +95,7 @@ export default function HomePage() {
           href="/collezione"
           className="flex flex-col items-center text-zinc-400 hover:text-yellow-400 transition"
         >
-          <LayoutGrid size={22} />
+          <Archive size={22} />
           <span className="text-xs mt-1">Collezione</span>
         </a>
 
@@ -103,7 +103,7 @@ export default function HomePage() {
           href="/gradelens"
           className="flex flex-col items-center text-zinc-400 hover:text-yellow-400 transition"
         >
-          <Camera size={22} />
+          <Search size={22} />
           <span className="text-xs mt-1">GradeLens</span>
         </a>
 
