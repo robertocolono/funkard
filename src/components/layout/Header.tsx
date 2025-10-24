@@ -1,32 +1,43 @@
 "use client";
-
 import Link from "next/link";
+
+const NAV = [
+  { href: "/market", label: "Marketplace" },
+  { href: "/collection", label: "Collezione" },
+  { href: "/gradelens", label: "GradeLens" },
+  { href: "/support", label: "Supporto" },
+];
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-zinc-800/70 bg-black/75 backdrop-blur supports-[backdrop-filter]:bg-black/55">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:h-[72px] sm:px-6 lg:px-8">
-        {/* Brand */}
-        <Link href="/" className="font-extrabold tracking-wide text-white">
-          <span className="text-[#F5C242]">FUN</span>KARD
-        </Link>
-
-        {/* Nav right */}
-        <nav className="flex items-center gap-7 text-sm text-zinc-200">
-          <Link href="/market" className="hover:text-white transition-colors">Marketplace</Link>
-          <Link href="/collection" className="hover:text-white transition-colors">Collezione</Link>
-          <Link href="/gradelens" className="hover:text-white transition-colors">GradeLens</Link>
-          <Link href="/support" className="hover:text-white transition-colors">Supporto</Link>
-
-          {/* CTA */}
-          <Link
-            href="/register"
-            className="rounded-xl bg-[#E7B04B] px-4 py-2 font-semibold text-white shadow-[inset_0_-2px_0_rgba(0,0,0,.25)] hover:opacity-90 active:opacity-100 transition"
-          >
-            Registrati
+    <header className="sticky top-0 z-50 bg-black/80 backdrop-blur border-b border-zinc-800">
+      <nav className="mx-auto max-w-7xl px-4 md:px-6">
+        <div className="h-16 md:h-18 flex items-center justify-between gap-6">
+          {/* Brand */}
+          <Link href="/" className="shrink-0 font-extrabold tracking-tight text-xl md:text-2xl">
+            <span className="text-[#FFC72C]">FUN</span>
+            <span className="text-white">KARD</span>
           </Link>
-        </nav>
-      </div>
+
+          {/* Right items */}
+          <div className="ml-auto flex items-center gap-6 md:gap-8">
+            {NAV.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-sm md:text-[15px] text-zinc-300 hover:text-white transition-colors"
+              >
+                {item.label}
+              </Link>
+            ))}
+
+            {/* CTA Registrati */}
+            <Link href="/register" className="btn-primary">
+              Registrati
+            </Link>
+          </div>
+        </div>
+      </nav>
     </header>
   );
 }
