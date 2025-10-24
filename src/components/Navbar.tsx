@@ -1,36 +1,47 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-export default function Navbar() {
+const Navbar = () => {
+  const pathname = usePathname();
+
+  const links = [
+    { name: "Marketplace", href: "/marketplace" },
+    { name: "Collezione", href: "/collezione" },
+    { name: "GradeLens", href: "/gradelens" },
+    { name: "Support", href: "/support" },
+    { name: "Registrati", href: "/register" },
+  ];
+
   return (
-    <nav className="fixed top-0 left-0 w-full bg-[#0a0a0a]/95 backdrop-blur-md border-b border-[#1f1f1f] z-50">
-      <div className="max-w-7xl mx-auto px-10 py-5 flex items-center justify-between">
-        {/* Logo testuale */}
-        <span className="text-3xl font-extrabold tracking-wide">
-          <span className="text-yellow-400">FUN</span>
-          <span className="text-white">KARD</span>
-        </span>
+    <nav className="w-full bg-black border-b border-neutral-800 py-6 md:py-8 px-6 md:px-12 flex items-center justify-between">
+      {/* Left side: Funkard text */}
+      <Link
+        href="/"
+        className="text-2xl md:text-3xl font-bold tracking-wide text-white hover:text-funkard-yellow transition-colors duration-300"
+      >
+        FUNKARD
+      </Link>
 
-        {/* Link principali */}
-        <div className="flex gap-10 text-base font-medium">
-          {[
-            ["Marketplace", "/marketplace"],
-            ["Collezione", "/collection"],
-            ["GradeLens", "/gradelens"],
-            ["Support", "/support"],
-            ["Registrati", "/register"],
-          ].map(([label, href]) => (
-            <Link
-              key={href}
-              href={href}
-              className="text-white hover:text-yellow-400 transition-all duration-200"
-            >
-              {label}
-            </Link>
-          ))}
-        </div>
+      {/* Right side: menu links */}
+      <div className="flex items-center space-x-6 md:space-x-10">
+        {links.map((link) => (
+          <Link
+            key={link.name}
+            href={link.href}
+            className={`text-base md:text-lg font-medium transition-colors duration-300 ${
+              pathname === link.href
+                ? "text-funkard-yellow"
+                : "text-white hover:text-funkard-yellow"
+            }`}
+          >
+            {link.name}
+          </Link>
+        ))}
       </div>
     </nav>
   );
-}
+};
+
+export default Navbar;

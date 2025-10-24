@@ -64,19 +64,19 @@ export default function HomePage() {
         </motion.h1>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col md:flex-row gap-5 mt-2">
-          <Link
+        <div className="mt-8 flex flex-col md:flex-row items-center justify-center gap-4">
+          <a
             href="/marketplace"
-            className="px-8 py-3 border-2 border-yellow-400 text-yellow-400 font-semibold rounded-full transition-all duration-300 hover:bg-yellow-400 hover:text-black hover:shadow-[0_0_15px_rgba(242,178,55,0.6)]"
+            className="px-8 py-3 text-lg font-semibold text-funkard-yellow border-2 border-funkard-yellow rounded-xl bg-transparent hover:bg-funkard-yellow hover:text-black transition-all duration-300 shadow-[0_0_15px_rgba(255,204,0,0.2)] hover:shadow-[0_0_25px_rgba(255,204,0,0.5)]"
           >
             Entra nel Marketplace
-          </Link>
-          <Link
+          </a>
+          <a
             href="/register"
-            className="px-8 py-3 border-2 border-yellow-400 text-yellow-400 font-semibold rounded-full transition-all duration-300 hover:bg-yellow-400 hover:text-black hover:shadow-[0_0_15px_rgba(242,178,55,0.6)]"
+            className="px-8 py-3 text-lg font-semibold text-funkard-yellow border-2 border-funkard-yellow rounded-xl bg-transparent hover:bg-funkard-yellow hover:text-black transition-all duration-300 shadow-[0_0_15px_rgba(255,204,0,0.2)] hover:shadow-[0_0_25px_rgba(255,204,0,0.5)]"
           >
             Crea un account
-          </Link>
+          </a>
         </div>
       </section>
 

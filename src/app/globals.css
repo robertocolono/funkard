@@ -5,6 +5,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --funkard-yellow: #FFCC00;
+}
+
 html,
 body {
   font-family: 'Outfit', sans-serif;
@@ -83,6 +87,23 @@ a:hover {
 
 .shadow-glow {
   box-shadow: 0 0 20px rgba(242, 178, 55, 0.1);
+}
+
+/* ==== FUNKARD YELLOW VARIABLES ==== */
+.text-funkard-yellow {
+  color: var(--funkard-yellow);
+}
+
+.border-funkard-yellow {
+  border-color: var(--funkard-yellow);
+}
+
+.bg-funkard-yellow {
+  background-color: var(--funkard-yellow);
+}
+
+.hover\:text-funkard-yellow:hover {
+  color: var(--funkard-yellow);
 }
 
 /* ==== RESPONSIVE HELPERS ==== */
