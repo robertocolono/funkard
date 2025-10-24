@@ -24,23 +24,23 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-black text-white flex flex-col">
       {/* NAVBAR */}
-      <nav className="w-full sticky top-0 z-50 flex justify-between items-center px-8 py-4 bg-black/80 backdrop-blur-sm border-b border-zinc-800">
-        <h1 className="text-2xl font-bold tracking-tight">
+      <nav className="w-full sticky top-0 z-50 flex justify-between items-center px-10 py-5 bg-black/80 backdrop-blur-sm border-b border-zinc-800">
+        <h1 className="text-3xl font-extrabold tracking-tight">
           <span className="text-yellow-400">FUN</span>KARD
         </h1>
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-8 text-sm font-medium">
           <a href="/marketplace" className="hover:text-yellow-400 transition">Marketplace</a>
           <a href="/collection" className="hover:text-yellow-400 transition">Collezione</a>
           <a href="/gradelens" className="hover:text-yellow-400 transition">GradeLens</a>
           <a href="/support" className="hover:text-yellow-400 transition">Support</a>
-          <Button className="bg-yellow-400 text-black font-semibold rounded-xl px-5 py-2 hover:bg-yellow-300">
+          <Button className="bg-yellow-400 text-black font-semibold rounded-xl px-5 py-2 hover:bg-yellow-300 transition">
             Registrati
           </Button>
         </div>
       </nav>
 
-      {/* FULLSCREEN HERO */}
-      <section className="flex flex-col justify-center items-center text-center flex-1 px-6">
+      {/* HERO FULLSCREEN */}
+      <section className="flex flex-col justify-center items-center text-center flex-1 px-6 py-16 md:py-24">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -60,7 +60,7 @@ export default function HomePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.7 }}
-          className="text-3xl md:text-4xl font-semibold mb-8"
+          className="text-3xl md:text-4xl font-semibold mb-8 max-w-2xl"
         >
           Esplora, compra, vendi e scambia in tutto il mondo!
         </motion.h2>
@@ -79,8 +79,8 @@ export default function HomePage() {
         </motion.div>
       </section>
 
-      {/* FEATURES */}
-      <section className="w-full max-w-6xl flex flex-col md:flex-row justify-center items-stretch gap-6 mt-20 px-6 mx-auto">
+      {/* FEATURE SECTION */}
+      <section className="w-full max-w-6xl mx-auto flex flex-col md:flex-row justify-center items-stretch gap-6 mt-10 px-6">
         {features.map((feature, i) => (
           <motion.div
             key={i}
@@ -103,9 +103,9 @@ export default function HomePage() {
       </section>
 
       {/* FOOTER */}
-      <footer className="mt-24 mb-10 text-sm text-zinc-500 text-center px-4">
+      <footer className="mt-20 mb-10 text-sm text-zinc-500 text-center px-4">
         <p>Funkard © 2025 — Da collezionisti per collezionisti</p>
-        <div className="flex justify-center gap-4 mt-2">
+        <div className="flex justify-center gap-6 mt-3">
           <a href="/privacy" className="hover:text-yellow-400 transition">Privacy</a>
           <a href="/cookie" className="hover:text-yellow-400 transition">Cookie</a>
           <a href="/terms" className="hover:text-yellow-400 transition">Termini</a>
