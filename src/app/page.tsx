@@ -1,120 +1,145 @@
 "use client";
-
-import Image from "next/image";
-import Link from "next/link";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { FunkardButton } from "@/components/ui/funkard-button";
-import { motion } from "framer-motion";
 
 export default function HomePage() {
   return (
-    <main className="bg-black text-white min-h-screen font-sans">
-      <Navbar />
+    <main className="min-h-screen bg-black text-white font-[Inter]">
+      {/* 🌟 NAVBAR */}
+      <nav className="w-full fixed top-0 left-0 z-50 flex justify-between items-center px-8 py-4 bg-black/80 backdrop-blur-md border-b border-[#FFCC00]/20">
+        {/* LOGO */}
+        <div className="flex items-center space-x-2">
+          <img src="/logo.png" alt="Funkard" className="w-8 h-8" />
+          <span className="text-[#FFCC00] font-semibold text-lg tracking-wide">
+            FUNKARD
+          </span>
+        </div>
 
-      {/* HERO */}
-      <section className="flex flex-col items-center justify-center text-center py-32 px-6 bg-gradient-to-b from-black via-neutral-900 to-black relative overflow-hidden">
-        <motion.div
-          initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <Image
-            src="/logo.png"
-            alt="Funkard Logo"
-            width={150}
-            height={150}
-            className="mx-auto mb-8 drop-shadow-[0_0_20px_rgba(255,204,0,0.2)]"
-          />
-        </motion.div>
+        {/* NAV LINKS */}
+        <div className="flex items-center space-x-6 text-sm">
+          <a href="#" className="hover:text-[#FFCC00] transition">Marketplace</a>
+          <a href="#" className="hover:text-[#FFCC00] transition">Collezione</a>
+          <a href="#" className="hover:text-[#FFCC00] transition">GradeLens</a>
+          <a href="#" className="hover:text-[#FFCC00] transition">Supporto</a>
+          <FunkardButton>Registrati</FunkardButton>
+        </div>
+      </nav>
 
-        <motion.h1
-          className="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight max-w-4xl mx-auto"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-        >
-          Esplora, compra, vendi e scambia in tutto il mondo{" "}
-          <span className="text-funkard-yellow">con un semplice click!</span>
-        </motion.h1>
+      {/* 🦾 HERO SECTION */}
+      <section className="pt-40 pb-24 text-center bg-gradient-to-b from-black via-[#0a0a0a] to-black">
+        <div className="max-w-3xl mx-auto px-4">
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">
+            Esplora, compra, vendi e scambia in tutto il mondo{" "}
+            <span className="text-[#FFCC00] drop-shadow-[0_0_8px_rgba(255,204,0,0.8)]">
+              con un semplice click!
+            </span>
+          </h1>
+          <p className="text-gray-400 mb-10 text-lg">
+            Il marketplace TCG creato per i collezionisti. Sicuro, globale e completamente trasparente.
+          </p>
 
-        <p className="text-gray-400 text-lg max-w-2xl mx-auto mt-6">
-          Il marketplace TCG creato per i collezionisti. Sicuro, globale e completamente trasparente.
-        </p>
+          <div className="flex justify-center space-x-4">
+            <FunkardButton variant="primary">Entra nel Marketplace</FunkardButton>
+            <FunkardButton variant="secondary">Crea un Account</FunkardButton>
+          </div>
+        </div>
 
-        <div className="mt-10 flex flex-col sm:flex-row gap-6 justify-center">
-          <FunkardButton variant="primary" href="/marketplace">
-            Entra nel Marketplace
-          </FunkardButton>
-          <FunkardButton variant="secondary" href="/register">
-            Crea un Account
-          </FunkardButton>
+        {/* Divider Glow */}
+        <div className="mt-16 h-[1px] w-2/3 mx-auto bg-gradient-to-r from-transparent via-[#FFCC00] to-transparent opacity-60" />
+      </section>
+
+      {/* 💎 FEATURES SECTION */}
+      <section className="py-20 px-6 bg-black">
+        <h2 className="text-3xl font-bold text-center mb-12">
+          Perché scegliere <span className="text-[#FFCC00]">Funkard</span>
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {/* Feature 1 */}
+          <div className="p-8 rounded-2xl bg-zinc-900/60 border border-[#FFCC00]/10 hover:border-[#FFCC00]/30 backdrop-blur-md text-center transition hover:scale-[1.03] shadow-[0_0_15px_rgba(255,204,0,0.1)]">
+            <div className="text-3xl mb-3">🛡️</div>
+            <h3 className="text-xl font-semibold mb-2">SafeTrade</h3>
+            <p className="text-gray-400">
+              Scambi sicuri e verificati, con protezione integrata per acquirenti e venditori.
+            </p>
+          </div>
+
+          {/* Feature 2 */}
+          <div className="p-8 rounded-2xl bg-zinc-900/60 border border-[#FFCC00]/10 hover:border-[#FFCC00]/30 backdrop-blur-md text-center transition hover:scale-[1.03] shadow-[0_0_15px_rgba(255,204,0,0.1)]">
+            <div className="text-3xl mb-3">🧾</div>
+            <h3 className="text-xl font-semibold mb-2">GradeLens</h3>
+            <p className="text-gray-400">
+              Analizza e confronta le tue carte grazie al nostro sistema di grading meccanico.
+            </p>
+          </div>
+
+          {/* Feature 3 */}
+          <div className="p-8 rounded-2xl bg-zinc-900/60 border border-[#FFCC00]/10 hover:border-[#FFCC00]/30 backdrop-blur-md text-center transition hover:scale-[1.03] shadow-[0_0_15px_rgba(255,204,0,0.1)]">
+            <div className="text-3xl mb-3">🌍</div>
+            <h3 className="text-xl font-semibold mb-2">Marketplace Globale</h3>
+            <p className="text-gray-400">
+              Connettiti con collezionisti da tutto il mondo in un'unica piattaforma.
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* FEATURES */}
-      <section className="py-24 bg-neutral-950">
-        <h2 className="text-center text-3xl sm:text-4xl font-bold mb-16">
-          Perché scegliere Funkard
-        </h2>
+      {/* 📈 TRENDING SECTION */}
+      <section className="py-20 bg-black/95 text-center">
+        <h2 className="text-3xl font-bold mb-12">Le carte più popolari del momento</h2>
 
-        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-8 px-6">
-          {[
-            {
-              icon: "🛡️",
-              title: "SafeTrade",
-              desc: "Scambi sicuri e verificati, con protezione integrata per acquirenti e venditori.",
-            },
-            {
-              icon: "📸",
-              title: "GradeLens",
-              desc: "Analizza e confronta le tue carte grazie al nostro sistema di grading meccanico.",
-            },
-            {
-              icon: "🌍",
-              title: "Marketplace Globale",
-              desc: "Connettiti con collezionisti da tutto il mondo in un'unica piattaforma.",
-            },
-          ].map((f) => (
-            <div
-              key={f.title}
-              className="bg-[#111] border border-neutral-800 rounded-2xl p-8 text-center hover:border-funkard-yellow hover:shadow-[0_0_15px_rgba(255,204,0,0.2)] transition-all duration-300"
-            >
-              <div className="text-4xl mb-4">{f.icon}</div>
-              <h3 className="text-xl font-semibold mb-3">{f.title}</h3>
-              <p className="text-gray-400 text-sm leading-relaxed">{f.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* TRENDING CARDS */}
-      <section className="py-24 bg-neutral-900">
-        <h2 className="text-center text-3xl sm:text-4xl font-bold mb-12">
-          Le carte più popolari del momento
-        </h2>
-
-        <div className="flex overflow-x-auto gap-6 px-6 pb-4 scrollbar-hide">
-          {[...Array(8)].map((_, i) => (
+        <div className="flex flex-wrap justify-center gap-6 px-6 max-w-6xl mx-auto">
+          {["Carta #1", "Carta #2", "Carta #3", "Carta #4", "Carta #5", "Carta #6"].map((card, i) => (
             <div
               key={i}
-              className="min-w-[220px] bg-[#1a1a1a] border border-neutral-800 rounded-xl p-6 flex flex-col items-center justify-center hover:border-funkard-yellow hover:shadow-[0_0_15px_rgba(255,204,0,0.2)] transition-all duration-300"
+              className="w-[160px] h-[120px] bg-zinc-900/70 border border-[#FFCC00]/10 rounded-xl flex flex-col justify-center items-center hover:border-[#FFCC00]/40 transition"
             >
-              <div className="w-28 h-40 bg-neutral-800 rounded-lg mb-4"></div>
-              <p className="font-semibold">Carta #{i + 1}</p>
-              <p className="text-funkard-yellow mt-2 text-sm">Trend +{3 + i * 2}%</p>
+              <p className="font-semibold">{card}</p>
+              <span className="text-green-400 text-sm mt-1">Trend +{3 + i * 2}%</span>
             </div>
           ))}
         </div>
 
-        <div className="text-center mt-10">
-          <FunkardButton variant="primary" href="/marketplace">
-            Scopri il Marketplace
-          </FunkardButton>
+        <div className="mt-12">
+          <FunkardButton variant="primary">Scopri il Marketplace</FunkardButton>
         </div>
       </section>
 
-      <Footer />
+      {/* 🧭 FOOTER */}
+      <footer className="border-t border-[#FFCC00]/20 py-10 px-6 text-sm bg-black">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
+          <div>
+            <h4 className="font-semibold text-[#FFCC00] mb-3">Navigazione</h4>
+            <ul className="space-y-1 text-gray-400">
+              <li>Marketplace</li>
+              <li>Collezione</li>
+              <li>GradeLens</li>
+              <li>Supporto</li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-semibold text-[#FFCC00] mb-3">Legale</h4>
+            <ul className="space-y-1 text-gray-400">
+              <li>Termini e Condizioni</li>
+              <li>Privacy Policy</li>
+              <li>Cookie Policy</li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-semibold text-[#FFCC00] mb-3">Contatti</h4>
+            <ul className="space-y-1 text-gray-400">
+              <li>Email: info@funkard.com</li>
+              <li>Instagram: @funkard</li>
+              <li>Telegram: @funkard</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-10 text-center text-gray-500 text-xs">
+          © 2025 <span className="text-[#FFCC00]">Funkard</span> — made by collezionisti, per collezionisti.
+        </div>
+      </footer>
     </main>
   );
 }
