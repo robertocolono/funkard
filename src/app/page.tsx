@@ -100,53 +100,23 @@ export default function HomePage() {
         </motion.div>
       </section>
 
-      {/* SEZIONE FUNZIONALITÀ */}
-      <section className="mt-16 px-6 md:px-12 max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 text-center hover:border-yellow-400 transition">
-            <h3 className="text-yellow-400 text-xl font-semibold mb-3">
-              Gestisci la tua collezione
-            </h3>
-            <p className="text-zinc-400">
-              Tieni traccia delle tue carte in modo semplice e visivo.
-            </p>
-          </div>
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 px-6 md:px-12 max-w-6xl mx-auto">
+        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 text-center hover:border-yellow-400 transition">
+          <h3 className="text-yellow-400 text-xl font-semibold mb-3">Gestisci la tua collezione</h3>
+          <p className="text-zinc-400">Tieni traccia delle tue carte in modo semplice e visivo.</p>
+        </div>
 
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 text-center hover:border-yellow-400 transition">
-            <h3 className="text-yellow-400 text-xl font-semibold mb-3">
-              Valuta le tue carte
-            </h3>
-            <p className="text-zinc-400">
-              Scopri il valore reale grazie alla tecnologia GradeLens.
-            </p>
-          </div>
+        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 text-center hover:border-yellow-400 transition">
+          <h3 className="text-yellow-400 text-xl font-semibold mb-3">Valuta le tue carte</h3>
+          <p className="text-zinc-400">Scopri il valore reale grazie alla tecnologia GradeLens.</p>
+        </div>
 
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 text-center hover:border-yellow-400 transition">
-            <h3 className="text-yellow-400 text-xl font-semibold mb-3">
-              Connettiti con tutto il mondo
-            </h3>
-            <p className="text-zinc-400">
-              Compra e vendi in sicurezza con collezionisti globali.
-            </p>
-          </div>
-
+        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 text-center hover:border-yellow-400 transition">
+          <h3 className="text-yellow-400 text-xl font-semibold mb-3">Connettiti con tutto il mondo</h3>
+          <p className="text-zinc-400">Compra e vendi in sicurezza con collezionisti globali.</p>
         </div>
       </section>
-
-      {/* TEST OVERRIDE VISIVO */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
-        gap: '20px',
-        background: '#111',
-        padding: '20px',
-        margin: '20px 0'
-      }}>
-        <div style={{ background: '#222', padding: '20px', textAlign: 'center', color: 'white' }}>A</div>
-        <div style={{ background: '#222', padding: '20px', textAlign: 'center', color: 'white' }}>B</div>
-        <div style={{ background: '#222', padding: '20px', textAlign: 'center', color: 'white' }}>C</div>
-      </div>
 
       {/* FOOTER DESKTOP */}
       {!isMobile && (
