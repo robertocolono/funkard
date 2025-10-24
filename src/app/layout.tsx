@@ -1,4 +1,3 @@
-import Header from "@/components/layout/Header";
 import { SessionProvider } from "@/lib/context/SessionContext";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -10,7 +9,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="it">
       <body className={`${inter.className} bg-black text-zinc-100 antialiased`}>
         <SessionProvider>
-          <Header />
           {children}
         </SessionProvider>
       </body>

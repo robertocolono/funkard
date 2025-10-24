@@ -25,4 +25,17 @@ export const Card = React.forwardRef(
 );
 Card.displayName = "Card";
 
+export const CardContent = React.forwardRef(
+  ({ className = "", ...props }: any, ref: any) => {
+    return (
+      <div
+        ref={ref}
+        className={clsx("p-6", className)}
+        {...props}
+      />
+    );
+  }
+);
+CardContent.displayName = "CardContent";
+
 export default Card;
