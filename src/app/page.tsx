@@ -5,17 +5,26 @@ export default function HomePage() {
   return (
     <main className="pt-6 bg-black min-h-screen">
       {/* 🦾 HERO SECTION */}
-      <section className="flex flex-col items-center justify-center text-center py-28 bg-black text-white">
-        <h1 className="text-4xl font-bold mb-4">
-          Esplora, compra, vendi e scambia in tutto il mondo{" "}
-          <span className="text-yellow-500">con un semplice click!</span>
+      <section className="text-center py-16 bg-black">
+        {/* Logo sopra al titolo */}
+        <div className="flex justify-center mb-8">
+          <img
+            src="/logo.png"
+            alt="Funkard Logo"
+            className="w-40 md:w-52"
+          />
+        </div>
+
+        <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">
+          Esplora, compra, vendi e scambia in tutto il mondo
+          <span className="text-yellow-500"> con un semplice click!</span>
         </h1>
 
-        <p className="text-gray-300 mb-8">
+        <p className="text-gray-300 mb-6">
           Il marketplace TCG creato per i collezionisti. Sicuro, globale e completamente trasparente.
         </p>
 
-        <div className="flex gap-4">
+        <div className="flex justify-center gap-4">
           <button className="funkard-btn">Entra nel Marketplace</button>
           <button className="funkard-btn">Crea un Account</button>
         </div>
