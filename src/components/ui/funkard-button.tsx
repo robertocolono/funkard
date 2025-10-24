@@ -8,13 +8,13 @@ interface FunkardButtonProps {
   href?: string;
 }
 
-export const FunkardButton: React.FC<FunkardButtonProps> = ({
+export const FunkardButton = ({
   children,
   variant = "primary",
   onClick,
   className = "",
   href,
-}) => {
+}: FunkardButtonProps) => {
   const base =
     "px-6 py-2 rounded-full transition-all duration-300 font-semibold";
 
