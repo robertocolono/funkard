@@ -37,16 +37,16 @@ export default function HomePage() {
         </h1>
 
         {/* CTA Buttons */}
-        <div className="inline-flex flex-col sm:flex-row items-center justify-center gap-6">
+        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
             href="/marketplace"
-            className="px-8 py-4 text-lg font-bold text-black bg-funkard-yellow rounded-xl hover:opacity-90 transition-all duration-300 shadow-[0_0_25px_rgba(255,204,0,0.3)]"
+            className="px-8 py-3 text-base font-semibold text-black bg-funkard-yellow rounded-lg hover:opacity-90 transition-all duration-300 shadow-md hover:shadow-[0_0_15px_rgba(255,204,0,0.4)]"
           >
             Entra nel Marketplace
           </a>
           <a
             href="/register"
-            className="px-8 py-4 text-lg font-bold text-funkard-yellow border-2 border-funkard-yellow rounded-xl hover:bg-funkard-yellow hover:text-black transition-all duration-300 shadow-[0_0_25px_rgba(255,204,0,0.3)]"
+            className="px-8 py-3 text-base font-semibold text-funkard-yellow border border-funkard-yellow rounded-lg hover:bg-funkard-yellow hover:text-black transition-all duration-300 shadow-md hover:shadow-[0_0_15px_rgba(255,204,0,0.4)]"
           >
             Crea un account
           </a>
@@ -54,12 +54,12 @@ export default function HomePage() {
       </section>
 
       {/* FEATURES */}
-      <section className="py-20 bg-black">
+      <section id="features" className="py-24 bg-black text-white">
         <h2 className="text-center text-3xl md:text-4xl font-bold mb-14">
           Perché scegliere Funkard
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto px-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-6 max-w-6xl mx-auto">
           {[
             {
               title: "SafeTrade",
@@ -76,14 +76,14 @@ export default function HomePage() {
               desc: "Connettiti con collezionisti da tutto il mondo in un'unica piattaforma.",
               icon: "🌍",
             },
-          ].map((f) => (
+          ].map((feature) => (
             <div
-              key={f.title}
-              className="bg-[#111] rounded-2xl p-8 text-center border border-neutral-800 hover:border-funkard-yellow hover:shadow-[0_0_20px_rgba(255,204,0,0.25)] transition-all duration-300"
+              key={feature.title}
+              className="bg-[#111] rounded-xl p-8 text-center border border-neutral-800 hover:border-funkard-yellow hover:shadow-[0_0_20px_rgba(255,204,0,0.2)] transition-all duration-300"
             >
-              <div className="text-4xl mb-4">{f.icon}</div>
-              <h3 className="text-xl font-semibold mb-3">{f.title}</h3>
-              <p className="text-gray-400 text-sm leading-relaxed">{f.desc}</p>
+              <div className="text-4xl mb-4">{feature.icon}</div>
+              <h3 className="text-lg font-semibold mb-3">{feature.title}</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">{feature.desc}</p>
             </div>
           ))}
         </div>
