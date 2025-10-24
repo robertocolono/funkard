@@ -100,6 +100,9 @@ export default function HomePage() {
         </motion.div>
       </section>
 
+      {/* TEST BANNER ROSSO */}
+      <div className="bg-red-800 text-white p-2">TEST FUNKARD GRID</div>
+
       {/* SEZIONE FUNZIONALITÀ */}
       <section className="mt-16 px-6 md:px-12 max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
