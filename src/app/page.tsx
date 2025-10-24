@@ -100,18 +100,30 @@ export default function HomePage() {
       {/* FEATURE SECTION */}
       <section className="flex flex-col md:flex-row justify-center items-stretch gap-8 mt-16 px-8">
         <div className="flex-1 bg-zinc-900 p-6 rounded-2xl border border-zinc-800 hover:border-yellow-400 transition">
-          <h3 className="text-yellow-400 text-xl font-semibold mb-3 text-center">Gestisci la tua collezione</h3>
-          <p className="text-zinc-400 text-center">Tieni traccia delle tue carte in modo semplice e visivo.</p>
+          <h3 className="text-yellow-400 text-xl font-semibold mb-3 text-center">
+            Gestisci la tua collezione
+          </h3>
+          <p className="text-zinc-400 text-center">
+            Tieni traccia delle tue carte in modo semplice e visivo.
+          </p>
         </div>
 
         <div className="flex-1 bg-zinc-900 p-6 rounded-2xl border border-zinc-800 hover:border-yellow-400 transition">
-          <h3 className="text-yellow-400 text-xl font-semibold mb-3 text-center">Valuta le tue carte</h3>
-          <p className="text-zinc-400 text-center">Scopri il valore reale grazie alla tecnologia GradeLens.</p>
+          <h3 className="text-yellow-400 text-xl font-semibold mb-3 text-center">
+            Valuta le tue carte
+          </h3>
+          <p className="text-zinc-400 text-center">
+            Scopri il valore reale grazie alla tecnologia GradeLens.
+          </p>
         </div>
 
         <div className="flex-1 bg-zinc-900 p-6 rounded-2xl border border-zinc-800 hover:border-yellow-400 transition">
-          <h3 className="text-yellow-400 text-xl font-semibold mb-3 text-center">Connettiti con tutto il mondo</h3>
-          <p className="text-zinc-400 text-center">Compra e vendi in sicurezza con collezionisti globali.</p>
+          <h3 className="text-yellow-400 text-xl font-semibold mb-3 text-center">
+            Connettiti con tutto il mondo
+          </h3>
+          <p className="text-zinc-400 text-center">
+            Compra e vendi in sicurezza con collezionisti globali.
+          </p>
         </div>
       </section>
 
