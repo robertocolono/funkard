@@ -24,10 +24,9 @@
   text-shadow: 0 0 22px rgba(246, 195, 86, 0.35);
 }
 
-/* Bottone primario "identico" al tuo */
+/* Bottone primario "identico" al tuo (pill, pieno, senza effetti strani) */
 .btn-primary {
-  --gold: #eab64d;            /* puoi alzare a #f0b957 se vuoi più chiaro */
-  --gold-deep: #d9a23e;
+  --gold: #eab64d;
   --text: #ffffff;
 
   display: inline-flex;
@@ -41,10 +40,10 @@
   font-size: 14px;
   line-height: 1;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.35), /* lieve highlight interno */
+    inset 0 1px 0 rgba(255,255,255,0.35),
     0 4px 12px rgba(0,0,0,0.25);
   border: 1px solid rgba(0,0,0,0.15);
-  transition: transform .04s ease, filter .12s ease;
+  transition: transform .04s ease;
   text-decoration: none;
 }
 .btn-primary:active { transform: translateY(1px); }
@@ -53,6 +52,10 @@
    FUNKARD GLOBAL OVERRIDE
 ------------------------------ */
 @layer base {
+  /* Rimuovi divide-y globali che causano bordi orizzontali indesiderati */
+  * {
+    border-color: transparent;
+  }
   html, body {
     background-color: #0a0a0a;
     color: white;
