@@ -39,11 +39,12 @@ export default function HomePage() {
     <main className="min-h-screen bg-black text-white flex flex-col">
       {/* NAVBAR DESKTOP */}
       {!isMobile && (
-        <nav className="w-full sticky top-0 z-50 flex justify-between items-center px-10 py-5 bg-black/80 backdrop-blur-sm border-b border-zinc-800">
+        <nav className="w-full sticky top-0 z-50 flex justify-between items-center px-12 py-5 bg-black/80 backdrop-blur-sm border-b border-zinc-800">
           <h1 className="text-3xl font-extrabold tracking-tight">
             <span className="text-yellow-400">FUN</span>KARD
           </h1>
-          <div className="flex items-center gap-8 text-sm font-medium">
+
+          <div className="flex items-center gap-10 text-base font-medium">
             <a href="/marketplace" className="hover:text-yellow-400 transition">Marketplace</a>
             <a href="/collection" className="hover:text-yellow-400 transition">Collezione</a>
             <a href="/gradelens" className="hover:text-yellow-400 transition">GradeLens</a>
@@ -95,8 +96,8 @@ export default function HomePage() {
         </motion.div>
       </section>
 
-      {/* FEATURE SECTION */}
-      <section className="w-full max-w-6xl mx-auto flex flex-col md:flex-row justify-center items-stretch gap-6 mt-10 px-6 pb-24 md:pb-10">
+      {/* FEATURE SECTION (orizzontale) */}
+      <section className="w-full max-w-6xl mx-auto flex flex-col md:flex-row justify-center items-stretch gap-8 mt-10 px-6 pb-24 md:pb-10">
         {features.map(({ icon: Icon, title, desc }, i) => (
           <motion.div
             key={i}
@@ -106,12 +107,12 @@ export default function HomePage() {
             viewport={{ once: true }}
             className="flex-1"
           >
-            <Card className="bg-zinc-900/80 border-zinc-800 hover:border-yellow-400 transition rounded-2xl shadow-md hover:shadow-yellow-400/10 h-full flex flex-col items-center justify-center text-center p-6">
-              <Icon className="h-10 w-10 text-yellow-400 mb-4" />
-              <CardContent className="p-0">
-                <h3 className="text-xl font-semibold mb-3 text-yellow-400">{title}</h3>
+            <Card className="bg-zinc-900/80 border-zinc-800 hover:border-yellow-400 transition rounded-2xl shadow-md hover:shadow-yellow-400/10 h-full flex flex-col justify-between text-center p-6">
+              <div className="flex flex-col items-center justify-center flex-grow">
+                <Icon className="h-10 w-10 text-yellow-400 mb-4" />
+                <h3 className="text-lg md:text-xl font-semibold mb-3 text-yellow-400">{title}</h3>
                 <p className="text-zinc-400 text-sm md:text-base">{desc}</p>
-              </CardContent>
+              </div>
             </Card>
           </motion.div>
         ))}
