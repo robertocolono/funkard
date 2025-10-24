@@ -3,7 +3,7 @@ import { FunkardButton } from "@/components/ui/funkard-button";
 
 export default function HomePage() {
   return (
-    <main className="pt-20">
+    <main className="pt-6 bg-black min-h-screen">
       {/* 🦾 HERO SECTION */}
       <section className="flex flex-col items-center justify-center text-center py-28 bg-black text-white">
         <h1 className="text-4xl font-bold mb-4">
