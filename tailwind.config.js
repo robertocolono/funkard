@@ -9,12 +9,12 @@ module.exports = {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   safelist: [
-    "grid", "grid-cols-3", "gap-6",
+    "grid", "grid-cols-1", "grid-cols-3", "md:grid-cols-3", "gap-6", "gap-8",
     "px-8", "py-4", "rounded-xl",
     "text-funkard-yellow", "border-funkard-yellow",
     "flex", "flex-col", "md:flex-row",
     "hidden", "md:flex", "md:hidden",
-    "flex-1", "gap-8", "mt-16",
+    "flex-1", "mt-16", "max-w-6xl", "mx-auto",
   ],
   theme: {
     extend: {

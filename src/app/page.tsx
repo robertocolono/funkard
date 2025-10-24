@@ -44,15 +44,18 @@ export default function HomePage() {
             <span className="text-yellow-400">FUN</span>KARD
           </h1>
 
-          <div className="flex items-center gap-10 text-base font-medium">
-            <a href="/marketplace" className="hover:text-yellow-400 transition">Marketplace</a>
-            <a href="/collection" className="hover:text-yellow-400 transition">Collezione</a>
-            <a href="/gradelens" className="hover:text-yellow-400 transition">GradeLens</a>
-            <a href="/support" className="hover:text-yellow-400 transition">Support</a>
-            <Button className="bg-yellow-400 text-black font-semibold rounded-xl px-5 py-2 hover:bg-yellow-300 transition">
-              Registrati
-            </Button>
-          </div>
+          {/* link DESKTOP con spazio regolare */}
+          <ul className="hidden md:flex items-center gap-10 text-base font-medium">
+            <li><a href="/marketplace" className="hover:text-yellow-400 transition">Marketplace</a></li>
+            <li><a href="/collection" className="hover:text-yellow-400 transition">Collezione</a></li>
+            <li><a href="/gradelens" className="hover:text-yellow-400 transition">GradeLens</a></li>
+            <li><a href="/support" className="hover:text-yellow-400 transition">Support</a></li>
+            <li>
+              <a href="/signup" className="bg-yellow-400 text-black font-semibold rounded-xl px-5 py-2 hover:bg-yellow-300 transition">
+                Registrati
+              </a>
+            </li>
+          </ul>
         </nav>
       )}
 
@@ -88,42 +91,44 @@ export default function HomePage() {
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.5 }}
         >
-          <Button
-            size="lg"
-            className="bg-yellow-400 text-black font-bold text-lg px-10 py-4 rounded-2xl hover:scale-105 hover:shadow-[0_0_25px_rgba(250,204,21,0.5)] transition-all duration-300"
+          <a
+            href="/marketplace"
+            className="inline-block bg-yellow-400 text-black font-bold text-lg px-10 py-4 rounded-2xl hover:bg-yellow-300 transition"
           >
             Esplora il Marketplace
-          </Button>
+          </a>
         </motion.div>
       </section>
 
       {/* FEATURE SECTION */}
-      <section className="flex flex-col md:flex-row justify-center items-stretch gap-8 mt-16 px-8">
-        <div className="flex-1 bg-zinc-900 p-6 rounded-2xl border border-zinc-800 hover:border-yellow-400 transition">
-          <h3 className="text-yellow-400 text-xl font-semibold mb-3 text-center">
-            Gestisci la tua collezione
-          </h3>
-          <p className="text-zinc-400 text-center">
-            Tieni traccia delle tue carte in modo semplice e visivo.
-          </p>
-        </div>
+      <section className="mt-16 px-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="bg-zinc-900 p-6 rounded-2xl border border-zinc-800 hover:border-yellow-400 transition">
+            <h3 className="text-yellow-400 text-xl font-semibold mb-3 text-center">
+              Gestisci la tua collezione
+            </h3>
+            <p className="text-zinc-400 text-center">
+              Tieni traccia delle tue carte in modo semplice e visivo.
+            </p>
+          </div>
 
-        <div className="flex-1 bg-zinc-900 p-6 rounded-2xl border border-zinc-800 hover:border-yellow-400 transition">
-          <h3 className="text-yellow-400 text-xl font-semibold mb-3 text-center">
-            Valuta le tue carte
-          </h3>
-          <p className="text-zinc-400 text-center">
-            Scopri il valore reale grazie alla tecnologia GradeLens.
-          </p>
-        </div>
+          <div className="bg-zinc-900 p-6 rounded-2xl border border-zinc-800 hover:border-yellow-400 transition">
+            <h3 className="text-yellow-400 text-xl font-semibold mb-3 text-center">
+              Valuta le tue carte
+            </h3>
+            <p className="text-zinc-400 text-center">
+              Scopri il valore reale grazie alla tecnologia GradeLens.
+            </p>
+          </div>
 
-        <div className="flex-1 bg-zinc-900 p-6 rounded-2xl border border-zinc-800 hover:border-yellow-400 transition">
-          <h3 className="text-yellow-400 text-xl font-semibold mb-3 text-center">
-            Connettiti con tutto il mondo
-          </h3>
-          <p className="text-zinc-400 text-center">
-            Compra e vendi in sicurezza con collezionisti globali.
-          </p>
+          <div className="bg-zinc-900 p-6 rounded-2xl border border-zinc-800 hover:border-yellow-400 transition">
+            <h3 className="text-yellow-400 text-xl font-semibold mb-3 text-center">
+              Connettiti con tutto il mondo
+            </h3>
+            <p className="text-zinc-400 text-center">
+              Compra e vendi in sicurezza con collezionisti globali.
+            </p>
+          </div>
         </div>
       </section>
 
