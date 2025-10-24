@@ -36,7 +36,7 @@ export default function HomePage() {
   ];
 
   return (
-    <main className="min-h-screen bg-black text-white flex flex-col overflow-x-hidden">
+    <main className="min-h-screen bg-black text-white overflow-x-hidden">
       {/* NAVBAR DESKTOP */}
       {!isMobile && (
         <nav className="w-full sticky top-0 z-50 flex justify-between items-center px-12 py-5 bg-black/80 backdrop-blur-sm border-b border-zinc-800">
