@@ -1,122 +1,144 @@
-/* ==== FONT PRINCIPALE ==== */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ==== TEST TAILWIND ==== */
-.test-tw { 
-  color: #ef4444; 
-  background-color: #86efac; 
-  padding: 1rem;
-  border-radius: 0.5rem;
-}
-
-:root {
-  --funkard-yellow: #FFCC00;
-}
-
-html,
-body {
-  font-family: 'Outfit', sans-serif;
-  background-color: #0a0a0a;
-  color: #ffffff;
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* ==== SCROLLBAR CUSTOM ==== */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #f2b237, #ff9800);
-  border-radius: 4px;
-}
-::-webkit-scrollbar-track {
-  background: #111;
-}
-
-/* ==== LINK E TESTI ==== */
-a {
-  color: white;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-a:hover {
-  color: #f2b237;
-}
-
-/* ==== GRADIENTI E GLOW ==== */
-.bg-glow {
-  background: radial-gradient(circle at center, rgba(242,178,55,0.15), transparent 70%);
-}
-
-.text-glow {
-  text-shadow: 0 0 20px rgba(242,178,55,0.4);
-}
-
-/* ==== ANIMAZIONI GLOBALI ==== */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+/* ------------------------------
+   FUNKARD GLOBAL OVERRIDE
+------------------------------ */
+@layer base {
+  html, body {
+    background-color: #0a0a0a;
+    color: white;
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+    font-family: "Inter", sans-serif;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  h1, h2, h3, h4, h5 {
+    color: white;
+    font-weight: bold;
+    letter-spacing: -0.025em;
+  }
+
+  a {
+    transition: all 0.2s ease;
+  }
+
+  a:hover {
+    color: #FFCC00;
+  }
+
+  /* Gestione Navbar */
+  nav {
+    background-color: rgba(10, 10, 10, 0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #262626;
+  }
+
+  /* Rimozione margini inutili */
+  section {
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Hero */
+  .hero-title {
+    font-size: 1.875rem;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  @media (min-width: 768px) {
+    .hero-title {
+      font-size: 2.25rem;
+    }
   }
 }
-.animate-fadeInUp {
-  animation: fadeInUp 0.6s ease-out;
+
+/* ------------------------------
+   COMPONENT OVERRIDES
+------------------------------ */
+@layer components {
+  /* Bottoni globali */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 2rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-primary {
+    background-color: #FFCC00;
+    color: black;
+  }
+
+  .btn-primary:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(255, 204, 0, 0.4);
+  }
+
+  .btn-outline {
+    border: 2px solid #FFCC00;
+    color: #FFCC00;
+    background-color: transparent;
+  }
+
+  .btn-outline:hover {
+    background-color: #FFCC00;
+    color: black;
+    transform: scale(1.05);
+  }
+
+  /* Card feature */
+  .feature-card {
+    background-color: #111;
+    text-align: center;
+    padding: 2rem;
+    border-radius: 0.75rem;
+    border: 1px solid #262626;
+    transition: all 0.3s ease;
+  }
+
+  .feature-card:hover {
+    border-color: #FFCC00;
+    box-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
+  }
+
+  .feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid #262626;
+    background-color: rgba(10, 10, 10, 0.9);
+  }
 }
 
-/* ==== CONTAINER CENTRATO ==== */
-.container {
-  max-width: 80rem; /* 1280px - equivalente a max-w-7xl */
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1.5rem; /* 24px - equivalente a px-6 */
-  padding-right: 1.5rem;
-}
+/* ------------------------------
+   UTILITIES EXTRA
+------------------------------ */
+@layer utilities {
+  .shadow-glow {
+    box-shadow: 0 0 20px rgba(255, 204, 0, 0.2);
+  }
 
-/* ==== ANIMAZIONI SCROLLING CARDS ==== */
-@keyframes scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
+  .max-container {
+    max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
 
-.animate-scroll {
-  display: flex;
-  width: max-content;
-  animation: scroll 25s linear infinite;
-}
-
-.shadow-glow {
-  box-shadow: 0 0 20px rgba(242, 178, 55, 0.1);
-}
-
-/* ==== FUNKARD YELLOW VARIABLES ==== */
-.text-funkard-yellow {
-  color: var(--funkard-yellow);
-}
-
-.border-funkard-yellow {
-  border-color: var(--funkard-yellow);
-}
-
-.bg-funkard-yellow {
-  background-color: var(--funkard-yellow);
-}
-
-.hover\:text-funkard-yellow:hover {
-  color: var(--funkard-yellow);
-}
-
-/* ==== RESPONSIVE HELPERS ==== */
-@media (max-width: 768px) {
-  h1 {
-    font-size: 2rem;
+  .center-flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

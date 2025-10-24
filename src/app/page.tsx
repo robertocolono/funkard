@@ -49,18 +49,8 @@ export default function HomePage() {
 
         {/* CTA Buttons */}
         <div className="mt-10 flex flex-col md:flex-row items-center justify-center gap-6">
-          <a
-            href="/marketplace"
-            className="px-10 py-4 text-lg font-semibold text-black bg-funkard-yellow rounded-xl hover:scale-105 transition-all duration-300 shadow-[0_0_20px_rgba(255,204,0,0.4)]"
-          >
-            Entra nel Marketplace
-          </a>
-          <a
-            href="/register"
-            className="px-10 py-4 text-lg font-semibold text-funkard-yellow border-2 border-funkard-yellow rounded-xl hover:bg-funkard-yellow hover:text-black transition-all duration-300 shadow-[0_0_20px_rgba(255,204,0,0.4)]"
-          >
-            Crea un account
-          </a>
+          <a href="/marketplace" className="btn btn-primary">Entra nel Marketplace</a>
+          <a href="/register" className="btn btn-outline">Crea un account</a>
         </div>
       </section>
 
@@ -70,31 +60,14 @@ export default function HomePage() {
 
         <div className="flex flex-col md:flex-row justify-center items-stretch gap-6 px-6 max-w-6xl mx-auto">
           {[
-            {
-              title: "SafeTrade",
-              desc: "Scambi sicuri e verificati, con protezione integrata per acquirenti e venditori.",
-              icon: "🛡️",
-            },
-            {
-              title: "GradeLens AI",
-              desc: "Analizza le tue carte in tempo reale grazie alla nostra intelligenza artificiale.",
-              icon: "🤖",
-            },
-            {
-              title: "Marketplace Globale",
-              desc: "Connettiti con collezionisti da tutto il mondo in un'unica piattaforma.",
-              icon: "🌍",
-            },
-          ].map((feature) => (
-            <div
-              key={feature.title}
-              className="flex-1 bg-[#111] rounded-xl p-8 text-center border border-neutral-800 hover:border-funkard-yellow hover:shadow-[0_0_15px_rgba(255,204,0,0.2)] transition-all duration-300"
-            >
-              <div className="flex flex-col items-center">
-                <div className="text-5xl mb-4">{feature.icon}</div>
-                <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{feature.desc}</p>
-              </div>
+            { title: "SafeTrade", icon: "🛡️", desc: "Scambi sicuri e verificati con protezione integrata." },
+            { title: "GradeLens AI", icon: "🤖", desc: "Analizza le tue carte in tempo reale grazie alla nostra AI." },
+            { title: "Marketplace Globale", icon: "🌍", desc: "Connettiti con collezionisti da tutto il mondo." },
+          ].map((f) => (
+            <div key={f.title} className="feature-card">
+              <div className="feature-icon">{f.icon}</div>
+              <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
+              <p className="text-gray-400 text-sm">{f.desc}</p>
             </div>
           ))}
         </div>
