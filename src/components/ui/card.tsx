@@ -2,12 +2,13 @@
 import * as React from "react";
 import { clsx } from "clsx";
 
-export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface CardProps {
   inset?: boolean;
+  [key: string]: any;
 }
 
-export const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className = "", inset = false, ...props }, ref) => {
+export const Card = React.forwardRef(
+  ({ className = "", inset = false, ...props }: any, ref: any) => {
     return (
       <div
         ref={ref}

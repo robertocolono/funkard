@@ -17,10 +17,10 @@ type SessionContextType = {
   logout: () => void;
 };
 
-const SessionContext = createContext<SessionContextType | null>(null);
+const SessionContext = createContext(null as SessionContextType | null);
 
 export function SessionProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState(null as User | null);
   const [loading, setLoading] = useState(true);
 
   const loadSession = useCallback(() => {

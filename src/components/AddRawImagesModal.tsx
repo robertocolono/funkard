@@ -10,7 +10,7 @@ interface AddRawImagesModalProps {
 
 export default function AddRawImagesModal({ cardId, onSuccess }: AddRawImagesModalProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [files, setFiles] = useState<{ [key: string]: File | null }>({});
+  const [files, setFiles] = useState({} as { [key: string]: File | null });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -26,7 +26,7 @@ export default function AddRawImagesModal({ cardId, onSuccess }: AddRawImagesMod
   ];
 
   const handleFileChange = (field: string, file: File | null) => {
-    setFiles((prev) => ({ ...prev, [field]: file }));
+    setFiles((prev: any) => ({ ...prev, [field]: file }));
   };
 
   const handleSubmit = async () => {
@@ -34,7 +34,7 @@ export default function AddRawImagesModal({ cardId, onSuccess }: AddRawImagesMod
     setMessage("");
     try {
       const formData = new FormData();
-      Object.entries(files).forEach(([key, file]) => {
+      Object.entries(files).forEach(([key, file]: [string, any]) => {
         if (file) formData.append(key, file);
       });
       const res = await fetch(

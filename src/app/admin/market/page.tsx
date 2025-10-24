@@ -13,9 +13,9 @@ interface PendingItem {
 }
 
 export default function AdminMarketPage() {
-  const [items, setItems] = useState<PendingItem[]>([]);
+  const [items, setItems] = useState([] as PendingItem[]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null as string | null);
 
   useEffect(() => {
     const fetchPendingItems = async () => {
@@ -77,7 +77,7 @@ export default function AdminMarketPage() {
               </tr>
             </thead>
             <tbody>
-              {items.map((item, idx) => (
+              {items.map((item: any, idx: any) => (
                 <tr key={idx} className="border-t border-zinc-700 hover:bg-zinc-800/50">
                   <td className="p-4 font-medium text-white">{item.itemName}</td>
                   <td className="p-4 text-gray-300">{item.category}</td>

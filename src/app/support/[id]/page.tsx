@@ -8,11 +8,11 @@ import { SupportTicket, CreateMessageRequest } from "@/types/support";
 export default function SupportChatPage() {
   const router = useRouter();
   const { id } = useParams() as { id: string };
-  const [ticket, setTicket] = useState<SupportTicket | null>(null);
+  const [ticket, setTicket] = useState(null as SupportTicket | null);
   const [newMessage, setNewMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null as string | null);
 
   useEffect(() => {
     const fetchTicket = async () => {
@@ -165,7 +165,7 @@ export default function SupportChatPage() {
         </div>
 
         <div className="space-y-4 mb-6">
-          {ticket.messages.map((message) => (
+          {ticket.messages.map((message: any) => (
             <div key={message.id} className={`flex ${message.isAdmin ? 'justify-end' : 'justify-start'}`}>
               <div className={`max-w-xs lg:max-w-md px-4 py-3 rounded-lg ${
                 message.isAdmin 

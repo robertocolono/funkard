@@ -81,7 +81,7 @@ export default function ProfilePage() {
           <label className="text-sm text-gray-400">Nome</label>
           <Input
             value={form.name}
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, name: e.target.value })}
             placeholder="Il tuo nome"
             className="mt-1"
           />
@@ -91,7 +91,7 @@ export default function ProfilePage() {
           <label className="text-sm text-gray-400">Email</label>
           <Input
             value={form.email}
-            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, email: e.target.value })}
             placeholder="Indirizzo email"
             className="mt-1"
           />
@@ -101,7 +101,7 @@ export default function ProfilePage() {
           <label className="text-sm text-gray-400">Valuta preferita</label>
           <Select
             value={form.currency}
-            onValueChange={(value) => setForm({ ...form, currency: value })}
+            onValueChange={(value: any) => setForm({ ...form, currency: value })}
           >
             <SelectTrigger className="mt-1 bg-zinc-800 border-zinc-700">
               <SelectValue placeholder="Seleziona valuta" />

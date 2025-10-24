@@ -6,12 +6,13 @@ interface TabsContextValue {
   value: string;
   setValue: (v: string) => void;
 }
-const TabsContext = React.createContext<TabsContextValue | null>(null);
+const TabsContext = React.createContext(null as TabsContextValue | null);
 
-interface TabsProps extends React.HTMLAttributes<HTMLDivElement> {
+interface TabsProps {
   defaultValue: string;
   value?: string;
   onValueChange?: (v: string) => void;
+  [key: string]: any;
 }
 export function Tabs({ defaultValue, value, onValueChange, className, children }: TabsProps) {
   const [internal, setInternal] = React.useState(defaultValue);
@@ -27,7 +28,7 @@ export function Tabs({ defaultValue, value, onValueChange, className, children }
   );
 }
 
-export function TabsList({ className, children, ...rest }: React.HTMLAttributes<HTMLDivElement>) {
+export function TabsList({ className, children, ...rest }: any) {
   return (
     <div
       className={clsx(
@@ -41,8 +42,9 @@ export function TabsList({ className, children, ...rest }: React.HTMLAttributes<
   );
 }
 
-interface TabsTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface TabsTriggerProps {
   value: string;
+  [key: string]: any;
 }
 export function TabsTrigger({ value, className, children, ...rest }: TabsTriggerProps) {
   const ctx = React.useContext(TabsContext);
@@ -66,8 +68,9 @@ export function TabsTrigger({ value, className, children, ...rest }: TabsTrigger
   );
 }
 
-interface TabsContentProps extends React.HTMLAttributes<HTMLDivElement> {
+interface TabsContentProps {
   value: string;
+  [key: string]: any;
 }
 export function TabsContent({ value, className, children, ...rest }: TabsContentProps) {
   const ctx = React.useContext(TabsContext);

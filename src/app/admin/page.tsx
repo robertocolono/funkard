@@ -17,10 +17,10 @@ interface DashboardStats {
 }
 
 export default function AdminDashboard() {
-  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [stats, setStats] = useState(null as DashboardStats | null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [adminToken, setAdminToken] = useState<string | null>(null);
+  const [error, setError] = useState(null as string | null);
+  const [adminToken, setAdminToken] = useState(null as string | null);
 
   useEffect(() => {
     // Ottieni il token admin
@@ -135,7 +135,7 @@ export default function AdminDashboard() {
         <h2 className="text-xl font-semibold mb-4">📋 Attività Recente</h2>
         {stats?.recentActivity && stats.recentActivity.length > 0 ? (
           <div className="space-y-3">
-            {stats.recentActivity.map((activity) => (
+            {stats.recentActivity.map((activity: any) => (
               <div key={activity.id} className="flex items-center gap-3 p-3 bg-zinc-800 rounded-lg">
                 <span className="text-lg">
                   {activity.type === "pending" ? "📈" : 

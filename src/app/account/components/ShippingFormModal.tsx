@@ -22,7 +22,7 @@ export default function ShippingFormModal({
     postalCode: '',
     country: '',
   });
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState({} as Record<string, string>);
 
   useEffect(() => {
     if (editData) setForm(editData);
@@ -30,7 +30,7 @@ export default function ShippingFormModal({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    setErrors((prev) => ({ ...prev, [e.target.name]: '' })); // pulisce errore
+    setErrors((prev: any) => ({ ...prev, [e.target.name]: '' })); // pulisce errore
   };
 
   const handleSubmit = (e: React.FormEvent) => {

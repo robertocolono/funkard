@@ -7,7 +7,7 @@ interface Props {
 }
 
 export default function CardImageUploader({ onUploadComplete }: Props) {
-  const [preview, setPreview] = useState<string | null>(null);
+  const [preview, setPreview] = useState(null as string | null);
   const [loading, setLoading] = useState(false);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {

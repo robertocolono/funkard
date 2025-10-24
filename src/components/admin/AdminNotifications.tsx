@@ -12,11 +12,11 @@ interface NotificationStats {
 }
 
 export default function AdminNotifications({ token }: { token: string }) {
-  const [notifications, setNotifications] = useState<AdminNotification[]>([]);
-  const [stats, setStats] = useState<NotificationStats | null>(null);
+  const [notifications, setNotifications] = useState([] as AdminNotification[]);
+  const [stats, setStats] = useState(null as NotificationStats | null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [resolving, setResolving] = useState<number | null>(null);
+  const [error, setError] = useState(null as string | null);
+  const [resolving, setResolving] = useState(null as number | null);
 
   useEffect(() => {
     const loadNotifications = async () => {
@@ -46,11 +46,11 @@ export default function AdminNotifications({ token }: { token: string }) {
     try {
       setResolving(id);
       await resolveAdminNotification(id, token);
-      setNotifications(prev => prev.filter(n => n.id !== id));
+      setNotifications((prev: any) => prev.filter((n: any) => n.id !== id));
       
       // Aggiorna le statistiche
       if (stats) {
-        setStats(prev => prev ? { ...prev, unread: Math.max(0, prev.unread - 1) } : null);
+        setStats((prev: any) => prev ? { ...prev, unread: Math.max(0, prev.unread - 1) } : null);
       }
     } catch (err) {
       console.error("Errore risoluzione:", err);
@@ -63,9 +63,9 @@ export default function AdminNotifications({ token }: { token: string }) {
   const handleMarkAllAsRead = async () => {
     try {
       await markAllAsRead(token);
-      setNotifications(prev => prev.map(n => ({ ...n, resolved: true })));
+      setNotifications((prev: any) => prev.map((n: any) => ({ ...n, resolved: true })));
       if (stats) {
-        setStats(prev => prev ? { ...prev, unread: 0 } : null);
+        setStats((prev: any) => prev ? { ...prev, unread: 0 } : null);
       }
     } catch (err) {
       console.error("Errore marcatura tutte:", err);
@@ -158,7 +158,7 @@ export default function AdminNotifications({ token }: { token: string }) {
 
       {/* LISTA NOTIFICHE */}
       <div className="space-y-3">
-        {notifications.map((notification) => (
+        {notifications.map((notification: any) => (
           <div 
             key={notification.id} 
             className={`border rounded-xl p-4 flex justify-between items-start transition-all ${

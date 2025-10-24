@@ -9,12 +9,12 @@ interface NotificationBadgeProps {
 }
 
 export default function NotificationBadge({ token }: NotificationBadgeProps) {
-  const [stats, setStats] = useState<{
+  const [stats, setStats] = useState(null as {
     total: number;
     unread: number;
     errors: number;
     warnings: number;
-  } | null>(null);
+  } | null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

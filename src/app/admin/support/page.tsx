@@ -20,11 +20,11 @@ interface SupportTicket {
 }
 
 export default function AdminSupportPage() {
-  const [tickets, setTickets] = useState<SupportTicket[]>([]);
+  const [tickets, setTickets] = useState([] as SupportTicket[]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null as string | null);
   const [reply, setReply] = useState("");
-  const [replyingTo, setReplyingTo] = useState<string | null>(null);
+  const [replyingTo, setReplyingTo] = useState(null as string | null);
 
   useEffect(() => {
     const fetchTickets = async () => {
@@ -106,7 +106,7 @@ export default function AdminSupportPage() {
         </div>
       ) : (
         <div className="space-y-4">
-          {tickets.map((ticket) => (
+          {tickets.map((ticket: any) => (
             <div key={ticket.id} className="p-6 border border-zinc-700 rounded-xl bg-zinc-900">
               <div className="flex items-start justify-between mb-4">
                 <div>
@@ -147,7 +147,7 @@ export default function AdminSupportPage() {
                 <div className="mb-4">
                   <h4 className="text-sm font-medium text-gray-400 mb-2">Risposte:</h4>
                   <div className="space-y-2">
-                    {ticket.replies.map((reply) => (
+                    {ticket.replies.map((reply: any) => (
                       <div key={reply.id} className={`p-3 rounded-lg ${
                         reply.isAdmin 
                           ? "bg-yellow-900/20 border border-yellow-700" 

@@ -10,23 +10,23 @@ interface AddressFormProps {
 }
 
 export default function AddressForm({ initialData, onSave }: AddressFormProps) {
-  const [formData, setFormData] = useState<AddressFormData>(
+  const [formData, setFormData] = useState(
     initialData || {
       fullName: "",
       addressLine: "",
       city: "",
       postalCode: "",
       country: "IT",
-    }
+    } as AddressFormData
   )
 
-  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [errors, setErrors] = useState({} as Record<string, string>)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
 
   const handleChange = (field: keyof AddressFormData, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }))
-    if (errors[field]) setErrors((prev) => ({ ...prev, [field]: "" })) // pulizia errore
+    setFormData((prev: any) => ({ ...prev, [field]: value }))
+    if (errors[field]) setErrors((prev: any) => ({ ...prev, [field]: "" })) // pulizia errore
   }
 
   const handleSubmit = async (e: React.FormEvent) => {

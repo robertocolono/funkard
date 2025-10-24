@@ -10,7 +10,7 @@ import { CreditCard, Trash2, Edit2, Loader2 } from 'lucide-react';
 export default function PaymentsPage() {
   const { payments, loading, addPayment, updatePayment, deletePayment } = usePayments();
   const [open, setOpen] = useState(false);
-  const [editId, setEditId] = useState<string | null>(null);
+  const [editId, setEditId] = useState(null as string | null);
   const [form, setForm] = useState({ cardType: '', cardNumber: '', name: '', expiry: '', country: '' });
 
   const handleSave = async () => {
@@ -41,7 +41,7 @@ export default function PaymentsPage() {
         <p className="text-gray-400">Nessun metodo di pagamento salvato.</p>
       ) : (
         <div className="grid gap-4">
-          {payments.map((p) => (
+          {payments.map((p: any) => (
             <div key={p.id} className="border border-zinc-800 rounded-lg p-4 bg-zinc-900 flex justify-between items-center">
               <div>
                 <p className="font-medium">{p.cardType} **** {p.last4}</p>
@@ -66,11 +66,11 @@ export default function PaymentsPage() {
             <DialogTitle>{editId ? 'Modifica metodo' : 'Nuovo metodo di pagamento'}</DialogTitle>
           </DialogHeader>
           <div className="space-y-3 mt-4">
-            <Input placeholder="Tipo carta (es. Visa, Mastercard)" value={form.cardType} onChange={(e) => setForm({ ...form, cardType: e.target.value })} />
-            <Input placeholder="Numero carta" value={form.cardNumber} onChange={(e) => setForm({ ...form, cardNumber: e.target.value })} />
-            <Input placeholder="Nome sulla carta" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
-            <Input placeholder="Scadenza (MM/YY)" value={form.expiry} onChange={(e) => setForm({ ...form, expiry: e.target.value })} />
-            <Input placeholder="Paese" value={form.country} onChange={(e) => setForm({ ...form, country: e.target.value })} />
+            <Input placeholder="Tipo carta (es. Visa, Mastercard)" value={form.cardType} onChange={(e: any) => setForm({ ...form, cardType: e.target.value })} />
+            <Input placeholder="Numero carta" value={form.cardNumber} onChange={(e: any) => setForm({ ...form, cardNumber: e.target.value })} />
+            <Input placeholder="Nome sulla carta" value={form.name} onChange={(e: any) => setForm({ ...form, name: e.target.value })} />
+            <Input placeholder="Scadenza (MM/YY)" value={form.expiry} onChange={(e: any) => setForm({ ...form, expiry: e.target.value })} />
+            <Input placeholder="Paese" value={form.country} onChange={(e: any) => setForm({ ...form, country: e.target.value })} />
           </div>
           <DialogFooter className="mt-6">
             <Button variant="outline" onClick={() => setOpen(false)}>Annulla</Button>

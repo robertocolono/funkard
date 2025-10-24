@@ -7,8 +7,8 @@ import AddressesTab from "@/components/account/AddressesTab";
 import PaymentTab from "@/components/account/PaymentTab";
 
 export default function AccountPage() {
-  const [tab, setTab] = useState<"profile" | "addresses" | "payment">("profile");
-  const [user, setUser] = useState<any>(null);
+  const [tab, setTab] = useState("profile" as "profile" | "addresses" | "payment");
+  const [user, setUser] = useState(null as any);
 
   useEffect(() => {
     (async () => {

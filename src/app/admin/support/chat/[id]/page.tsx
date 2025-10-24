@@ -27,11 +27,11 @@ interface Ticket {
 export default function AdminTicketChatPage() {
   const { id } = useParams();
   const router = useRouter();
-  const [ticket, setTicket] = useState<Ticket | null>(null);
+  const [ticket, setTicket] = useState(null as Ticket | null);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
   const [sending, setSending] = useState(false);
-  const [client, setClient] = useState<Client | null>(null);
+  const [client, setClient] = useState(null as Client | null);
 
   const fetchTicket = useCallback(async () => {
     try {
@@ -97,10 +97,10 @@ export default function AdminTicketChatPage() {
 
           if (data.content) {
             // È un messaggio di chat
-            setTicket(prev => prev ? ({ ...prev, messages: [...prev.messages, data] }) : prev);
+            setTicket((prev: any) => prev ? ({ ...prev, messages: [...prev.messages, data] }) : prev);
           } else {
             // È un aggiornamento del ticket
-            setTicket(prev => prev ? ({ ...prev, ...data }) : prev);
+            setTicket((prev: any) => prev ? ({ ...prev, ...data }) : prev);
           }
         });
       },
@@ -161,7 +161,7 @@ export default function AdminTicketChatPage() {
         {ticket.messages.length === 0 ? (
           <p className="text-gray-500 text-center mt-10">Nessun messaggio ancora.</p>
         ) : (
-          ticket.messages.map((msg) => (
+          ticket.messages.map((msg: any) => (
             <div
               key={msg.id}
               className={`flex ${

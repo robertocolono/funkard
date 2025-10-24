@@ -18,11 +18,11 @@ interface ArchivedNotification {
 
 export default function AdminNotificationsArchivePage() {
   const router = useRouter();
-  const [token, setToken] = useState<string | null>(null);
+  const [token, setToken] = useState(null as string | null);
   const [loading, setLoading] = useState(true);
-  const [notifications, setNotifications] = useState<ArchivedNotification[]>([]);
+  const [notifications, setNotifications] = useState([] as ArchivedNotification[]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterType, setFilterType] = useState<"all" | "ERROR" | "WARNING" | "INFO">("all");
+  const [filterType, setFilterType] = useState("all" as "all" | "ERROR" | "WARNING" | "INFO");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -78,7 +78,7 @@ export default function AdminNotificationsArchivePage() {
     }
   };
 
-  const filteredNotifications = notifications.filter(notification => {
+  const filteredNotifications = notifications.filter((notification: any) => {
     const matchesSearch = notification.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          notification.message.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesFilter = filterType === "all" || notification.type === filterType;
@@ -188,7 +188,7 @@ export default function AdminNotificationsArchivePage() {
           </div>
         ) : (
           <div className="space-y-4">
-            {filteredNotifications.map((notification) => (
+            {filteredNotifications.map((notification: any) => (
               <div 
                 key={notification.id} 
                 className="border rounded-xl p-4 bg-zinc-900/40 border-zinc-800 opacity-75"
@@ -240,19 +240,19 @@ export default function AdminNotificationsArchivePage() {
             </div>
             <div>
               <div className="text-2xl font-bold text-red-400">
-                {notifications.filter(n => n.type === "ERROR").length}
+                {notifications.filter((n: any) => n.type === "ERROR").length}
               </div>
               <div className="text-gray-400">Errori risolti</div>
             </div>
             <div>
               <div className="text-2xl font-bold text-yellow-400">
-                {notifications.filter(n => n.type === "WARNING").length}
+                {notifications.filter((n: any) => n.type === "WARNING").length}
               </div>
               <div className="text-gray-400">Avvisi risolti</div>
             </div>
             <div>
               <div className="text-2xl font-bold text-blue-400">
-                {notifications.filter(n => n.type === "INFO").length}
+                {notifications.filter((n: any) => n.type === "INFO").length}
               </div>
               <div className="text-gray-400">Info risolte</div>
             </div>

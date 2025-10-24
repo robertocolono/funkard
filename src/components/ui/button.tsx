@@ -2,9 +2,10 @@
 import * as React from "react";
 import { clsx } from "clsx";
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps {
   variant?: "default" | "outline" | "ghost" | "destructive" | "secondary";
   size?: "sm" | "md" | "lg" | "icon";
+  [key: string]: any;
 }
 
 const variantClasses: Record<string, string> = {
@@ -22,8 +23,8 @@ const sizeClasses: Record<string, string> = {
   icon: "h-10 w-10 p-0 flex items-center justify-center",
 };
 
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className = "", variant = "default", size = "md", ...props }, ref) => {
+export const Button = React.forwardRef(
+  ({ className = "", variant = "default", size = "md", ...props }: any, ref: any) => {
     return (
       <button
         ref={ref}

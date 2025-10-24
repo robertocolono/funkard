@@ -10,7 +10,7 @@ import { Loader2, Trash2, Edit2, MapPin } from 'lucide-react';
 export default function AddressesPage() {
   const { addresses, loading, addAddress, updateAddress, deleteAddress } = useAddresses();
   const [open, setOpen] = useState(false);
-  const [editId, setEditId] = useState<string | null>(null);
+  const [editId, setEditId] = useState(null as string | null);
   const [form, setForm] = useState({ name: '', street: '', city: '', zip: '', country: '' });
 
   const handleSave = async () => {
@@ -39,7 +39,7 @@ export default function AddressesPage() {
         <p className="text-gray-400">Nessun indirizzo salvato.</p>
       ) : (
         <div className="grid gap-4">
-          {addresses.map((a) => (
+          {addresses.map((a: any) => (
             <div key={a.id} className="border border-zinc-800 rounded-lg p-4 bg-zinc-900 flex justify-between items-center">
               <div>
                 <p className="font-medium">{a.name || 'Senza nome'}</p>
@@ -64,11 +64,11 @@ export default function AddressesPage() {
             <DialogTitle>{editId ? 'Modifica indirizzo' : 'Nuovo indirizzo'}</DialogTitle>
           </DialogHeader>
           <div className="space-y-3 mt-4">
-            <Input placeholder="Nome (opzionale)" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
-            <Input placeholder="Via e numero civico" value={form.street} onChange={(e) => setForm({ ...form, street: e.target.value })} />
-            <Input placeholder="Città" value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} />
-            <Input placeholder="CAP" value={form.zip} onChange={(e) => setForm({ ...form, zip: e.target.value })} />
-            <Input placeholder="Paese" value={form.country} onChange={(e) => setForm({ ...form, country: e.target.value })} />
+            <Input placeholder="Nome (opzionale)" value={form.name} onChange={(e: any) => setForm({ ...form, name: e.target.value })} />
+            <Input placeholder="Via e numero civico" value={form.street} onChange={(e: any) => setForm({ ...form, street: e.target.value })} />
+            <Input placeholder="Città" value={form.city} onChange={(e: any) => setForm({ ...form, city: e.target.value })} />
+            <Input placeholder="CAP" value={form.zip} onChange={(e: any) => setForm({ ...form, zip: e.target.value })} />
+            <Input placeholder="Paese" value={form.country} onChange={(e: any) => setForm({ ...form, country: e.target.value })} />
           </div>
           <DialogFooter className="mt-6">
             <Button variant="outline" onClick={() => setOpen(false)}>Annulla</Button>

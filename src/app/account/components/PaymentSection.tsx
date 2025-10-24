@@ -21,9 +21,9 @@ interface PaymentMethod {
 }
 
 export default function PaymentSection({ data = [], onUpdate }: { data: any[], onUpdate: () => void }) {
-  const [methods, setMethods] = useState<PaymentMethod[]>(data);
+  const [methods, setMethods] = useState(data as PaymentMethod[]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null as string | null);
 
   // Aggiorna methods quando data cambia
   useEffect(() => {
@@ -85,7 +85,7 @@ export default function PaymentSection({ data = [], onUpdate }: { data: any[], o
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <AnimatePresence>
-            {methods.map((method) => (
+            {methods.map((method: any) => (
               <motion.div
                 key={method.id}
                 layout

@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export default function AdminNotificationsPage() {
   const router = useRouter();
-  const [token, setToken] = useState<string | null>(null);
+  const [token, setToken] = useState(null as string | null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

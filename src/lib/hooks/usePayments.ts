@@ -11,7 +11,7 @@ interface Payment {
 }
 
 export function usePayments() {
-  const [payments, setPayments] = useState<Payment[]>([]);
+  const [payments, setPayments] = useState([] as Payment[]);
   const [loading, setLoading] = useState(false);
 
   const loadPayments = async () => {

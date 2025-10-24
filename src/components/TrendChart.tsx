@@ -5,8 +5,8 @@ import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianG
 type Range = "7d" | "30d" | "1y";
 
 export default function TrendChart({ itemName, category = "card" }: { itemName: string; category?: string; }) {
-  const [range, setRange] = useState<Range>("30d");
-  const [data, setData] = useState<{
+  const [range, setRange] = useState("30d" as Range);
+  const [data, setData] = useState(null as {
     itemName: string;
     category: string;
     rangeType: string;
@@ -15,7 +15,7 @@ export default function TrendChart({ itemName, category = "card" }: { itemName: 
     updatedAt: string;
     status: string;
     manualCheck: boolean;
-  } | null>(null);
+  } | null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => { 

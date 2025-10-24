@@ -3,7 +3,7 @@ import { useState } from "react";
 import CardImageUploader from "@/components/cards/CardImageUploader";
 
 export default function AddCardPage() {
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [imageUrl, setImageUrl] = useState(null as string | null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

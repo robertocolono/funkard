@@ -6,9 +6,9 @@ import AddToCollectionModal from "@/components/AddToCollectionModal";
 import { calculateGrade, type GradeResult } from "@/lib/gradeUtils";
 
 export default function GradeLensMock() {
-  const [frontImage, setFrontImage] = useState<File | null>(null);
-  const [backImage, setBackImage] = useState<File | null>(null);
-  const [gradeResult, setGradeResult] = useState<GradeResult | null>(null);
+  const [frontImage, setFrontImage] = useState(null as File | null);
+  const [backImage, setBackImage] = useState(null as File | null);
+  const [gradeResult, setGradeResult] = useState(null as GradeResult | null);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
 

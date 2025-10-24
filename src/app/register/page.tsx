@@ -59,26 +59,26 @@ export default function RegisterPage() {
           <Input
             placeholder="Nome completo"
             value={form.name}
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, name: e.target.value })}
           />
           <Input
             placeholder="Email"
             type="email"
             value={form.email}
-            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, email: e.target.value })}
           />
           <Input
             placeholder="Password"
             type="password"
             value={form.password}
-            onChange={(e) => setForm({ ...form, password: e.target.value })}
+            onChange={(e: any) => setForm({ ...form, password: e.target.value })}
           />
 
           <div>
             <label className="text-sm text-gray-400 mb-1 block">Valuta preferita</label>
             <Select
               value={form.currency}
-              onValueChange={(v) => setForm({ ...form, currency: v })}
+              onValueChange={(v: any) => setForm({ ...form, currency: v })}
             >
               <SelectTrigger className="bg-zinc-800 border-zinc-700">
                 <SelectValue placeholder="Seleziona una valuta" />

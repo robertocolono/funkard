@@ -14,16 +14,16 @@ type NotificationContextType = {
   markAsRead: (ticketId: string) => void;
 };
 
-const NotificationContext = createContext<NotificationContextType>({
+const NotificationContext = createContext({
   notifications: [],
   unreadCount: 0,
   markAsRead: () => {},
-});
+} as NotificationContextType);
 
 export const useNotifications = () => useContext(NotificationContext);
 
 export const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
-  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [notifications, setNotifications] = useState([] as Notification[]);
 
   // 📦 1️⃣ Carichiamo le notifiche salvate al mount
   useEffect(() => {
@@ -44,12 +44,12 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
   }, [notifications]);
 
   // 📊 Calcolo automatico del totale non letti
-  const unreadCount = notifications.filter((n) => n.unread).length;
+  const unreadCount = notifications.filter((n: any) => n.unread).length;
 
   // 👀 Segna come letta una notifica specifica
   const markAsRead = useCallback((ticketId: string) => {
-    setNotifications((prev) =>
-      prev.map((n) => (n.ticketId === ticketId ? { ...n, unread: false } : n))
+    setNotifications((prev: any) =>
+      prev.map((n: any) => (n.ticketId === ticketId ? { ...n, unread: false } : n))
     );
   }, []);
 
@@ -76,10 +76,10 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
         const data = JSON.parse(event.data);
 
         if (data.type === 'ticket-reply') {
-          setNotifications((prev) => {
-            const exists = prev.find((n) => n.ticketId === data.ticketId);
+          setNotifications((prev: any) => {
+            const exists = prev.find((n: any) => n.ticketId === data.ticketId);
             if (exists) {
-              return prev.map((n) =>
+              return prev.map((n: any) =>
                 n.ticketId === data.ticketId ? { ...n, unread: true } : n
               );
             }
@@ -116,7 +116,7 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
         }
 
         if (data.type === 'ticket-resolved') {
-          setNotifications((prev) => prev.filter((n) => n.ticketId !== data.ticketId));
+          setNotifications((prev: any) => prev.filter((n: any) => n.ticketId !== data.ticketId));
           
           toast.success(`✅ Il ticket "${data.subject || 'senza titolo'}" è stato risolto.`);
         }

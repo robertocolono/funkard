@@ -21,7 +21,7 @@ export default function PaymentFormModal({
   onClose: () => void;
   onSubmit: (data: Omit<PaymentMethod, 'id'>) => void;
 }) {
-  const [form, setForm] = useState<Omit<PaymentMethod, 'id'>>({
+  const [form, setForm] = useState({
     cardHolder: '',
     cardNumber: '',
     expiryDate: '',

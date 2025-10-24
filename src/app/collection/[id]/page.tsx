@@ -49,9 +49,9 @@ interface UserCard {
 export default function CardDetailPage() {
   const router = useRouter();
   const { id } = useParams() as { id: string };
-  const [card, setCard] = useState<UserCard | null>(null);
+  const [card, setCard] = useState(null as UserCard | null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null as string | null);
 
   useEffect(() => {
     const fetchCard = async () => {
@@ -265,7 +265,7 @@ export default function CardDetailPage() {
                 <span className="text-zinc-500">Valore stimato:</span> {value}
               </p>
               <p>
-                <span className="text-zinc-500">Origine:</span> {sourceMap[card.source ?? "manual"]}
+                <span className="text-zinc-500">Origine:</span> {sourceMap[card.source as keyof typeof sourceMap ?? "manual"]}
               </p>
               <p>
                 <span className="text-zinc-500">Aggiunta il:</span> {date}

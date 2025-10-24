@@ -13,9 +13,9 @@ export default function SupportChatPage() {
   const { id } = useParams();
   const { markAsRead } = useNotifications();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [ticket, setTicket] = useState<any>(null);
+  const [ticket, setTicket] = useState(null as any);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [messages, setMessages] = useState<any[]>([]);
+  const [messages, setMessages] = useState([] as any[]);
   const [newMessage, setNewMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [isOnline, setIsOnline] = useState(true);
@@ -182,7 +182,7 @@ export default function SupportChatPage() {
           {messages.length === 0 && (
             <p className="text-gray-500 text-center py-10">Nessun messaggio ancora</p>
           )}
-          {messages.map((msg) => (
+          {messages.map((msg: any) => (
             <div
               key={msg.id}
               className={`p-3 rounded-lg ${

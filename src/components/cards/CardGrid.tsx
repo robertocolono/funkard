@@ -10,7 +10,7 @@ interface Card {
 }
 
 export default function CardGrid() {
-  const [cards, setCards] = useState<Card[]>([]);
+  const [cards, setCards] = useState([] as Card[]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function CardGrid() {
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
-      {cards.map((card) => (
+      {cards.map((card: any) => (
         <div
           key={card.id}
           className="border rounded-xl shadow-sm hover:shadow-md transition p-3 flex flex-col bg-white"

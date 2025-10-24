@@ -8,9 +8,9 @@ interface ImageUploaderProps {
 }
 
 export default function ImageUploader({ label, onUpload }: ImageUploaderProps) {
-  const [preview, setPreview] = useState<string | null>(null);
+  const [preview, setPreview] = useState(null as string | null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null as string | null);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

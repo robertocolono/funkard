@@ -27,12 +27,12 @@ export default function AddToCollectionModal({
 }: AddToCollectionModalProps) {
   const [name, setName] = useState(defaultName);
   const [condition, setCondition] = useState(defaultCondition);
-  const [estimatedValue, setEstimatedValue] = useState<string>(
+  const [estimatedValue, setEstimatedValue] = useState(
     typeof defaultEstimatedValue === "number" && !isNaN(defaultEstimatedValue)
       ? String(defaultEstimatedValue)
-      : ""
+      : "" as string
   );
-  const [image, setImage] = useState<File | null>(null);
+  const [image, setImage] = useState(null as File | null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 

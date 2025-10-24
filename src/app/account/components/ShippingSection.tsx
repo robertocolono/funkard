@@ -13,7 +13,7 @@ import ShippingFormModal from './ShippingFormModal';
 export default function ShippingSection({ data = [], onUpdate }: { data: any[]; onUpdate: () => void }) {
   const [addresses, setAddresses] = useState(data);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editData, setEditData] = useState<any | null>(null);
+  const [editData, setEditData] = useState(null as any | null);
 
   const handleAddOrEdit = async (formData: any) => {
     if (editData) {
@@ -52,7 +52,7 @@ export default function ShippingSection({ data = [], onUpdate }: { data: any[]; 
         <p className="text-sm text-zinc-500">Nessun indirizzo salvato.</p>
       ) : (
         <div className="grid sm:grid-cols-2 gap-4">
-          {addresses.map((a) => (
+          {addresses.map((a: any) => (
             <div
               key={a.id}
               className={`border rounded-xl p-4 flex justify-between items-start ${

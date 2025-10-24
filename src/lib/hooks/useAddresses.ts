@@ -11,7 +11,7 @@ interface Address {
 }
 
 export function useAddresses() {
-  const [addresses, setAddresses] = useState<Address[]>([]);
+  const [addresses, setAddresses] = useState([] as Address[]);
   const [loading, setLoading] = useState(false);
 
   const loadAddresses = async () => {

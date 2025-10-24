@@ -15,11 +15,11 @@ interface User {
 }
 
 export default function AdminUsersPage() {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState([] as User[]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null as string | null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterType, setFilterType] = useState<"all" | "PRIVATO" | "BUSINESS">("all");
+  const [filterType, setFilterType] = useState("all" as "all" | "PRIVATO" | "BUSINESS");
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -37,7 +37,7 @@ export default function AdminUsersPage() {
     fetchUsers();
   }, []);
 
-  const filteredUsers = users.filter(user => {
+  const filteredUsers = users.filter((user: any) => {
     const matchesSearch = user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          user.handle?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesFilter = filterType === "all" || user.tipoUtente === filterType;
@@ -49,7 +49,7 @@ export default function AdminUsersPage() {
       await adminApi.toggleUserVerification(userId, !currentStatus);
 
       // Aggiorna lo stato locale
-      setUsers(users.map(user => 
+      setUsers(users.map((user: any) => 
         user.id === userId 
           ? { ...user, verified: !currentStatus }
           : user
@@ -119,13 +119,13 @@ export default function AdminUsersPage() {
         </div>
         <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
           <div className="text-2xl font-bold text-green-400">
-            {users.filter(u => u.verified).length}
+            {users.filter((u: any) => u.verified).length}
           </div>
           <div className="text-sm text-gray-400">Verificati</div>
         </div>
         <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
           <div className="text-2xl font-bold text-blue-400">
-            {users.filter(u => u.tipoUtente === "BUSINESS").length}
+            {users.filter((u: any) => u.tipoUtente === "BUSINESS").length}
           </div>
           <div className="text-sm text-gray-400">Business</div>
         </div>
@@ -153,7 +153,7 @@ export default function AdminUsersPage() {
               </tr>
             </thead>
             <tbody>
-              {filteredUsers.map((user) => (
+              {filteredUsers.map((user: any) => (
                 <tr key={user.id} className="border-t border-zinc-700 hover:bg-zinc-800/50">
                   <td className="p-4">
                     <div>

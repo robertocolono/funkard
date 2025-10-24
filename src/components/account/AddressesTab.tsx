@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { getUserAddresses, addUserAddress, deleteUserAddress } from "@/lib/funkardApi";
 
 export default function AddressesTab() {
-  const [addresses, setAddresses] = useState<any[]>([]);
-  const [form, setForm] = useState<any>({});
+  const [addresses, setAddresses] = useState([] as any[]);
+  const [form, setForm] = useState({} as any);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export default function AddressesTab() {
       </button>
 
       <div className="space-y-3">
-        {addresses.map((a) => (
+        {addresses.map((a: any) => (
           <div key={a.id} className="p-4 bg-zinc-900 border border-zinc-700 rounded-lg flex justify-between items-center">
             <div>
               <p className="font-medium">{a.fullName}</p>

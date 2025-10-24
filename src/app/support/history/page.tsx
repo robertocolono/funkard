@@ -6,9 +6,9 @@ import { SupportTicket } from "@/types/support";
 
 export default function SupportHistoryPage() {
   const router = useRouter();
-  const [tickets, setTickets] = useState<SupportTicket[]>([]);
+  const [tickets, setTickets] = useState([] as SupportTicket[]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null as string | null);
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -95,7 +95,7 @@ export default function SupportHistoryPage() {
           </div>
         ) : (
           <div className="space-y-4">
-            {tickets.map((ticket) => (
+            {tickets.map((ticket: any) => (
               <div key={ticket.id} className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
                 <div className="flex items-start justify-between mb-4">
                   <div>

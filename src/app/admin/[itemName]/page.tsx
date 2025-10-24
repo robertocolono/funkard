@@ -21,9 +21,9 @@ interface ProductDetails {
 export default function AdminProductPage() {
   const router = useRouter();
   const { itemName } = useParams() as { itemName: string };
-  const [product, setProduct] = useState<ProductDetails | null>(null);
+  const [product, setProduct] = useState(null as ProductDetails | null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null as string | null);
   const [actionLoading, setActionLoading] = useState(false);
 
   useEffect(() => {
