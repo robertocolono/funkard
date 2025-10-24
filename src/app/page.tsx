@@ -60,7 +60,7 @@ export default function HomePage() {
       )}
 
       {/* HERO */}
-      <section className="flex flex-col justify-center items-center text-center flex-1 px-6 py-20 md:py-24 relative">
+      <section className="justify-center items-center text-center flex-1 px-6 py-20 md:py-24 relative">
         <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-zinc-900/70 to-transparent pointer-events-none" />
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -99,9 +99,6 @@ export default function HomePage() {
           </a>
         </motion.div>
       </section>
-
-      {/* TEST BANNER ROSSO */}
-      <div className="bg-red-800 text-white p-2">TEST FUNKARD GRID</div>
 
       {/* SEZIONE FUNZIONALITÀ */}
       <section className="mt-16 px-6 md:px-12 max-w-6xl mx-auto">
