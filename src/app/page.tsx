@@ -5,12 +5,11 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Home, Layers, Search, MessageCircle, User } from "lucide-react";
+import { Home, Layers, Search, MessageCircle, User, FolderKanban, Gem, Globe2 } from "lucide-react";
 
 export default function HomePage() {
   const [isMobile, setIsMobile] = useState(false);
 
-  // Detect screen size on mount and resize
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     handleResize();
@@ -20,14 +19,17 @@ export default function HomePage() {
 
   const features = [
     {
+      icon: FolderKanban,
       title: "Gestisci la tua collezione",
       desc: "Tieni traccia delle tue carte in modo semplice e visivo.",
     },
     {
+      icon: Gem,
       title: "Valuta le tue carte",
       desc: "Scopri il valore reale grazie alla tecnologia GradeLens.",
     },
     {
+      icon: Globe2,
       title: "Connettiti con tutto il mondo",
       desc: "Compra e vendi in sicurezza con collezionisti globali.",
     },
@@ -42,18 +44,10 @@ export default function HomePage() {
             <span className="text-yellow-400">FUN</span>KARD
           </h1>
           <div className="flex items-center gap-8 text-sm font-medium">
-            <a href="/marketplace" className="hover:text-yellow-400 transition">
-              Marketplace
-            </a>
-            <a href="/collection" className="hover:text-yellow-400 transition">
-              Collezione
-            </a>
-            <a href="/gradelens" className="hover:text-yellow-400 transition">
-              GradeLens
-            </a>
-            <a href="/support" className="hover:text-yellow-400 transition">
-              Support
-            </a>
+            <a href="/marketplace" className="hover:text-yellow-400 transition">Marketplace</a>
+            <a href="/collection" className="hover:text-yellow-400 transition">Collezione</a>
+            <a href="/gradelens" className="hover:text-yellow-400 transition">GradeLens</a>
+            <a href="/support" className="hover:text-yellow-400 transition">Support</a>
             <Button className="bg-yellow-400 text-black font-semibold rounded-xl px-5 py-2 hover:bg-yellow-300 transition">
               Registrati
             </Button>
@@ -82,7 +76,7 @@ export default function HomePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.7 }}
-          className="text-3xl md:text-4xl font-semibold mb-8 max-w-2xl"
+          className="text-3xl md:text-4xl font-semibold mb-8 max-w-2xl text-zinc-100"
         >
           Esplora, compra, vendi e scambia in tutto il mondo!
         </motion.h2>
@@ -101,9 +95,9 @@ export default function HomePage() {
         </motion.div>
       </section>
 
-      {/* FEATURES */}
+      {/* FEATURE SECTION */}
       <section className="w-full max-w-6xl mx-auto flex flex-col md:flex-row justify-center items-stretch gap-6 mt-10 px-6 pb-24 md:pb-10">
-        {features.map((feature, i) => (
+        {features.map(({ icon: Icon, title, desc }, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, y: 30 }}
@@ -112,12 +106,11 @@ export default function HomePage() {
             viewport={{ once: true }}
             className="flex-1"
           >
-            <Card className="bg-zinc-900 border-zinc-800 hover:border-yellow-400 transition rounded-2xl shadow-md hover:shadow-yellow-400/10">
-              <CardContent className="p-6 text-center">
-                <h3 className="text-xl font-semibold mb-3 text-yellow-400">
-                  {feature.title}
-                </h3>
-                <p className="text-zinc-400">{feature.desc}</p>
+            <Card className="bg-zinc-900/80 border-zinc-800 hover:border-yellow-400 transition rounded-2xl shadow-md hover:shadow-yellow-400/10 h-full flex flex-col items-center justify-center text-center p-6">
+              <Icon className="h-10 w-10 text-yellow-400 mb-4" />
+              <CardContent className="p-0">
+                <h3 className="text-xl font-semibold mb-3 text-yellow-400">{title}</h3>
+                <p className="text-zinc-400 text-sm md:text-base">{desc}</p>
               </CardContent>
             </Card>
           </motion.div>
@@ -126,18 +119,12 @@ export default function HomePage() {
 
       {/* FOOTER DESKTOP */}
       {!isMobile && (
-        <footer className="mt-16 mb-10 text-sm text-zinc-500 text-center px-4">
+        <footer className="mt-16 mb-10 text-sm text-zinc-500 text-center px-4 border-t border-zinc-800 pt-6">
           <p>Funkard © 2025 — Da collezionisti per collezionisti</p>
           <div className="flex justify-center gap-6 mt-3">
-            <a href="/privacy" className="hover:text-yellow-400 transition">
-              Privacy
-            </a>
-            <a href="/cookie" className="hover:text-yellow-400 transition">
-              Cookie
-            </a>
-            <a href="/terms" className="hover:text-yellow-400 transition">
-              Termini
-            </a>
+            <a href="/privacy" className="hover:text-yellow-400 transition">Privacy</a>
+            <a href="/cookie" className="hover:text-yellow-400 transition">Cookie</a>
+            <a href="/terms" className="hover:text-yellow-400 transition">Termini</a>
           </div>
         </footer>
       )}
