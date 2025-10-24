@@ -25,35 +25,29 @@ export default function HomePage() {
       </section>
 
       {/* 💎 FEATURES SECTION */}
-      <section className="py-20 px-6 bg-black">
-        <h2 className="text-3xl font-bold text-center mb-12">
-          Perché scegliere <span className="text-[#FFCC00]">Funkard</span>
+      <section className="py-12 bg-black text-center">
+        <h2 className="text-2xl font-bold mb-10">
+          Perché scegliere <span className="text-yellow-500">Funkard</span>
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {/* Feature 1 */}
-          <div className="p-8 rounded-2xl bg-zinc-900/60 border border-[#FFCC00]/10 hover:border-[#FFCC00]/30 backdrop-blur-md text-center transition hover:scale-[1.03] shadow-[0_0_15px_rgba(255,204,0,0.1)]">
-            <div className="text-3xl mb-3">🛡️</div>
-            <h3 className="text-xl font-semibold mb-2">SafeTrade</h3>
-            <p className="text-gray-400">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
+          <div>
+            <h3 className="text-white font-semibold text-lg mb-2">SafeTrade</h3>
+            <p className="text-gray-300 text-sm">
               Scambi sicuri e verificati, con protezione integrata per acquirenti e venditori.
             </p>
           </div>
 
-          {/* Feature 2 */}
-          <div className="p-8 rounded-2xl bg-zinc-900/60 border border-[#FFCC00]/10 hover:border-[#FFCC00]/30 backdrop-blur-md text-center transition hover:scale-[1.03] shadow-[0_0_15px_rgba(255,204,0,0.1)]">
-            <div className="text-3xl mb-3">🧾</div>
-            <h3 className="text-xl font-semibold mb-2">GradeLens</h3>
-            <p className="text-gray-400">
+          <div>
+            <h3 className="text-white font-semibold text-lg mb-2">GradeLens</h3>
+            <p className="text-gray-300 text-sm">
               Analizza e confronta le tue carte grazie al nostro sistema di grading meccanico.
             </p>
           </div>
 
-          {/* Feature 3 */}
-          <div className="p-8 rounded-2xl bg-zinc-900/60 border border-[#FFCC00]/10 hover:border-[#FFCC00]/30 backdrop-blur-md text-center transition hover:scale-[1.03] shadow-[0_0_15px_rgba(255,204,0,0.1)]">
-            <div className="text-3xl mb-3">🌍</div>
-            <h3 className="text-xl font-semibold mb-2">Marketplace Globale</h3>
-            <p className="text-gray-400">
+          <div>
+            <h3 className="text-white font-semibold text-lg mb-2">Marketplace Globale</h3>
+            <p className="text-gray-300 text-sm">
               Connettiti con collezionisti da tutto il mondo in un'unica piattaforma.
             </p>
           </div>
