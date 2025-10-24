@@ -5,6 +5,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ==== TEST TAILWIND ==== */
+.test-tw { 
+  color: #ef4444; 
+  background-color: #86efac; 
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
 :root {
   --funkard-yellow: #FFCC00;
 }
