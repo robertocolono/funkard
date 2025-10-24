@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Home, Layers, Search, MessageCircle, User, FolderKanban, Gem, Globe2 } from "lucide-react";
+import { Layers, Search, User, Archive, Star, Globe, Mail } from "lucide-react";
 
 export default function HomePage() {
   const [isMobile, setIsMobile] = useState(false);
@@ -19,17 +19,17 @@ export default function HomePage() {
 
   const features = [
     {
-      icon: FolderKanban,
+      icon: Archive,
       title: "Gestisci la tua collezione",
       desc: "Tieni traccia delle tue carte in modo semplice e visivo.",
     },
     {
-      icon: Gem,
+      icon: Star,
       title: "Valuta le tue carte",
       desc: "Scopri il valore reale grazie alla tecnologia GradeLens.",
     },
     {
-      icon: Globe2,
+      icon: Globe,
       title: "Connettiti con tutto il mondo",
       desc: "Compra e vendi in sicurezza con collezionisti globali.",
     },
@@ -142,13 +142,13 @@ export default function HomePage() {
       {/* MOBILE BOTTOM NAV */}
       {isMobile && (
         <nav className="fixed bottom-0 left-0 right-0 z-[9999] bg-zinc-900/90 backdrop-blur-lg border-t border-zinc-800 flex justify-around items-center py-2 shadow-[0_-2px_8px_rgba(0,0,0,0.6)]">
-          {[
-            { icon: Home, label: "Market", href: "/marketplace" },
-            { icon: Layers, label: "Collezione", href: "/collection" },
-            { icon: Search, label: "GradeLens", href: "/gradelens" },
-            { icon: MessageCircle, label: "Support", href: "/support" },
-            { icon: User, label: "Profilo", href: "/profile" },
-          ].map(({ icon: Icon, label, href }, i) => (
+        {[
+          { icon: Layers, label: "Market", href: "/marketplace" },
+          { icon: Archive, label: "Collezione", href: "/collection" },
+          { icon: Search, label: "GradeLens", href: "/gradelens" },
+          { icon: Mail, label: "Support", href: "/support" },
+          { icon: User, label: "Profilo", href: "/profile" },
+        ].map(({ icon: Icon, label, href }, i) => (
             <a
               key={i}
               href={href}
