@@ -13,7 +13,7 @@ export default function Navbar() {
         </Link>
 
         {/* Links a destra (desktop) */}
-        <div className="ml-auto hidden sm:flex items-center gap-8 text-sm lg:text-base">
+        <div className="ml-auto flex items-center gap-8 text-sm lg:text-base">
           <Link href="/marketplace" className="hover:text-funkard-yellow transition">
             Marketplace
           </Link>
