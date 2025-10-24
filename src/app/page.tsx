@@ -5,18 +5,13 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Layers, Search, User, Archive, Star, Globe, Mail } from "lucide-react";
+import { Layers, Search, User, Archive, Star, Globe, Mail, FolderKanban, Gem } from "lucide-react";
 
 export default function HomePage() {
   const [isMobile, setIsMobile] = useState(false);
-  const [gridColumns, setGridColumns] = useState('repeat(1, 1fr)');
 
   useEffect(() => {
-    const handleResize = () => {
-      const mobile = window.innerWidth < 768;
-      setIsMobile(mobile);
-      setGridColumns(mobile ? 'repeat(1, 1fr)' : 'repeat(3, 1fr)');
-    };
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -106,32 +101,24 @@ export default function HomePage() {
       </section>
 
 
-      {/* TEST VISIVO TEMPORANEO */}
-      <div className="bg-red-500 text-white p-4 text-center font-bold">
-        TEST: Se vedi questo, il file è corretto
-      </div>
 
-      <section 
-        className="mt-16 px-6 md:px-12 max-w-6xl mx-auto"
-        style={{
-          display: 'grid',
-          gridTemplateColumns: gridColumns,
-          gap: '2rem'
-        }}
-      >
-        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 text-center hover:border-yellow-400 transition">
-          <h3 className="text-yellow-400 text-xl font-semibold mb-3">Gestisci la tua collezione</h3>
-          <p className="text-zinc-400">Tieni traccia delle tue carte in modo semplice e visivo.</p>
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 px-6 md:px-12 max-w-6xl mx-auto text-center">
+        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-yellow-400 transition">
+          <FolderKanban className="w-8 h-8 mx-auto mb-3 text-yellow-400" />
+          <h3 className="text-yellow-400 text-lg font-semibold mb-3">Gestisci la tua collezione</h3>
+          <p className="text-zinc-400 text-sm">Tieni traccia delle tue carte in modo semplice e visivo.</p>
         </div>
 
-        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 text-center hover:border-yellow-400 transition">
-          <h3 className="text-yellow-400 text-xl font-semibold mb-3">Valuta le tue carte</h3>
-          <p className="text-zinc-400">Scopri il valore reale grazie alla tecnologia GradeLens.</p>
+        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-yellow-400 transition">
+          <Gem className="w-8 h-8 mx-auto mb-3 text-yellow-400" />
+          <h3 className="text-yellow-400 text-lg font-semibold mb-3">Valuta le tue carte</h3>
+          <p className="text-zinc-400 text-sm">Scopri il valore reale grazie alla tecnologia GradeLens.</p>
         </div>
 
-        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 text-center hover:border-yellow-400 transition">
-          <h3 className="text-yellow-400 text-xl font-semibold mb-3">Connettiti con tutto il mondo</h3>
-          <p className="text-zinc-400">Compra e vendi in sicurezza con collezionisti globali.</p>
+        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-yellow-400 transition">
+          <Globe className="w-8 h-8 mx-auto mb-3 text-yellow-400" />
+          <h3 className="text-yellow-400 text-lg font-semibold mb-3">Connettiti con tutto il mondo</h3>
+          <p className="text-zinc-400 text-sm">Compra e vendi in sicurezza con collezionisti globali.</p>
         </div>
       </section>
 
