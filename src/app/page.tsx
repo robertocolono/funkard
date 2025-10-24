@@ -1,15 +1,31 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function HomePage() {
+  const features = [
+    {
+      title: "Gestisci la tua collezione",
+      desc: "Tieni traccia delle tue carte in modo semplice e visivo.",
+    },
+    {
+      title: "Valuta le tue carte",
+      desc: "Scopri il valore reale grazie alla tecnologia GradeLens.",
+    },
+    {
+      title: "Connettiti con tutto il mondo",
+      desc: "Compra e vendi in sicurezza con collezionisti globali.",
+    },
+  ];
+
   return (
-    <main className="min-h-screen bg-black text-white flex flex-col items-center">
+    <main className="min-h-screen bg-black text-white flex flex-col">
       {/* NAVBAR */}
       <nav className="w-full sticky top-0 z-50 flex justify-between items-center px-8 py-4 bg-black/80 backdrop-blur-sm border-b border-zinc-800">
-        <h1 className="text-2xl font-bold">
+        <h1 className="text-2xl font-bold tracking-tight">
           <span className="text-yellow-400">FUN</span>KARD
         </h1>
         <div className="flex items-center gap-6">
@@ -23,53 +39,66 @@ export default function HomePage() {
         </div>
       </nav>
 
-      {/* HERO */}
-      <section className="flex flex-col items-center justify-center text-center mt-16 px-6">
-        <Image
-          src="/logo.png"
-          alt="Funkard Logo"
-          width={200}
-          height={200}
-          className="mb-6"
-        />
-        <h2 className="text-2xl md:text-3xl font-semibold mb-4">
-          Esplora, compra, vendi e scambia in tutto il mondo!
-        </h2>
-        <Button
-          size="lg"
-          className="bg-yellow-400 text-black font-bold text-lg px-8 py-3 rounded-xl hover:bg-yellow-300 transition"
+      {/* FULLSCREEN HERO */}
+      <section className="flex flex-col justify-center items-center text-center flex-1 px-6">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
         >
-          Esplora il Marketplace
-        </Button>
+          <Image
+            src="/logo.png"
+            alt="Funkard Logo"
+            width={240}
+            height={240}
+            className="mb-6"
+            priority
+          />
+        </motion.div>
+
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.7 }}
+          className="text-3xl md:text-4xl font-semibold mb-8"
+        >
+          Esplora, compra, vendi e scambia in tutto il mondo!
+        </motion.h2>
+
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.6, duration: 0.5 }}
+        >
+          <Button
+            size="lg"
+            className="bg-yellow-400 text-black font-bold text-lg px-10 py-4 rounded-2xl hover:bg-yellow-300 transition"
+          >
+            Esplora il Marketplace
+          </Button>
+        </motion.div>
       </section>
 
-      {/* FEATURE SECTION */}
-      <section className="w-full max-w-6xl flex flex-col md:flex-row justify-center items-stretch gap-6 mt-24 px-6">
-        {[
-          {
-            title: "Gestisci la tua collezione",
-            desc: "Tieni traccia delle tue carte in modo semplice e visivo.",
-          },
-          {
-            title: "Valuta le tue carte",
-            desc: "Scopri il valore reale grazie alla tecnologia GradeLens.",
-          },
-          {
-            title: "Connettiti con tutto il mondo",
-            desc: "Compra e vendi in sicurezza con collezionisti globali.",
-          },
-        ].map((feature, i) => (
-          <Card
+      {/* FEATURES */}
+      <section className="w-full max-w-6xl flex flex-col md:flex-row justify-center items-stretch gap-6 mt-20 px-6 mx-auto">
+        {features.map((feature, i) => (
+          <motion.div
             key={i}
-            className="flex-1 bg-zinc-900 border-zinc-800 hover:border-yellow-400 transition rounded-2xl"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.2, duration: 0.6 }}
+            viewport={{ once: true }}
+            className="flex-1"
           >
-            <CardContent className="p-6 text-center">
-              <h3 className="text-xl font-semibold mb-3 text-yellow-400">
-                {feature.title}
-              </h3>
-              <p className="text-zinc-400">{feature.desc}</p>
-            </CardContent>
-          </Card>
+            <Card className="bg-zinc-900 border-zinc-800 hover:border-yellow-400 transition rounded-2xl shadow-md hover:shadow-yellow-400/10">
+              <CardContent className="p-6 text-center">
+                <h3 className="text-xl font-semibold mb-3 text-yellow-400">
+                  {feature.title}
+                </h3>
+                <p className="text-zinc-400">{feature.desc}</p>
+              </CardContent>
+            </Card>
+          </motion.div>
         ))}
       </section>
 
