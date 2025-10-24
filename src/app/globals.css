@@ -19,6 +19,11 @@
   background-color: #eab308; /* leggero tono più scuro */
 }
 
+/* Glow più morbido su titoli grandi (facoltativo) */
+.glow-title {
+  text-shadow: 0 0 22px rgba(246, 195, 86, 0.35);
+}
+
 /* ------------------------------
    FUNKARD GLOBAL OVERRIDE
 ------------------------------ */

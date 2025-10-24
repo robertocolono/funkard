@@ -1,96 +1,181 @@
+// src/app/page.tsx
 import Image from "next/image";
 import Link from "next/link";
+import { FunkardButton } from "@/components/ui/FunkardButton";
+import FeatureCard from "@/components/FeatureCard";
 
 export default function HomePage() {
   return (
-    <div className="bg-black text-white">
-      {/* HERO SECTION */}
-      <section className="flex flex-col items-center justify-center text-center px-6 pt-24 pb-16">
-        <div className="w-32 h-32 mb-6">
+    <main className="mx-auto max-w-7xl px-4 sm:px-6">
+      {/* HERO */}
+      <section className="pt-10 sm:pt-14">
+        {/* Logo piccolo in alto */}
+        <div className="mx-auto mb-4 flex justify-center">
+          {/* Sostituisci il path con il tuo asset reale */}
           <Image
-            src="/logo.png" // percorso corretto del tuo logo
-            alt="Funkard Logo"
-            width={128}
-            height={128}
-            className="object-contain mx-auto"
+            src="/logo-smile.svg"
+            alt="Funkard"
+            width={72}
+            height={72}
+            priority
+            className="opacity-95"
           />
         </div>
 
-        <h1 className="text-3xl md:text-4xl font-bold max-w-3xl">
-          Esplora, compra, vendi e scambia in tutto il mondo con un{" "}
-          <span className="text-yellow-400">semplice click!</span>
+        <h1 className="mx-auto max-w-4xl text-center text-3xl sm:text-4xl font-extrabold leading-tight">
+          Esplora, compra, vendi e scambia in tutto il mondo{" "}
+          <span className="text-[#F6C356]">con un semplice click!</span>
         </h1>
-        <p className="mt-4 text-neutral-300 text-sm md:text-base">
-          Il marketplace TCG creato per i collezionisti. Sicuro, globale e completamente trasparente.
+
+        <p className="mx-auto mt-4 max-w-3xl text-center text-[15px] text-zinc-300">
+          Il marketplace TCG creato per i collezionisti. Sicuro, globale e
+          completamente trasparente.
         </p>
 
-        <div className="mt-8 flex space-x-4">
-          <Link
-            href="/marketplace"
-            className="bg-yellow-400 text-black px-5 py-2 rounded-md font-semibold hover:bg-yellow-500 transition"
-          >
+        {/* CTA + separatore con respiro */}
+        <div className="mt-6 flex justify-center">
+          <FunkardButton as="a" href="/marketplace">
             Entra nel Marketplace
-          </Link>
+          </FunkardButton>
         </div>
 
-        <div className="border-b border-yellow-400 w-2/3 mt-14"></div>
+        <hr className="mx-auto mt-8 h-px w-full max-w-4xl border-0 bg-[#F6C356]/40" />
       </section>
 
-      {/* FEATURES */}
-      <section className="max-w-6xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
-        <div>
-          <h3 className="text-lg font-semibold text-yellow-400">SafeTrade</h3>
-          <p className="mt-2 text-neutral-300 text-sm">
-            Scambi sicuri e verificati, con protezione integrata per acquirenti e venditori.
-          </p>
+      {/* FEATURE (orizzontali) */}
+      <section className="py-12">
+        <h2 className="mb-8 text-center text-2xl font-bold">
+          Perché scegliere <span className="text-[#F6C356]">Funkard</span>
+        </h2>
+
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+          <FeatureCard
+            title="SafeTrade"
+            description="Scambi sicuri e verificati, con protezione integrata per acquirenti e venditori."
+            icon={<span>🛡️</span>}
+          />
+
+          <FeatureCard
+            title="GradeLens"
+            description="Analizza e confronta le tue carte grazie al nostro sistema di grading meccanico."
+            icon={<span>🧠</span>}
+          />
+
+          <FeatureCard
+            title="Marketplace Globale"
+            description="Connettiti con collezionisti da tutto il mondo in un'unica piattaforma."
+            icon={<span>🌐</span>}
+          />
         </div>
-        <div>
-          <h3 className="text-lg font-semibold text-yellow-400">GradeLens</h3>
-          <p className="mt-2 text-neutral-300 text-sm">
-            Analizza e confronta le tue carte grazie al nostro sistema di grading meccanico.
-          </p>
+      </section>
+
+      {/* GRADE LENS CARD */}
+      <section className="py-6">
+        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5">
+          <div className="mx-auto max-w-3xl rounded-2xl bg-white p-6 text-zinc-900">
+            <div className="mb-4 text-center text-xl font-bold">
+              🧠 GradeLens — Scansione simulata
+            </div>
+
+            <div className="mb-5 flex justify-center">
+              <FunkardButton>Analizza la carta</FunkardButton>
+            </div>
+
+            <div className="rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+              <div className="mb-1 font-semibold">⚠️ Importante</div>
+              <p className="leading-6">
+                Il punteggio assegnato da GradeLens è una{" "}
+                <span className="font-semibold">stima simulata</span> basata su
+                parametri tecnici e/o valutazione manuale. Non rappresenta una
+                certificazione ufficiale di condizione o valore.
+              </p>
+              <p className="mt-2 leading-6">
+                Le valutazioni possono{" "}
+                <span className="font-semibold">
+                  differire da quelle di enti di grading professionali
+                </span>{" "}
+                (PSA, BGS, CGC, ecc.).
+              </p>
+            </div>
+
+            <p className="mt-3 text-center text-xs text-zinc-500">
+              *Valutazione simulata non ufficiale. Le carte possono differire da
+              grading professionali.
+            </p>
+          </div>
         </div>
-        <div>
-          <h3 className="text-lg font-semibold text-yellow-400">Marketplace Globale</h3>
-          <p className="mt-2 text-neutral-300 text-sm">
-            Connettiti con collezionisti da tutto il mondo in un'unica piattaforma.
-          </p>
+      </section>
+
+      {/* ANTEPRIMA MARKETPLACE (placeholder vuoto) */}
+      <section className="py-10">
+        <h3 className="mb-4 text-center text-xl font-semibold">
+          Le carte più popolari del momento
+        </h3>
+
+        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/30 p-8 text-center text-zinc-400">
+          Nessuna carta disponibile al momento. Torna presto: questa sezione si
+          aggiornerà automaticamente quando saranno presenti i primi dati.
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-neutral-800 py-10 text-center text-sm">
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div>
-            <h4 className="text-yellow-400 font-semibold mb-2">Navigazione</h4>
-            <ul className="space-y-1 text-neutral-300">
-              <li><Link href="/marketplace">Marketplace</Link></li>
-              <li><Link href="/collezione">Collezione</Link></li>
-              <li><Link href="/gradelens">GradeLens</Link></li>
-              <li><Link href="/supporto">Supporto</Link></li>
-            </ul>
+      <footer className="py-12">
+        <div className="mx-auto max-w-5xl text-center">
+          <div className="grid grid-cols-1 gap-10 sm:grid-cols-3">
+            <div>
+              <div className="mb-2 font-semibold text-white">Navigazione</div>
+              <ul className="space-y-2 text-zinc-300">
+                <li>
+                  <Link href="/marketplace">Marketplace</Link>
+                </li>
+                <li>
+                  <Link href="/collection">Collezione</Link>
+                </li>
+                <li>
+                  <Link href="/gradelens">GradeLens</Link>
+                </li>
+                <li>
+                  <Link href="/support">Supporto</Link>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <div className="mb-2 font-semibold text-white">Legale</div>
+              <ul className="space-y-2 text-zinc-300">
+                <li>
+                  <Link href="/terms">Termini e Condizioni</Link>
+                </li>
+                <li>
+                  <Link href="/privacy">Privacy Policy</Link>
+                </li>
+                <li>
+                  <Link href="/cookies">Cookie Policy</Link>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <div className="mb-2 font-semibold text-white">Contatti</div>
+              <ul className="space-y-2 text-zinc-300">
+                <li>
+                  <a href="mailto:info@funkard.com">info@funkard.com</a>
+                </li>
+                <li>
+                  <a href="https://t.me/funkard" target="_blank">
+                    @funkard
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
 
-          <div>
-            <h4 className="text-yellow-400 font-semibold mb-2">Legale</h4>
-            <ul className="space-y-1 text-neutral-300">
-              <li><Link href="/termini">Termini e Condizioni</Link></li>
-              <li><Link href="/privacy">Privacy Policy</Link></li>
-              <li><Link href="/cookie">Cookie Policy</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-yellow-400 font-semibold mb-2">Contatti</h4>
-            <p className="text-neutral-300 text-sm">info@funkard.com</p>
-            <p className="text-neutral-300 text-sm">@funkard</p>
-          </div>
+          <p className="mt-10 text-sm text-zinc-400">
+            © {new Date().getFullYear()} <span className="text-[#F6C356]">Funkard</span> — made by collezionisti, per
+            collezionisti.
+          </p>
         </div>
-
-        <p className="mt-8 text-neutral-500 text-xs">
-          © 2025 <span className="text-yellow-400">Funkard</span> — made by collezionisti, per collezionisti.
-        </p>
       </footer>
-    </div>
+    </main>
   );
 }
