@@ -1,45 +1,32 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
-const Navbar = () => {
-  const pathname = usePathname();
-
-  const links = [
-    { name: "Marketplace", href: "/marketplace" },
-    { name: "Collezione", href: "/collezione" },
-    { name: "GradeLens", href: "/gradelens" },
-    { name: "Support", href: "/support" },
-    { name: "Registrati", href: "/register" },
-  ];
-
+export default function Navbar() {
   return (
-    <nav className="w-full bg-black border-b border-neutral-800 py-5 px-8 md:py-6 md:px-16 flex items-center justify-between">
-      <Link
-        href="/"
-        className="text-2xl font-bold tracking-wide text-white hover:text-funkard-yellow transition-colors duration-300"
-      >
-        FUNKARD
-      </Link>
+    <nav className="fixed top-0 w-full bg-[#0a0a0a]/90 backdrop-blur-md border-b border-neutral-800 z-50">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        {/* Logo */}
+        <Link href="/" className="text-2xl font-extrabold text-white">
+          FUN<span className="text-funkard-yellow">KARD</span>
+        </Link>
 
-      <div className="flex items-center space-x-8">
-        {links.map((link) => (
-          <Link
-            key={link.name}
-            href={link.href}
-            className={`text-base font-medium transition-colors duration-300 ${
-              pathname === link.href
-                ? "text-funkard-yellow"
-                : "text-white hover:text-funkard-yellow"
-            }`}
-          >
-            {link.name}
-          </Link>
-        ))}
+        {/* Links */}
+        <div className="hidden md:flex space-x-10 text-sm font-medium">
+          <Link href="/marketplace" className="hover:text-funkard-yellow transition">Marketplace</Link>
+          <Link href="/collection" className="hover:text-funkard-yellow transition">Collezione</Link>
+          <Link href="/gradelens" className="hover:text-funkard-yellow transition">GradeLens</Link>
+          <Link href="/support" className="hover:text-funkard-yellow transition">Supporto</Link>
+        </div>
+
+        {/* Button */}
+        <Link
+          href="/register"
+          className="ml-6 px-5 py-2 rounded-lg bg-funkard-yellow text-black font-semibold hover:opacity-90 transition-all shadow-[0_0_10px_rgba(255,204,0,0.4)]"
+        >
+          Registrati
+        </Link>
       </div>
     </nav>
   );
-};
-
-export default Navbar;
+}
