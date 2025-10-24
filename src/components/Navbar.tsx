@@ -18,23 +18,19 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 bg-black/90 backdrop-blur-sm border-b border-yellow-500">
-      <div className="max-w-screen-xl mx-auto flex justify-between items-center px-6 py-3">
-        {/* Logo */}
-        <div className="flex items-center space-x-2">
-          <img src="/logo.png" alt="Funkard" className="h-8 w-auto" />
-          <span className="text-yellow-500 font-bold tracking-wide">FUNKARD</span>
-        </div>
-
-        {/* Links */}
-        <nav className="flex items-center space-x-6 text-white text-sm">
+      <div className="max-w-screen-xl mx-auto flex items-center justify-between px-6 py-3">
+        {/* Sezioni centrali */}
+        <nav className="flex-1 flex justify-center space-x-8 text-white text-sm">
           <a href="#marketplace" className="hover:text-yellow-500 transition">Marketplace</a>
           <a href="#collezione" className="hover:text-yellow-500 transition">Collezione</a>
           <a href="#gradelens" className="hover:text-yellow-500 transition">GradeLens</a>
           <a href="#supporto" className="hover:text-yellow-500 transition">Supporto</a>
         </nav>
 
-        {/* Bottone */}
-        <button className="funkard-btn">Registrati</button>
+        {/* Bottone Registrati */}
+        <div className="flex justify-end ml-auto">
+          <button className="funkard-btn">Registrati</button>
+        </div>
       </div>
     </header>
   );
