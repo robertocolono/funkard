@@ -2,14 +2,18 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
+  const pathname = usePathname();
+  const isLoggedIn = false; // 👉 da collegare poi alla sessione utente
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-neutral-800">
-      <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-6 py-4 gap-4">
-        
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-4">
+
         {/* LOGO */}
-        <Link href="/" className="flex items-center gap-2 flex-shrink-0">
+        <Link href="/" className="flex items-center gap-2">
           <Image
             src="/logo.png"
             alt="Funkard Logo"
@@ -23,28 +27,59 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* LINK SECTIONS */}
-        <div className="flex flex-wrap justify-center gap-6 w-full sm:w-auto text-sm font-medium text-gray-300">
-          <Link href="/marketplace" className="hover:text-funkard-yellow transition">Marketplace</Link>
-          <Link href="/collection" className="hover:text-funkard-yellow transition">Collezione</Link>
-          <Link href="/gradelens" className="hover:text-funkard-yellow transition">GradeLens</Link>
-          <Link href="/support" className="hover:text-funkard-yellow transition">Supporto</Link>
+        {/* SEZIONI CENTRALI */}
+        <div className="hidden md:flex items-center gap-10 text-sm font-medium">
+          <Link
+            href="/marketplace"
+            className={`hover:text-funkard-yellow transition ${
+              pathname === "/marketplace" ? "text-funkard-yellow" : "text-gray-300"
+            }`}
+          >
+            Marketplace
+          </Link>
+          <Link
+            href="/collection"
+            className={`hover:text-funkard-yellow transition ${
+              pathname === "/collection" ? "text-funkard-yellow" : "text-gray-300"
+            }`}
+          >
+            Collezione
+          </Link>
+          <Link
+            href="/gradelens"
+            className={`hover:text-funkard-yellow transition ${
+              pathname === "/gradelens" ? "text-funkard-yellow" : "text-gray-300"
+            }`}
+          >
+            GradeLens
+          </Link>
+          <Link
+            href="/support"
+            className={`hover:text-funkard-yellow transition ${
+              pathname === "/support" ? "text-funkard-yellow" : "text-gray-300"
+            }`}
+          >
+            Supporto
+          </Link>
         </div>
 
-        {/* CTA BUTTONS */}
-        <div className="flex justify-center sm:justify-end gap-3 w-full sm:w-auto">
-          <Link
-            href="/register"
-            className="px-5 py-2 text-sm font-semibold bg-funkard-yellow text-black rounded-md hover:bg-yellow-400 transition-all duration-300 shadow-[0_0_8px_rgba(255,204,0,0.4)]"
-          >
-            Registrati
-          </Link>
-          <Link
-            href="/login"
-            className="px-5 py-2 text-sm font-semibold text-funkard-yellow border border-funkard-yellow rounded-md hover:bg-funkard-yellow hover:text-black transition-all duration-300"
-          >
-            Accedi
-          </Link>
+        {/* CTA DESTRA */}
+        <div className="hidden md:flex items-center gap-4">
+          {!isLoggedIn ? (
+            <Link
+              href="/register"
+              className="px-5 py-2 text-sm font-semibold bg-funkard-yellow text-black rounded-md hover:bg-yellow-400 transition-all duration-300 shadow-[0_0_10px_rgba(255,204,0,0.3)]"
+            >
+              Registrati
+            </Link>
+          ) : (
+            <Link
+              href="/account"
+              className="px-5 py-2 text-sm font-semibold border border-funkard-yellow text-funkard-yellow rounded-md hover:bg-funkard-yellow hover:text-black transition-all duration-300"
+            >
+              Profilo
+            </Link>
+          )}
         </div>
       </div>
     </nav>

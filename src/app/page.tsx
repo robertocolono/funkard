@@ -15,38 +15,37 @@ export default function HomePage() {
       <div className="grid grid-cols-3 gap-6 bg-red-500 h-10 mx-auto mb-4 max-w-md"></div>
 
       {/* HERO */}
-      <section className="flex flex-col items-center text-center px-6 pt-40 pb-24 max-w-5xl mx-auto">
-        <motion.p
-          className="text-3xl md:text-4xl text-yellow-400 font-semibold mb-6"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
+      <section className="text-center py-32 bg-black text-white">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-4 text-funkard-yellow drop-shadow-[0_0_8px_rgba(255,204,0,0.4)]">
           Benvenuto
-        </motion.p>
+        </h1>
 
         <Image
           src="/logo.png"
           alt="Funkard Logo"
-          width={200}
-          height={200}
-          className="mb-8"
+          width={120}
+          height={120}
+          className="mx-auto mb-6"
         />
 
-        <h1 className="text-3xl md:text-4xl font-bold mb-10 leading-snug">
-          Il marketplace TCG creato per i collezionisti. Sicuro, globale e completamente trasparente.
-        </h1>
+        <h2 className="text-2xl sm:text-3xl font-bold mb-6">
+          Il marketplace TCG creato per i collezionisti.
+          <br />
+          <span className="text-funkard-yellow">
+            Sicuro, globale e completamente trasparente.
+          </span>
+        </h2>
 
-        {/* CTA Buttons */}
-        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-5">
+        <div className="mt-8 flex flex-col sm:flex-row justify-center gap-5">
           <a
             href="/marketplace"
-            className="px-8 py-3 text-base font-semibold bg-funkard-yellow text-black rounded-lg hover:bg-yellow-400 hover:scale-[1.02] transition-all duration-300 shadow-[0_0_12px_rgba(255,204,0,0.4)]"
+            className="px-8 py-3 text-base font-semibold bg-funkard-yellow text-black rounded-lg hover:bg-yellow-400 hover:scale-[1.03] transition-all duration-300 shadow-[0_0_12px_rgba(255,204,0,0.4)]"
           >
             Entra nel Marketplace
           </a>
           <a
             href="/register"
-            className="px-8 py-3 text-base font-semibold border border-funkard-yellow text-funkard-yellow rounded-lg hover:bg-funkard-yellow hover:text-black hover:scale-[1.02] transition-all duration-300"
+            className="px-8 py-3 text-base font-semibold border border-funkard-yellow text-funkard-yellow rounded-lg hover:bg-funkard-yellow hover:text-black hover:scale-[1.03] transition-all duration-300"
           >
             Crea un account
           </a>
