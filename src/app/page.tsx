@@ -3,24 +3,21 @@ import { FunkardButton } from "@/components/ui/funkard-button";
 
 export default function HomePage() {
   return (
-    <main className="pt-20 min-h-screen bg-black text-white font-[Inter]">
+    <main className="pt-20">
       {/* 🦾 HERO SECTION */}
-      <section className="pt-20 pb-24 text-center bg-gradient-to-b from-black via-[#0a0a0a] to-black">
-        <div className="max-w-3xl mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">
-            Esplora, compra, vendi e scambia in tutto il mondo{" "}
-            <span className="text-[#FFCC00] drop-shadow-[0_0_8px_rgba(255,204,0,0.8)]">
-              con un semplice click!
-            </span>
-          </h1>
-          <p className="text-gray-400 mb-10 text-lg">
-            Il marketplace TCG creato per i collezionisti. Sicuro, globale e completamente trasparente.
-          </p>
+      <section className="flex flex-col items-center justify-center text-center py-28 bg-black text-white">
+        <h1 className="text-4xl font-bold mb-4">
+          Esplora, compra, vendi e scambia in tutto il mondo{" "}
+          <span className="text-yellow-500">con un semplice click!</span>
+        </h1>
 
-          <div className="flex justify-center space-x-4">
-            <FunkardButton variant="primary">Entra nel Marketplace</FunkardButton>
-            <FunkardButton variant="secondary">Crea un Account</FunkardButton>
-          </div>
+        <p className="text-gray-300 mb-8">
+          Il marketplace TCG creato per i collezionisti. Sicuro, globale e completamente trasparente.
+        </p>
+
+        <div className="flex gap-4">
+          <button className="funkard-btn">Entra nel Marketplace</button>
+          <button className="funkard-btn">Crea un Account</button>
         </div>
 
         {/* Divider Glow */}

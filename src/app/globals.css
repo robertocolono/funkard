@@ -3,6 +3,23 @@
 @tailwind utilities;
 
 /* ------------------------------
+   FUNKARD BUTTONS
+------------------------------ */
+.funkard-btn {
+  background-color: #facc15; /* dorato Funkard */
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.funkard-btn:hover {
+  background-color: #eab308; /* leggero tono più scuro */
+}
+
+/* ------------------------------
    FUNKARD GLOBAL OVERRIDE
 ------------------------------ */
 @layer base {
