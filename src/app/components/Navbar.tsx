@@ -6,7 +6,7 @@ export default function Navbar() {
       <div className="flex items-center space-x-2">
         <img src="/logo.png" alt="Funkard Logo" className="w-8 h-8" />
         <h1 className="text-xl font-bold">
-          <span className="text-yellow-400">FUN</span>KARD
+          <span className="text-white">FUN</span><span className="text-yellow-400">KARD</span>
         </h1>
       </div>
 

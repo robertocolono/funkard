@@ -20,23 +20,20 @@ export default function Features() {
   ];
 
   return (
-    <section className="mt-16 text-center px-6 md:px-16 max-w-6xl mx-auto">
-      <h3 className="text-3xl font-extrabold text-yellow-400 drop-shadow-[0_0_15px_rgba(255,204,0,0.6)]">
-        Diventa un collezionista e divertiti!
-      </h3>
-      <p className="text-zinc-400 mt-2">
-        Scopri tutte le funzionalità del mondo Funkard.
-      </p>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+    <section className="mt-16 px-6 md:px-16 max-w-6xl mx-auto">
+      <div className="space-y-8">
         {features.map((f, i) => (
           <div
             key={i}
-            className="bg-zinc-900 rounded-2xl border border-zinc-800 p-8 shadow-[0_0_15px_rgba(255,204,0,0.25)] hover:shadow-[0_0_30px_rgba(255,204,0,0.4)] transition"
+            className="flex items-center space-x-6 p-6 border-b border-yellow-400/20 last:border-b-0"
           >
-            {f.icon}
-            <h4 className="text-xl font-semibold text-yellow-400 mb-2">{f.title}</h4>
-            <p className="text-zinc-400 text-sm">{f.text}</p>
+            <div className="flex-shrink-0">
+              {f.icon}
+            </div>
+            <div className="flex-1">
+              <h4 className="text-xl font-semibold text-white mb-2">{f.title}</h4>
+              <p className="text-zinc-400">{f.text}</p>
+            </div>
           </div>
         ))}
       </div>

@@ -10,7 +10,6 @@ export default function HomePage() {
     <main className="min-h-screen bg-black text-white">
       <Navbar />
       <Hero />
-      <div className="mt-16 border-t border-zinc-800 w-3/4 mx-auto"></div>
       <Features />
       <GradeLensDemo />
       <SupportCommunity />
