@@ -134,6 +134,20 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* TEST OVERRIDE VISIVO */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, 1fr)',
+        gap: '20px',
+        background: '#111',
+        padding: '20px',
+        margin: '20px 0'
+      }}>
+        <div style={{ background: '#222', padding: '20px', textAlign: 'center', color: 'white' }}>A</div>
+        <div style={{ background: '#222', padding: '20px', textAlign: 'center', color: 'white' }}>B</div>
+        <div style={{ background: '#222', padding: '20px', textAlign: 'center', color: 'white' }}>C</div>
+      </div>
+
       {/* FOOTER DESKTOP */}
       {!isMobile && (
         <footer className="mt-16 mb-10 text-sm text-zinc-500 text-center px-4 border-t border-zinc-800 pt-6">
