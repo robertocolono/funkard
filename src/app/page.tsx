@@ -3,28 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Shield, Brain, Globe } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export default function HomePage() {
-  const features = [
-    {
-      icon: <Shield className="w-10 h-10 text-yellow-400 mb-3" />,
-      title: "SafeTrade",
-      desc: "Scambi sicuri e verificati, con protezione integrata per acquirenti e venditori.",
-    },
-    {
-      icon: <Brain className="w-10 h-10 text-yellow-400 mb-3" />,
-      title: "GradeLens AI",
-      desc: "Analizza le tue carte in tempo reale grazie alla nostra intelligenza artificiale.",
-    },
-    {
-      icon: <Globe className="w-10 h-10 text-yellow-400 mb-3" />,
-      title: "Marketplace Globale",
-      desc: "Connettiti con collezionisti da tutto il mondo in un'unica piattaforma.",
-    },
-  ];
 
   return (
     <main className="bg-[#0a0a0a] text-white min-h-screen pt-40">
@@ -81,16 +63,52 @@ export default function HomePage() {
       </section>
 
       {/* FEATURES */}
-      <section id="features" className="py-20">
-        <h2 className="text-center text-3xl font-bold mb-14">Perché Funkard</h2>
-        <div className="flex flex-col md:flex-row justify-center items-start gap-16 px-6 text-center">
-          {features.map((f) => (
-            <div key={f.title} className="flex-1 max-w-sm mx-auto">
-              {f.icon}
-              <h3 className="text-xl font-semibold mb-2">{f.title}</h3>
-              <p className="text-gray-400 text-sm">{f.desc}</p>
+      <section id="features" className="py-24 bg-black text-white">
+        <h2 className="text-center text-4xl font-bold mb-16">Perché scegliere Funkard</h2>
+        
+        <div className="flex flex-col md:flex-row justify-center items-stretch gap-8 md:gap-12 px-6 max-w-6xl mx-auto">
+          {/* Feature 1 */}
+          <div className="flex-1 bg-[#111] rounded-2xl p-8 text-center border border-neutral-800 hover:border-funkard-yellow hover:shadow-[0_0_20px_rgba(255,204,0,0.2)] transition-all duration-300">
+            <div className="flex flex-col items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-10 h-10 text-funkard-yellow mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 11c0 .552-.448 1-1 1s-1-.448-1-1 .448-1 1-1 1 .448 1 1z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5.121 19.121A4 4 0 014 17V9a4 4 0 014-4h8a4 4 0 014 4v8a4 4 0 01-1.121 2.121M9 21h6" />
+              </svg>
+              <h3 className="text-xl font-semibold mb-2">SafeTrade</h3>
+              <p className="text-gray-400 text-sm">
+                Scambi sicuri e verificati, con protezione integrata per acquirenti e venditori.
+              </p>
             </div>
-          ))}
+          </div>
+
+          {/* Feature 2 */}
+          <div className="flex-1 bg-[#111] rounded-2xl p-8 text-center border border-neutral-800 hover:border-funkard-yellow hover:shadow-[0_0_20px_rgba(255,204,0,0.2)] transition-all duration-300">
+            <div className="flex flex-col items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-10 h-10 text-funkard-yellow mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6l4 2" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12a7 7 0 1114 0 7 7 0 01-14 0z" />
+              </svg>
+              <h3 className="text-xl font-semibold mb-2">GradeLens AI</h3>
+              <p className="text-gray-400 text-sm">
+                Analizza le tue carte in tempo reale grazie alla nostra intelligenza artificiale.
+              </p>
+            </div>
+          </div>
+
+          {/* Feature 3 */}
+          <div className="flex-1 bg-[#111] rounded-2xl p-8 text-center border border-neutral-800 hover:border-funkard-yellow hover:shadow-[0_0_20px_rgba(255,204,0,0.2)] transition-all duration-300">
+            <div className="flex flex-col items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-10 h-10 text-funkard-yellow mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5h2l.4 2M7 13h10l4-8H5.4" />
+                <circle cx="7" cy="21" r="1" />
+                <circle cx="17" cy="21" r="1" />
+              </svg>
+              <h3 className="text-xl font-semibold mb-2">Marketplace Globale</h3>
+              <p className="text-gray-400 text-sm">
+                Connettiti con collezionisti da tutto il mondo in un'unica piattaforma.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
