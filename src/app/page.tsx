@@ -5,24 +5,23 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-black text-white font-[Inter]">
       {/* 🌟 NAVBAR */}
-      <nav className="w-full fixed top-0 left-0 z-50 flex justify-between items-center px-8 py-4 bg-black/80 backdrop-blur-md border-b border-[#FFCC00]/20">
-        {/* LOGO */}
-        <div className="flex items-center space-x-2">
-          <img src="/logo.png" alt="Funkard" className="w-8 h-8" />
-          <span className="text-[#FFCC00] font-semibold text-lg tracking-wide">
-            FUNKARD
-          </span>
+      <header className="flex justify-between items-center w-full px-8 py-4 border-b border-gray-800 bg-black fixed top-0 left-0 z-50">
+        <div className="flex items-center space-x-3">
+          <img src="/logo.png" alt="Funkard logo" className="h-10 w-auto" />
+          <span className="text-yellow-500 font-bold">FUNKARD</span>
         </div>
 
-        {/* NAV LINKS */}
-        <div className="flex items-center space-x-6 text-sm">
-          <a href="#" className="hover:text-[#FFCC00] transition">Marketplace</a>
-          <a href="#" className="hover:text-[#FFCC00] transition">Collezione</a>
-          <a href="#" className="hover:text-[#FFCC00] transition">GradeLens</a>
-          <a href="#" className="hover:text-[#FFCC00] transition">Supporto</a>
-          <FunkardButton>Registrati</FunkardButton>
-        </div>
-      </nav>
+        <nav className="flex items-center space-x-6 text-white text-sm">
+          <a href="/marketplace" className="hover:text-yellow-500 transition">Marketplace</a>
+          <a href="/collezione" className="hover:text-yellow-500 transition">Collezione</a>
+          <a href="/gradelens" className="hover:text-yellow-500 transition">GradeLens</a>
+          <a href="/supporto" className="hover:text-yellow-500 transition">Supporto</a>
+        </nav>
+
+        <button className="border border-yellow-500 text-yellow-500 px-4 py-2 rounded-md hover:bg-yellow-500 hover:text-black transition">
+          Registrati
+        </button>
+      </header>
 
       {/* 🦾 HERO SECTION */}
       <section className="pt-40 pb-24 text-center bg-gradient-to-b from-black via-[#0a0a0a] to-black">
