@@ -10,6 +10,9 @@ export default function HomePage() {
     <main className="bg-[#0a0a0a] text-white min-h-screen">
       <Navbar />
 
+      {/* TEST TAILWIND */}
+      <div className="bg-red-500 w-40 h-40 mx-auto mb-4"></div>
+
       {/* HERO */}
       <section className="flex flex-col items-center text-center px-6 pt-40 pb-24 max-w-5xl mx-auto">
         <motion.p
