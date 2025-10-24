@@ -17,6 +17,9 @@ module.exports = {
     extend: {
       colors: {
         'funkard-yellow': '#FFCC00',
+        funkard: {
+          yellow: "#F5C242",
+        },
         brand: {
           yellow: "#f2b237",
           orange: "#ff9800",
