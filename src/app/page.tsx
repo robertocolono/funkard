@@ -101,6 +101,11 @@ export default function HomePage() {
       </section>
 
 
+      {/* TEST VISIVO TEMPORANEO */}
+      <div className="bg-red-500 text-white p-4 text-center font-bold">
+        TEST: Se vedi questo, il file è corretto
+      </div>
+
       <section className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 px-6 md:px-12 max-w-6xl mx-auto">
         <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 text-center hover:border-yellow-400 transition">
           <h3 className="text-yellow-400 text-xl font-semibold mb-3">Gestisci la tua collezione</h3>
