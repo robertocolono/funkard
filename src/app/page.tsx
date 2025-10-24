@@ -64,6 +64,7 @@ export default function HomePage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
         >
+          <p className="text-yellow-400 text-lg font-bold mb-4">DEBUG FUNKARD - FILE CORRETTO</p>
           <Image
             src="/logo.png"
             alt="Funkard Logo"
