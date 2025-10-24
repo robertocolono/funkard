@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Layers, Search, User, Archive, Star, Globe, Mail, FolderKanban, Gem } from "lucide-react";
+import { Layers, Search, User, Archive, Star, Globe, Mail, FolderKanban, Gem, Home, LayoutGrid, Camera, HelpCircle } from "lucide-react";
 
 export default function HomePage() {
   const [isMobile, setIsMobile] = useState(false);
@@ -39,23 +39,16 @@ export default function HomePage() {
     <main className="min-h-screen bg-black text-white overflow-x-hidden">
       {/* NAVBAR DESKTOP */}
       {!isMobile && (
-        <nav className="w-full sticky top-0 z-50 flex justify-between items-center px-12 py-5 bg-black/80 backdrop-blur-sm border-b border-zinc-800">
-          <h1 className="text-3xl font-extrabold tracking-tight">
-            <span className="text-yellow-400">FUN</span>KARD
-          </h1>
+        <nav className="w-full flex justify-between items-center px-6 md:px-12 py-4 border-b border-zinc-800 bg-black">
+          <h1 className="text-2xl font-bold text-white">FUNKARD</h1>
 
-          {/* link DESKTOP con spazio regolare */}
-          <ul className="hidden md:flex items-center gap-10 text-base font-medium">
-            <li><a href="/marketplace" className="hover:text-yellow-400 transition">Marketplace</a></li>
-            <li><a href="/collection" className="hover:text-yellow-400 transition">Collezione</a></li>
-            <li><a href="/gradelens" className="hover:text-yellow-400 transition">GradeLens</a></li>
-            <li><a href="/support" className="hover:text-yellow-400 transition">Support</a></li>
-            <li>
-              <a href="/signup" className="bg-yellow-400 text-black font-semibold rounded-xl px-5 py-2 hover:bg-yellow-300 transition">
-                Registrati
-              </a>
-            </li>
-          </ul>
+          <div className="hidden md:flex space-x-8 text-sm text-zinc-300">
+            <a href="/marketplace" className="hover:text-yellow-400 transition">Marketplace</a>
+            <a href="/collezione" className="hover:text-yellow-400 transition">Collezione</a>
+            <a href="/gradelens" className="hover:text-yellow-400 transition">GradeLens</a>
+            <a href="/supporto" className="hover:text-yellow-400 transition">Supporto</a>
+            <a href="/profilo" className="hover:text-yellow-400 transition">Profilo</a>
+          </div>
         </nav>
       )}
 
@@ -136,24 +129,32 @@ export default function HomePage() {
 
       {/* MOBILE BOTTOM NAV */}
       {isMobile && (
-        <nav className="fixed bottom-0 left-0 right-0 z-[9999] bg-zinc-900/90 backdrop-blur-lg border-t border-zinc-800 flex justify-around items-center py-2 shadow-[0_-2px_8px_rgba(0,0,0,0.6)]">
-        {[
-          { icon: Layers, label: "Market", href: "/marketplace" },
-          { icon: Archive, label: "Collezione", href: "/collection" },
-          { icon: Search, label: "GradeLens", href: "/gradelens" },
-          { icon: Mail, label: "Support", href: "/support" },
-          { icon: User, label: "Profilo", href: "/profile" },
-        ].map(({ icon: Icon, label, href }, i) => (
-            <a
-              key={i}
-              href={href}
-              className="flex flex-col items-center text-[10px] text-zinc-400 hover:text-yellow-400 transition"
-            >
-              <Icon className="h-5 w-5 mb-1" />
-              {label}
-            </a>
-          ))}
-        </nav>
+        <footer className="fixed bottom-0 left-0 w-full bg-black border-t border-zinc-800 flex justify-around items-center py-3 md:hidden">
+          <a href="/marketplace" className="flex flex-col items-center text-zinc-400 hover:text-yellow-400 transition">
+            <Home size={22} />
+            <span className="text-xs mt-1">Market</span>
+          </a>
+
+          <a href="/collezione" className="flex flex-col items-center text-zinc-400 hover:text-yellow-400 transition">
+            <LayoutGrid size={22} />
+            <span className="text-xs mt-1">Collezione</span>
+          </a>
+
+          <a href="/gradelens" className="flex flex-col items-center text-zinc-400 hover:text-yellow-400 transition">
+            <Camera size={22} />
+            <span className="text-xs mt-1">GradeLens</span>
+          </a>
+
+          <a href="/supporto" className="flex flex-col items-center text-zinc-400 hover:text-yellow-400 transition">
+            <HelpCircle size={22} />
+            <span className="text-xs mt-1">Supporto</span>
+          </a>
+
+          <a href="/profilo" className="flex flex-col items-center text-zinc-400 hover:text-yellow-400 transition">
+            <User size={22} />
+            <span className="text-xs mt-1">Profilo</span>
+          </a>
+        </footer>
       )}
     </main>
   );
