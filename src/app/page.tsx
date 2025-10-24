@@ -36,7 +36,7 @@ export default function HomePage() {
   ];
 
   return (
-    <main className="min-h-screen bg-black text-white flex flex-col">
+    <main className="min-h-screen bg-black text-white flex flex-col overflow-x-hidden">
       {/* NAVBAR DESKTOP */}
       {!isMobile && (
         <nav className="w-full sticky top-0 z-50 flex justify-between items-center px-12 py-5 bg-black/80 backdrop-blur-sm border-b border-zinc-800">
@@ -57,7 +57,8 @@ export default function HomePage() {
       )}
 
       {/* HERO */}
-      <section className="flex flex-col justify-center items-center text-center flex-1 px-6 py-20 md:py-24">
+      <section className="flex flex-col justify-center items-center text-center flex-1 px-6 py-20 md:py-24 relative">
+        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-zinc-900/70 to-transparent pointer-events-none" />
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -89,33 +90,38 @@ export default function HomePage() {
         >
           <Button
             size="lg"
-            className="bg-yellow-400 text-black font-bold text-lg px-10 py-4 rounded-2xl hover:bg-yellow-300 transition"
+            className="bg-yellow-400 text-black font-bold text-lg px-10 py-4 rounded-2xl hover:scale-105 hover:shadow-[0_0_25px_rgba(250,204,21,0.5)] transition-all duration-300"
           >
             Esplora il Marketplace
           </Button>
         </motion.div>
       </section>
 
-      {/* FEATURE SECTION (orizzontale) */}
-      <section className="w-full max-w-6xl mx-auto flex flex-col md:flex-row justify-center items-stretch gap-8 mt-10 px-6 pb-24 md:pb-10">
-        {features.map(({ icon: Icon, title, desc }, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.2, duration: 0.6 }}
-            viewport={{ once: true }}
-            className="flex-1"
-          >
-            <Card className="bg-zinc-900/80 border-zinc-800 hover:border-yellow-400 transition rounded-2xl shadow-md hover:shadow-yellow-400/10 h-full flex flex-col justify-between text-center p-6">
-              <div className="flex flex-col items-center justify-center flex-grow">
-                <Icon className="h-10 w-10 text-yellow-400 mb-4" />
-                <h3 className="text-lg md:text-xl font-semibold mb-3 text-yellow-400">{title}</h3>
-                <p className="text-zinc-400 text-sm md:text-base">{desc}</p>
-              </div>
-            </Card>
-          </motion.div>
-        ))}
+      {/* FEATURE SECTION */}
+      <section className="relative w-full">
+        {/* Gradient strip */}
+        <div className="absolute inset-0 bg-gradient-to-b from-yellow-400/10 to-transparent pointer-events-none" />
+
+        <div className="relative w-full max-w-6xl mx-auto flex flex-col md:flex-row justify-center items-stretch gap-8 mt-10 px-6 pb-24 md:pb-10 z-10">
+          {features.map(({ icon: Icon, title, desc }, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.2, duration: 0.6 }}
+              viewport={{ once: true }}
+              className="flex-1"
+            >
+              <Card className="bg-zinc-900/80 border-zinc-800 hover:border-yellow-400 transition rounded-2xl shadow-md hover:shadow-[0_0_20px_rgba(250,204,21,0.15)] h-full flex flex-col justify-between text-center p-6 transform hover:-translate-y-1 transition-all duration-300">
+                <div className="flex flex-col items-center justify-center flex-grow">
+                  <Icon className="h-10 w-10 text-yellow-400 mb-4 transition-transform duration-300 group-hover:scale-110" />
+                  <h3 className="text-lg md:text-xl font-semibold mb-3 text-yellow-400">{title}</h3>
+                  <p className="text-zinc-400 text-sm md:text-base">{desc}</p>
+                </div>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
       </section>
 
       {/* FOOTER DESKTOP */}
