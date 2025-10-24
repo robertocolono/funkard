@@ -17,12 +17,8 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? "bg-black/90 shadow-lg" : "bg-transparent"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-5">
+    <header className="fixed top-0 left-0 w-full z-50 bg-black border-b border-yellow-500">
+      <div className="max-w-screen-xl mx-auto flex justify-between items-center px-6 py-3">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <Image
@@ -66,6 +62,6 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-    </nav>
+    </header>
   );
 }

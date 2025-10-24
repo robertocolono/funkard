@@ -3,28 +3,9 @@ import { FunkardButton } from "@/components/ui/funkard-button";
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-black text-white font-[Inter]">
-      {/* 🌟 NAVBAR */}
-      <header className="flex justify-between items-center w-full px-8 py-4 border-b border-gray-800 bg-black fixed top-0 left-0 z-50">
-        <div className="flex items-center space-x-3">
-          <img src="/logo.png" alt="Funkard logo" className="h-10 w-auto" />
-          <span className="text-yellow-500 font-bold">FUNKARD</span>
-        </div>
-
-        <nav className="flex items-center space-x-6 text-white text-sm">
-          <a href="/marketplace" className="hover:text-yellow-500 transition">Marketplace</a>
-          <a href="/collezione" className="hover:text-yellow-500 transition">Collezione</a>
-          <a href="/gradelens" className="hover:text-yellow-500 transition">GradeLens</a>
-          <a href="/supporto" className="hover:text-yellow-500 transition">Supporto</a>
-        </nav>
-
-        <button className="border border-yellow-500 text-yellow-500 px-4 py-2 rounded-md hover:bg-yellow-500 hover:text-black transition">
-          Registrati
-        </button>
-      </header>
-
+    <main className="pt-20 min-h-screen bg-black text-white font-[Inter]">
       {/* 🦾 HERO SECTION */}
-      <section className="pt-40 pb-24 text-center bg-gradient-to-b from-black via-[#0a0a0a] to-black">
+      <section className="pt-20 pb-24 text-center bg-gradient-to-b from-black via-[#0a0a0a] to-black">
         <div className="max-w-3xl mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">
             Esplora, compra, vendi e scambia in tutto il mondo{" "}
