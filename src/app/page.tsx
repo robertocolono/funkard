@@ -100,10 +100,10 @@ export default function HomePage() {
         </motion.div>
       </section>
 
-      {/* FEATURES */}
-      <div className="mt-16 px-6 md:px-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          
+      {/* FEATURE SECTION */}
+      <div className="mt-16 px-6 md:px-12 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* CARD 1 */}
           <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 text-center hover:border-yellow-400 transition">
             <h3 className="text-yellow-400 text-xl font-semibold mb-3">
               Gestisci la tua collezione
@@ -113,6 +113,7 @@ export default function HomePage() {
             </p>
           </div>
 
+          {/* CARD 2 */}
           <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 text-center hover:border-yellow-400 transition">
             <h3 className="text-yellow-400 text-xl font-semibold mb-3">
               Valuta le tue carte
@@ -122,6 +123,7 @@ export default function HomePage() {
             </p>
           </div>
 
+          {/* CARD 3 */}
           <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 text-center hover:border-yellow-400 transition">
             <h3 className="text-yellow-400 text-xl font-semibold mb-3">
               Connettiti con tutto il mondo
@@ -130,7 +132,6 @@ export default function HomePage() {
               Compra e vendi in sicurezza con collezionisti globali.
             </p>
           </div>
-
         </div>
       </div>
 
