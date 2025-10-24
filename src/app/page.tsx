@@ -33,16 +33,16 @@ export default function HomePage() {
         </h1>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
           <a
             href="/marketplace"
-            className="px-8 py-3 text-lg font-semibold text-black bg-funkard-yellow rounded-xl hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-[0_0_25px_rgba(255,204,0,0.4)]"
+            className="px-8 py-4 text-lg font-bold text-black bg-funkard-yellow rounded-xl hover:opacity-90 transition-all duration-300 shadow-[0_0_25px_rgba(255,204,0,0.3)]"
           >
             Entra nel Marketplace
           </a>
           <a
             href="/register"
-            className="px-8 py-3 text-lg font-semibold text-funkard-yellow border-2 border-funkard-yellow rounded-xl hover:bg-funkard-yellow hover:text-black transition-all duration-300 shadow-lg hover:shadow-[0_0_25px_rgba(255,204,0,0.4)]"
+            className="px-8 py-4 text-lg font-bold text-funkard-yellow border-2 border-funkard-yellow rounded-xl hover:bg-funkard-yellow hover:text-black transition-all duration-300 shadow-[0_0_25px_rgba(255,204,0,0.3)]"
           >
             Crea un account
           </a>

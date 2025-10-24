@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 w-full bg-[#0a0a0a]/90 backdrop-blur-md border-b border-neutral-800 z-50">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 py-5 flex items-center">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 py-6 flex items-center justify-between">
         {/* Brand */}
         <Link href="/" className="text-2xl font-extrabold tracking-wide">
           <span className="text-white">FUN</span>
