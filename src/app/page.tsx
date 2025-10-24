@@ -12,6 +12,7 @@ export default function HomePage() {
 
       {/* TEST TAILWIND */}
       <div className="bg-red-500 w-40 h-40 mx-auto mb-4"></div>
+      <div className="grid grid-cols-3 gap-6 bg-red-500 h-10 mx-auto mb-4 max-w-md"></div>
 
       {/* HERO */}
       <section className="flex flex-col items-center text-center px-6 pt-40 pb-24 max-w-5xl mx-auto">
@@ -36,7 +37,7 @@ export default function HomePage() {
         </h1>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+        <div className="inline-flex flex-col sm:flex-row items-center justify-center gap-6">
           <a
             href="/marketplace"
             className="px-8 py-4 text-lg font-bold text-black bg-funkard-yellow rounded-xl hover:opacity-90 transition-all duration-300 shadow-[0_0_25px_rgba(255,204,0,0.3)]"

@@ -158,3 +158,12 @@
   grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   gap: 2rem !important;
 }
+
+/* Forza le 3 colonne della sezione features in desktop */
+@media (min-width: 1024px) {
+  #features .grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0,1fr)) !important;
+    gap: 2rem !important;
+  }
+}

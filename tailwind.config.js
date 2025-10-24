@@ -3,9 +3,15 @@ module.exports = {
   important: true,
   darkMode: "class",
   content: [
-    "./src/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  safelist: [
+    "grid", "grid-cols-3", "gap-6",
+    "px-8", "py-4", "rounded-xl",
+    "text-funkard-yellow", "border-funkard-yellow",
   ],
   theme: {
     extend: {
