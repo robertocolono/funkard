@@ -67,6 +67,22 @@ a:hover {
   padding-right: 1.5rem;
 }
 
+/* ==== ANIMAZIONI SCROLLING CARDS ==== */
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-scroll {
+  display: flex;
+  width: max-content;
+  animation: scroll 25s linear infinite;
+}
+
+.shadow-glow {
+  box-shadow: 0 0 20px rgba(242, 178, 55, 0.1);
+}
+
 /* ==== RESPONSIVE HELPERS ==== */
 @media (max-width: 768px) {
   h1 {
