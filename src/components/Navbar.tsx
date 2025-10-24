@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+import { FunkardButton } from "@/components/ui/funkard-button";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -58,12 +59,11 @@ export default function Navbar() {
           ))}
 
           {/* CTA Button */}
-          <Link
-            href="/register"
-            className="ml-4 px-5 py-2.5 border-2 border-funkard-yellow text-funkard-yellow font-semibold rounded-lg hover:bg-funkard-yellow hover:text-black transition-all duration-300 shadow-[0_0_10px_rgba(255,204,0,0.2)]"
-          >
-            Registrati
-          </Link>
+          <div className="ml-4">
+            <FunkardButton variant="primary" href="/register">
+              Registrati
+            </FunkardButton>
+          </div>
         </div>
       </div>
     </nav>

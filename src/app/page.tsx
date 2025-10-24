@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { FunkardButton } from "@/components/ui/funkard-button";
 import { motion } from "framer-motion";
 
 export default function HomePage() {
@@ -42,18 +43,12 @@ export default function HomePage() {
         </p>
 
         <div className="mt-10 flex flex-col sm:flex-row gap-6 justify-center">
-          <Link
-            href="/marketplace"
-            className="bg-funkard-yellow text-black font-semibold px-10 py-4 rounded-lg shadow-lg hover:shadow-[0_0_20px_rgba(255,204,0,0.4)] transition-transform hover:scale-105"
-          >
+          <FunkardButton variant="primary" href="/marketplace">
             Entra nel Marketplace
-          </Link>
-          <Link
-            href="/register"
-            className="border border-funkard-yellow text-funkard-yellow font-semibold px-10 py-4 rounded-lg hover:bg-funkard-yellow hover:text-black transition-transform hover:scale-105"
-          >
+          </FunkardButton>
+          <FunkardButton variant="secondary" href="/register">
             Crea un Account
-          </Link>
+          </FunkardButton>
         </div>
       </section>
 
@@ -113,12 +108,9 @@ export default function HomePage() {
         </div>
 
         <div className="text-center mt-10">
-          <Link
-            href="/marketplace"
-            className="bg-funkard-yellow text-black font-semibold px-8 py-3 rounded-lg shadow-lg hover:shadow-[0_0_20px_rgba(255,204,0,0.4)] transition-transform hover:scale-105"
-          >
+          <FunkardButton variant="primary" href="/marketplace">
             Scopri il Marketplace
-          </Link>
+          </FunkardButton>
         </div>
       </section>
 
