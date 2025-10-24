@@ -4,6 +4,13 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  Home,
+  Layers,
+  Search,
+  MessageCircle,
+  User,
+} from "lucide-react";
 
 export default function HomePage() {
   const features = [
@@ -23,8 +30,8 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-black text-white flex flex-col">
-      {/* NAVBAR */}
-      <nav className="w-full sticky top-0 z-50 flex justify-between items-center px-10 py-5 bg-black/80 backdrop-blur-sm border-b border-zinc-800">
+      {/* DESKTOP NAVBAR */}
+      <nav className="hidden md:flex w-full sticky top-0 z-50 justify-between items-center px-10 py-5 bg-black/80 backdrop-blur-sm border-b border-zinc-800">
         <h1 className="text-3xl font-extrabold tracking-tight">
           <span className="text-yellow-400">FUN</span>KARD
         </h1>
@@ -39,8 +46,8 @@ export default function HomePage() {
         </div>
       </nav>
 
-      {/* HERO FULLSCREEN */}
-      <section className="flex flex-col justify-center items-center text-center flex-1 px-6 py-16 md:py-24">
+      {/* HERO */}
+      <section className="flex flex-col justify-center items-center text-center flex-1 px-6 py-20 md:py-24">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -49,8 +56,8 @@ export default function HomePage() {
           <Image
             src="/logo.png"
             alt="Funkard Logo"
-            width={240}
-            height={240}
+            width={220}
+            height={220}
             className="mb-6"
             priority
           />
@@ -80,7 +87,7 @@ export default function HomePage() {
       </section>
 
       {/* FEATURE SECTION */}
-      <section className="w-full max-w-6xl mx-auto flex flex-col md:flex-row justify-center items-stretch gap-6 mt-10 px-6">
+      <section className="w-full max-w-6xl mx-auto flex flex-col md:flex-row justify-center items-stretch gap-6 mt-10 px-6 pb-24 md:pb-10">
         {features.map((feature, i) => (
           <motion.div
             key={i}
@@ -102,8 +109,8 @@ export default function HomePage() {
         ))}
       </section>
 
-      {/* FOOTER */}
-      <footer className="mt-20 mb-10 text-sm text-zinc-500 text-center px-4">
+      {/* FOOTER (desktop only) */}
+      <footer className="hidden md:block mt-16 mb-10 text-sm text-zinc-500 text-center px-4">
         <p>Funkard © 2025 — Da collezionisti per collezionisti</p>
         <div className="flex justify-center gap-6 mt-3">
           <a href="/privacy" className="hover:text-yellow-400 transition">Privacy</a>
@@ -111,6 +118,26 @@ export default function HomePage() {
           <a href="/terms" className="hover:text-yellow-400 transition">Termini</a>
         </div>
       </footer>
+
+      {/* MOBILE BOTTOM NAV */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-zinc-900/90 backdrop-blur-lg border-t border-zinc-800 flex justify-around py-2">
+        {[
+          { icon: Home, label: "Market", href: "/marketplace" },
+          { icon: Layers, label: "Collezione", href: "/collection" },
+          { icon: Search, label: "GradeLens", href: "/gradelens" },
+          { icon: MessageCircle, label: "Support", href: "/support" },
+          { icon: User, label: "Profilo", href: "/profile" },
+        ].map(({ icon: Icon, label, href }, i) => (
+          <a
+            key={i}
+            href={href}
+            className="flex flex-col items-center text-xs text-zinc-400 hover:text-yellow-400 transition"
+          >
+            <Icon className="h-5 w-5 mb-1" />
+            {label}
+          </a>
+        ))}
+      </nav>
     </main>
   );
 }
