@@ -30,7 +30,7 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-black text-white flex flex-col">
-      {/* DESKTOP NAVBAR */}
+      {/* NAVBAR DESKTOP */}
       <nav className="hidden md:flex w-full sticky top-0 z-50 justify-between items-center px-10 py-5 bg-black/80 backdrop-blur-sm border-b border-zinc-800">
         <h1 className="text-3xl font-extrabold tracking-tight">
           <span className="text-yellow-400">FUN</span>KARD
@@ -119,8 +119,8 @@ export default function HomePage() {
         </div>
       </footer>
 
-      {/* MOBILE BOTTOM NAV */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-zinc-900/90 backdrop-blur-lg border-t border-zinc-800 flex justify-around py-2">
+      {/* NAVBAR MOBILE */}
+      <nav className="fixed bottom-0 left-0 right-0 z-[9999] md:hidden bg-zinc-900/90 backdrop-blur-lg border-t border-zinc-800 flex justify-around items-center py-2 shadow-[0_-2px_8px_rgba(0,0,0,0.6)]">
         {[
           { icon: Home, label: "Market", href: "/marketplace" },
           { icon: Layers, label: "Collezione", href: "/collection" },
@@ -131,7 +131,7 @@ export default function HomePage() {
           <a
             key={i}
             href={href}
-            className="flex flex-col items-center text-xs text-zinc-400 hover:text-yellow-400 transition"
+            className="flex flex-col items-center text-[10px] text-zinc-400 hover:text-yellow-400 transition"
           >
             <Icon className="h-5 w-5 mb-1" />
             {label}
