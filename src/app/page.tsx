@@ -98,23 +98,20 @@ export default function HomePage() {
       </section>
 
       {/* FEATURE SECTION */}
-      <section className="relative w-full">
-        {/* Gradient strip */}
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-400/10 to-transparent pointer-events-none" />
-
-        <div className="relative w-full max-w-6xl mx-auto flex flex-col md:flex-row justify-center items-stretch gap-8 mt-10 px-6 pb-24 md:pb-10 z-10">
+      <section className="relative w-full bg-gradient-to-b from-yellow-400/10 to-transparent pb-24 md:pb-16">
+        <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row justify-center items-stretch gap-8 mt-10 px-6">
           {features.map(({ icon: Icon, title, desc }, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.2, duration: 0.6 }}
+              transition={{ delay: i * 0.2, duration: 0.6, ease: "easeOut" }}
               viewport={{ once: true }}
               className="flex-1"
             >
               <Card className="bg-zinc-900/80 border-zinc-800 hover:border-yellow-400 transition rounded-2xl shadow-md hover:shadow-[0_0_20px_rgba(250,204,21,0.15)] h-full flex flex-col justify-between text-center p-6 transform hover:-translate-y-1 transition-all duration-300">
                 <div className="flex flex-col items-center justify-center flex-grow">
-                  <Icon className="h-10 w-10 text-yellow-400 mb-4 transition-transform duration-300 group-hover:scale-110" />
+                  <Icon className="h-10 w-10 text-yellow-400 mb-4 transition-transform duration-300" />
                   <h3 className="text-lg md:text-xl font-semibold mb-3 text-yellow-400">{title}</h3>
                   <p className="text-zinc-400 text-sm md:text-base">{desc}</p>
                 </div>
