@@ -14,6 +14,7 @@ export default function HomePage() {
       
       {/* HERO */}
       <section className="flex flex-col items-center text-center px-6 py-20">
+        <h1 className="text-5xl text-red-600 font-bold mb-4">TEST TAILWIND</h1>
         <motion.p
           className="text-3xl md:text-4xl text-yellow-400 font-semibold mb-6"
           initial={{ opacity: 0, y: -10 }}
