@@ -1,18 +1,23 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  Home,
-  Layers,
-  Search,
-  MessageCircle,
-  User,
-} from "lucide-react";
+import { Home, Layers, Search, MessageCircle, User } from "lucide-react";
 
 export default function HomePage() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect screen size on mount and resize
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const features = [
     {
       title: "Gestisci la tua collezione",
@@ -31,20 +36,30 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-black text-white flex flex-col">
       {/* NAVBAR DESKTOP */}
-      <nav className="hidden md:flex w-full sticky top-0 z-50 justify-between items-center px-10 py-5 bg-black/80 backdrop-blur-sm border-b border-zinc-800">
-        <h1 className="text-3xl font-extrabold tracking-tight">
-          <span className="text-yellow-400">FUN</span>KARD
-        </h1>
-        <div className="flex items-center gap-8 text-sm font-medium">
-          <a href="/marketplace" className="hover:text-yellow-400 transition">Marketplace</a>
-          <a href="/collection" className="hover:text-yellow-400 transition">Collezione</a>
-          <a href="/gradelens" className="hover:text-yellow-400 transition">GradeLens</a>
-          <a href="/support" className="hover:text-yellow-400 transition">Support</a>
-          <Button className="bg-yellow-400 text-black font-semibold rounded-xl px-5 py-2 hover:bg-yellow-300 transition">
-            Registrati
-          </Button>
-        </div>
-      </nav>
+      {!isMobile && (
+        <nav className="w-full sticky top-0 z-50 flex justify-between items-center px-10 py-5 bg-black/80 backdrop-blur-sm border-b border-zinc-800">
+          <h1 className="text-3xl font-extrabold tracking-tight">
+            <span className="text-yellow-400">FUN</span>KARD
+          </h1>
+          <div className="flex items-center gap-8 text-sm font-medium">
+            <a href="/marketplace" className="hover:text-yellow-400 transition">
+              Marketplace
+            </a>
+            <a href="/collection" className="hover:text-yellow-400 transition">
+              Collezione
+            </a>
+            <a href="/gradelens" className="hover:text-yellow-400 transition">
+              GradeLens
+            </a>
+            <a href="/support" className="hover:text-yellow-400 transition">
+              Support
+            </a>
+            <Button className="bg-yellow-400 text-black font-semibold rounded-xl px-5 py-2 hover:bg-yellow-300 transition">
+              Registrati
+            </Button>
+          </div>
+        </nav>
+      )}
 
       {/* HERO */}
       <section className="flex flex-col justify-center items-center text-center flex-1 px-6 py-20 md:py-24">
@@ -86,7 +101,7 @@ export default function HomePage() {
         </motion.div>
       </section>
 
-      {/* FEATURE SECTION */}
+      {/* FEATURES */}
       <section className="w-full max-w-6xl mx-auto flex flex-col md:flex-row justify-center items-stretch gap-6 mt-10 px-6 pb-24 md:pb-10">
         {features.map((feature, i) => (
           <motion.div
@@ -109,35 +124,45 @@ export default function HomePage() {
         ))}
       </section>
 
-      {/* FOOTER (desktop only) */}
-      <footer className="hidden md:block mt-16 mb-10 text-sm text-zinc-500 text-center px-4">
-        <p>Funkard © 2025 — Da collezionisti per collezionisti</p>
-        <div className="flex justify-center gap-6 mt-3">
-          <a href="/privacy" className="hover:text-yellow-400 transition">Privacy</a>
-          <a href="/cookie" className="hover:text-yellow-400 transition">Cookie</a>
-          <a href="/terms" className="hover:text-yellow-400 transition">Termini</a>
-        </div>
-      </footer>
+      {/* FOOTER DESKTOP */}
+      {!isMobile && (
+        <footer className="mt-16 mb-10 text-sm text-zinc-500 text-center px-4">
+          <p>Funkard © 2025 — Da collezionisti per collezionisti</p>
+          <div className="flex justify-center gap-6 mt-3">
+            <a href="/privacy" className="hover:text-yellow-400 transition">
+              Privacy
+            </a>
+            <a href="/cookie" className="hover:text-yellow-400 transition">
+              Cookie
+            </a>
+            <a href="/terms" className="hover:text-yellow-400 transition">
+              Termini
+            </a>
+          </div>
+        </footer>
+      )}
 
-      {/* NAVBAR MOBILE */}
-      <nav className="fixed bottom-0 left-0 right-0 z-[9999] md:hidden bg-zinc-900/90 backdrop-blur-lg border-t border-zinc-800 flex justify-around items-center py-2 shadow-[0_-2px_8px_rgba(0,0,0,0.6)]">
-        {[
-          { icon: Home, label: "Market", href: "/marketplace" },
-          { icon: Layers, label: "Collezione", href: "/collection" },
-          { icon: Search, label: "GradeLens", href: "/gradelens" },
-          { icon: MessageCircle, label: "Support", href: "/support" },
-          { icon: User, label: "Profilo", href: "/profile" },
-        ].map(({ icon: Icon, label, href }, i) => (
-          <a
-            key={i}
-            href={href}
-            className="flex flex-col items-center text-[10px] text-zinc-400 hover:text-yellow-400 transition"
-          >
-            <Icon className="h-5 w-5 mb-1" />
-            {label}
-          </a>
-        ))}
-      </nav>
+      {/* MOBILE BOTTOM NAV */}
+      {isMobile && (
+        <nav className="fixed bottom-0 left-0 right-0 z-[9999] bg-zinc-900/90 backdrop-blur-lg border-t border-zinc-800 flex justify-around items-center py-2 shadow-[0_-2px_8px_rgba(0,0,0,0.6)]">
+          {[
+            { icon: Home, label: "Market", href: "/marketplace" },
+            { icon: Layers, label: "Collezione", href: "/collection" },
+            { icon: Search, label: "GradeLens", href: "/gradelens" },
+            { icon: MessageCircle, label: "Support", href: "/support" },
+            { icon: User, label: "Profilo", href: "/profile" },
+          ].map(({ icon: Icon, label, href }, i) => (
+            <a
+              key={i}
+              href={href}
+              className="flex flex-col items-center text-[10px] text-zinc-400 hover:text-yellow-400 transition"
+            >
+              <Icon className="h-5 w-5 mb-1" />
+              {label}
+            </a>
+          ))}
+        </nav>
+      )}
     </main>
   );
 }
