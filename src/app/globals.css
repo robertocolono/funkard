@@ -24,8 +24,13 @@
     transition: all 0.2s ease;
   }
 
-  a:hover {
-    color: #FFCC00;
+  a, a:visited { 
+    color: #ffffff; 
+    text-decoration: none; 
+  }
+  
+  a:hover { 
+    color: var(--funkard-yellow); 
   }
 
   /* Gestione Navbar */

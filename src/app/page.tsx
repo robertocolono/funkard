@@ -56,20 +56,57 @@ export default function HomePage() {
 
       {/* FEATURES */}
       <section id="features" className="py-20 bg-black text-white">
-        <h2 className="text-center text-3xl md:text-4xl font-bold mb-12">Perché scegliere Funkard</h2>
+        <h2 className="text-center text-3xl md:text-4xl font-bold mb-12">
+          Perché scegliere Funkard
+        </h2>
 
-        <div className="flex flex-col md:flex-row justify-center items-stretch gap-6 px-6 max-w-6xl mx-auto">
-          {[
-            { title: "SafeTrade", icon: "🛡️", desc: "Scambi sicuri e verificati con protezione integrata." },
-            { title: "GradeLens AI", icon: "🤖", desc: "Analizza le tue carte in tempo reale grazie alla nostra AI." },
-            { title: "Marketplace Globale", icon: "🌍", desc: "Connettiti con collezionisti da tutto il mondo." },
-          ].map((f) => (
-            <div key={f.title} className="feature-card">
-              <div className="feature-icon">{f.icon}</div>
-              <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
-              <p className="text-gray-400 text-sm">{f.desc}</p>
-            </div>
-          ))}
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                title: "SafeTrade",
+                desc: "Scambi sicuri e verificati, con protezione integrata per acquirenti e venditori.",
+                icon: (
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-funkard-yellow mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 11c0 .552-.448 1-1 1s-1-.448-1-1 .448-1 1-1 1 .448 1 1z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5.121 19.121A4 4 0 014 17V9a4 4 0 014-4h8a4 4 0 014 4v8a4 4 0 01-1.121 2.121M9 21h6" />
+                  </svg>
+                ),
+              },
+              {
+                title: "GradeLens AI",
+                desc: "Analizza le tue carte in tempo reale grazie alla nostra intelligenza artificiale.",
+                icon: (
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-funkard-yellow mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6l4 2" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12a7 7 0 1114 0 7 7 0 01-14 0z" />
+                  </svg>
+                ),
+              },
+              {
+                title: "Marketplace Globale",
+                desc: "Connettiti con collezionisti da tutto il mondo in un'unica piattaforma.",
+                icon: (
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-funkard-yellow mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5h2l.4 2M7 13h10l4-8H5.4" />
+                    <circle cx="7" cy="21" r="1" />
+                    <circle cx="17" cy="21" r="1" />
+                  </svg>
+                ),
+              },
+            ].map((f) => (
+              <div
+                key={f.title}
+                className="bg-[#111] rounded-xl p-8 text-center border border-neutral-800 hover:border-funkard-yellow hover:shadow-[0_0_15px_rgba(255,204,0,0.2)] transition-all duration-300"
+              >
+                <div className="flex flex-col items-center">
+                  {f.icon}
+                  <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
+                  <p className="text-gray-400 text-sm leading-relaxed">{f.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
