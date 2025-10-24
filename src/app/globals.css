@@ -167,3 +167,18 @@
     gap: 2rem !important;
   }
 }
+
+/* ================================
+   COLORI BRAND GLOBALI
+=============================== */
+:root {
+  --funkard-yellow: #ffcc00;
+}
+
+.text-funkard-yellow {
+  color: var(--funkard-yellow);
+}
+
+.bg-funkard-yellow {
+  background-color: var(--funkard-yellow);
+}
