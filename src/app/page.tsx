@@ -4,9 +4,9 @@ import { Layers, Search, Mail, User } from "lucide-react";
 export default function HomePage() {
   return (
     <>
-      {/* NAVBAR DESKTOP - Sticky Top */}
+      {/* NAVBAR MINIMAL E PULITA */}
       <nav className="sticky top-0 z-50 w-full bg-black/90 backdrop-blur border-b border-zinc-800">
-        <div className="mx-auto flex items-center justify-between px-6 md:px-12 py-4">
+        <div className="max-w-6xl mx-auto flex items-center justify-between px-6 md:px-12 py-4">
           {/* Logo FUNKARD */}
           <a href="/" className="text-2xl md:text-3xl font-extrabold tracking-tight">
             <span className="text-yellow-400">FUN</span>KARD
@@ -36,10 +36,10 @@ export default function HomePage() {
         </div>
       </nav>
 
-      {/* HERO SECTION - Centrata con spazio sopra */}
-      <section className="bg-black text-white py-16 md:py-24">
-        <div className="max-w-5xl mx-auto px-6 md:px-12 text-center">
-          {/* Logo Funkard grande e centrato */}
+      {/* HERO SECTION - Centrato verticalmente senza padding eccessivo */}
+      <section className="bg-black text-white min-h-screen flex items-center justify-center">
+        <div className="max-w-6xl mx-auto px-6 md:px-12 text-center">
+          {/* Logo grande centrato */}
           <img 
             src="/logo.png" 
             alt="Funkard Logo" 
@@ -47,7 +47,7 @@ export default function HomePage() {
           />
           
           {/* Titolo principale */}
-          <h1 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">
+          <h1 className="text-3xl md:text-5xl font-bold mb-6 leading-tight text-white">
             Esplora, compra, vendi e scambia in tutto il mondo!
           </h1>
           
@@ -61,7 +61,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* FEATURES SECTION - 3 colonne su desktop, 1 su mobile */}
+      {/* FEATURES SECTION - Orizzontale su desktop, verticale su mobile */}
       <section className="bg-black text-white py-16 md:py-20">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -98,8 +98,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* FOOTER DESKTOP */}
-      <footer className="hidden md:block bg-black border-t border-zinc-800 text-center py-8">
+      {/* FOOTER - Allineato e coerente */}
+      <footer className="bg-black border-t border-zinc-800 text-center py-8">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <p className="text-zinc-500 text-sm">
             Funkard © 2025 — Da collezionisti per collezionisti
