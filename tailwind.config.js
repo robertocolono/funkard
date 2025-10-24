@@ -12,6 +12,9 @@ module.exports = {
     "grid", "grid-cols-3", "gap-6",
     "px-8", "py-4", "rounded-xl",
     "text-funkard-yellow", "border-funkard-yellow",
+    "flex", "flex-col", "md:flex-row",
+    "hidden", "md:flex", "md:hidden",
+    "flex-1", "gap-8", "mt-16",
   ],
   theme: {
     extend: {
