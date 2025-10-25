@@ -1,53 +1,55 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   important: true,
-  darkMode: "class",
+  darkMode: ["class"],
   content: [
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
-  safelist: [
-    "grid", "grid-cols-1", "grid-cols-3", "md:grid-cols-3", "gap-6", "gap-8",
-    "px-8", "py-4", "rounded-xl",
-    "text-funkard-yellow", "border-funkard-yellow",
-    "flex", "flex-col", "md:flex-row",
-    "hidden", "md:flex", "md:hidden",
-    "flex-1", "mt-16", "max-w-6xl", "mx-auto",
+    "./src/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
   ],
   theme: {
     extend: {
       colors: {
-        'funkard-yellow': '#FFCC00',
-        funkard: {
-          yellow: "#F5C242",
+        // 🎨 Palette principale Funkard
+        primary: {
+          DEFAULT: "#6C63FF", // Viola base
+          light: "#7F75FF",   // Hover
+          dark: "#5B54E6",    // Attivo
         },
-        brand: {
-          yellow: "#f2b237",
-          orange: "#ff9800",
-          dark: "#0a0a0a",
-          gray: "#1f1f1f",
+        secondary: {
+          DEFAULT: "#FFFFFF", // Bianco puro
+          dark: "#F5F5F7",    // Fondo card / sezioni
         },
+        neutral: {
+          50: "#FAFAFB",
+          100: "#F4F4F6",
+          200: "#E5E7EB",
+          300: "#D1D5DB",
+          400: "#9CA3AF",
+          500: "#6B7280",
+          600: "#4B5563",
+          700: "#374151",
+          800: "#1F2937",
+          900: "#111827",
+        },
+        success: "#00B894",
+        error: "#E74C3C",
+        warning: "#F39C12",
       },
       fontFamily: {
-        sans: ["Outfit", "sans-serif"],
+        sans: ["Inter", "ui-sans-serif", "system-ui"],
       },
       boxShadow: {
-        glow: "0 0 30px rgba(242,178,55,0.25)",
+        subtle: "0 1px 3px rgba(0, 0, 0, 0.06)",
+        soft: "0 4px 12px rgba(0, 0, 0, 0.08)",
+        card: "0 2px 8px rgba(0, 0, 0, 0.05)",
       },
-      backgroundImage: {
-        "gradient-funkard":
-          "linear-gradient(135deg, rgba(242,178,55,1) 0%, rgba(255,152,0,1) 100%)",
+      borderRadius: {
+        xl: "1rem",
+        "2xl": "1.5rem",
       },
-      animation: {
-        pulseGlow: "pulseGlow 3s ease-in-out infinite",
-      },
-      keyframes: {
-        pulseGlow: {
-          "0%, 100%": { opacity: "0.4" },
-          "50%": { opacity: "1" },
-        },
+      transitionTimingFunction: {
+        smooth: "cubic-bezier(0.4, 0, 0.2, 1)",
       },
     },
   },

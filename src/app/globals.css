@@ -2,224 +2,112 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ------------------------------
-   FUNKARD BUTTONS
------------------------------- */
-.funkard-btn {
-  background-color: #facc15; /* dorato Funkard */
-  color: #ffffff;
-  border: none;
-  padding: 0.5rem 1.25rem;
-  border-radius: 0.5rem;
+:root {
+  --background: #ffffff;
+  --foreground: #1a1a1a;
+  --card-bg: #f9f9fb;
+  --primary: #6c63ff;
+  --primary-hover: #7f75ff;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #fafafa;
+  --card-bg: #171717;
+  --primary: #7f75ff;
+  --primary-hover: #9188ff;
+  --shadow: 0 0 25px rgba(108, 99, 255, 0.2);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: Inter, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 🎨 Tema Funkard Bianco/Viola */
+.funkard-primary {
+  background-color: var(--primary);
+  color: white;
+}
+
+.funkard-primary:hover {
+  background-color: var(--primary-hover);
+}
+
+.funkard-card {
+  background-color: var(--card-bg);
+  box-shadow: var(--shadow);
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+}
+
+.funkard-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(108, 99, 255, 0.15);
+}
+
+/* 🎯 Componenti Funkard */
+.btn-funkard {
+  background-color: #6C63FF;
+  color: white;
   font-weight: 600;
-  cursor: pointer;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.funkard-btn:hover {
-  background-color: #eab308; /* leggero tono più scuro */
+.btn-funkard:hover {
+  background-color: #7F75FF;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
 }
 
-/* Glow più morbido su titoli grandi (facoltativo) */
-.glow-title {
-  text-shadow: 0 0 22px rgba(246, 195, 86, 0.35);
-}
-
-/* Bottone primario "identico" al tuo (pill, pieno, senza effetti strani) */
-.btn-primary {
-  --gold: #eab64d;
-  --text: #ffffff;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 16px;
-  border-radius: 12px;
-  background: var(--gold);
-  color: var(--text);
+.btn-funkard-secondary {
+  background-color: #F5F5F7;
+  color: #1F2937;
   font-weight: 600;
-  font-size: 14px;
-  line-height: 1;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.35),
-    0 4px 12px rgba(0,0,0,0.25);
-  border: 1px solid rgba(0,0,0,0.15);
-  transition: transform .04s ease;
-  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid #E5E7EB;
+  transition: all 0.3s ease;
 }
-.btn-primary:active { transform: translateY(1px); }
 
-/* ------------------------------
-   FUNKARD GLOBAL OVERRIDE
------------------------------- */
-@layer base {
-  /* Rimuovi divide-y globali che causano bordi orizzontali indesiderati */
-  * {
-    border-color: transparent;
-  }
-  html, body {
-    background-color: #0a0a0a;
-    color: white;
-    -webkit-font-smoothing: antialiased;
-    scroll-behavior: smooth;
-    font-family: "Inter", sans-serif;
-  }
+.btn-funkard-secondary:hover {
+  background-color: #F4F4F6;
+}
 
-  h1, h2, h3, h4, h5 {
-    color: white;
-    font-weight: bold;
-    letter-spacing: -0.025em;
-  }
+.card-funkard {
+  background-color: #F5F5F7;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
 
-  a {
-    transition: all 0.2s ease;
-  }
+.card-funkard:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
 
-  a, a:visited { 
-    color: #ffffff; 
-    text-decoration: none; 
+/* 🌟 Effetti Speciali */
+.glow-primary {
+  box-shadow: 0 0 20px rgba(108, 99, 255, 0.3);
+}
+
+.glow-primary:hover {
+  box-shadow: 0 0 30px rgba(108, 99, 255, 0.5);
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .card-funkard {
+    padding: 1rem;
   }
   
-  a:hover { 
-    color: var(--funkard-yellow); 
-  }
-
-  /* Gestione Navbar */
-  nav {
-    background-color: rgba(10, 10, 10, 0.9);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid #262626;
-  }
-
-  /* Rimozione margini inutili */
-  section {
-    position: relative;
-    z-index: 10;
-  }
-
-  /* Hero */
-  .hero-title {
-    font-size: 1.875rem;
-    font-weight: 800;
-    line-height: 1.1;
-  }
-
-  @media (min-width: 768px) {
-    .hero-title {
-      font-size: 2.25rem;
-    }
-  }
-}
-
-/* ------------------------------
-   COMPONENT OVERRIDES
------------------------------- */
-@layer components {
-  /* Bottoni globali */
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.75rem 2rem;
-    border-radius: 0.75rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  }
-
-  .btn-primary {
-    background-color: #FFCC00;
-    color: black;
-  }
-
-  .btn-primary:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 25px rgba(255, 204, 0, 0.4);
-  }
-
-  .btn-outline {
-    border: 2px solid #FFCC00;
-    color: #FFCC00;
-    background-color: transparent;
-  }
-
-  .btn-outline:hover {
-    background-color: #FFCC00;
-    color: black;
-    transform: scale(1.05);
-  }
-
-  /* Card feature */
-  .feature-card {
-    background-color: #111;
-    text-align: center;
-    padding: 2rem;
-    border-radius: 0.75rem;
-    border: 1px solid #262626;
-    transition: all 0.3s ease;
-  }
-
-  .feature-card:hover {
-    border-color: #FFCC00;
-    box-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
-  }
-
-  .feature-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-  }
-
-  /* Footer */
-  footer {
-    border-top: 1px solid #262626;
-    background-color: rgba(10, 10, 10, 0.9);
-  }
-}
-
-/* ------------------------------
-   UTILITIES EXTRA
------------------------------- */
-@layer utilities {
-  .shadow-glow {
-    box-shadow: 0 0 20px rgba(255, 204, 0, 0.2);
-  }
-
-  .max-container {
-    max-width: 80rem;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-
-  .center-flex {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-}
-
-
-/* ================================
-   COLORI BRAND GLOBALI
-=============================== */
-:root {
-  --funkard-yellow: #ffcc00;
-}
-
-.text-funkard-yellow {
-  color: var(--funkard-yellow);
-}
-
-.bg-funkard-yellow {
-  background-color: var(--funkard-yellow);
-}
-
-/* ================================
-   RESPONSIVE NAVBAR MOBILE
-=============================== */
-@media (max-width: 640px) {
-  nav {
-    padding: 0.75rem 1rem !important;
+  .btn-funkard {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
   }
 }
