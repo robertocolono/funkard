@@ -2,19 +2,19 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
 
 interface CardItemProps {
   id: string;
   title: string;
   imageFront: string;
+  imageBack?: string;
   game: string;
   condition: string;
   gradeCompany?: string;
   gradeValue?: number;
   price: number;
-  currency?: string;
   status: "available" | "sold";
 }
 
@@ -22,58 +22,72 @@ export default function CardItem({
   id,
   title,
   imageFront,
+  imageBack,
   game,
   condition,
   gradeCompany,
   gradeValue,
   price,
-  currency = "€",
   status,
 }: CardItemProps) {
+  const [showBack, setShowBack] = useState(false);
+
   return (
     <Link href={`/marketplace/${id}`}>
-      <Card className="group overflow-hidden transition-all duration-300 border border-gray-100 hover:shadow-[0_0_15px_rgba(139,92,246,0.15)] cursor-pointer">
-        {/* 🖼️ Immagine */}
-        <div className="relative w-full aspect-[3/4] bg-gray-50">
+      <div
+        className="group relative bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+        onClick={(e) => {
+          e.preventDefault();
+          setShowBack(!showBack);
+        }}
+      >
+        {/* 📸 Immagine carta */}
+        <div className="relative w-full h-64 overflow-hidden rounded-t-xl">
           <Image
-            src={imageFront}
+            src={showBack && imageBack ? imageBack : imageFront}
             alt={title}
             fill
-            className="object-cover group-hover:scale-105 transition-transform duration-300"
+            className="object-contain bg-gray-50"
           />
-          {status === "sold" && (
-            <div className="absolute inset-0 bg-white/80 flex items-center justify-center">
-              <span className="text-gray-800 font-semibold text-lg">Venduto</span>
-            </div>
-          )}
+
+          {/* 🔘 Stato */}
+          <Badge
+            className={`absolute top-2 left-2 text-xs ${
+              status === "sold"
+                ? "bg-gray-400 text-white"
+                : "bg-violet-600 text-white"
+            }`}
+          >
+            {status === "sold" ? "Venduta" : "Disponibile"}
+          </Badge>
         </div>
 
-        {/* 📋 Info */}
-        <div className="p-3 flex flex-col gap-2">
-          <h3 className="text-sm font-semibold text-gray-900 truncate">{title}</h3>
-          <p className="text-xs text-gray-500">{game}</p>
+        {/* 📋 Dettagli */}
+        <div className="p-4 space-y-1">
+          <h3 className="font-semibold text-gray-900 line-clamp-1">{title}</h3>
 
-          {/* Condizione */}
-          <div className="flex items-center gap-2">
-            <Badge className="bg-violet-100 text-violet-700 text-xs">
-              {gradeCompany
-                ? `${gradeCompany} ${gradeValue} (${condition})`
-                : condition}
-            </Badge>
-          </div>
+          <p className="text-sm text-gray-600">{game}</p>
 
-          {/* Prezzo */}
-          <div className="flex items-center justify-between mt-1">
-            <span className="text-base font-semibold text-violet-600">
-              {currency}
-              {price.toLocaleString()}
-            </span>
-            {status === "available" && (
-              <Badge className="bg-green-100 text-green-700 text-xs">Disponibile</Badge>
+          <p className="text-sm text-gray-600">
+            {condition}
+            {gradeCompany && gradeValue && (
+              <>
+                {" "}
+                · <span className="font-medium">{gradeCompany} {gradeValue}</span>
+              </>
             )}
+          </p>
+
+          <div className="pt-1 flex items-center justify-between">
+            <span className="text-lg font-bold text-violet-700">
+              €{price.toLocaleString()}
+            </span>
+            <span className="text-xs text-gray-400 group-hover:text-violet-600">
+              {showBack ? "← Fronte" : "Retro →"}
+            </span>
           </div>
         </div>
-      </Card>
+      </div>
     </Link>
   );
 }
