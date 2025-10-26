@@ -36,10 +36,8 @@ export default function CardItem({
     <Link href={`/marketplace/${id}`}>
       <div
         className="group relative bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-pointer"
-        onClick={(e) => {
-          e.preventDefault();
-          setShowBack(!showBack);
-        }}
+        onMouseEnter={() => setShowBack(true)}
+        onMouseLeave={() => setShowBack(false)}
       >
         {/* 📸 Immagine carta */}
         <div className="relative w-full h-64 overflow-hidden rounded-t-xl">
