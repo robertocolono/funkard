@@ -16,17 +16,17 @@ export interface Filters {
   status: "available" | "sold" | "";
 }
 
-export default function Filters({
-  filters,
-  onFiltersChange,
-}: {
+interface FiltersProps {
   filters: Filters;
   onFiltersChange: (filters: Filters) => void;
-}) {
+}
+
+export default function Filters({ filters, onFiltersChange }: FiltersProps) {
+
   const handleChange = (key: keyof Filters, value: string) => {
-    const newFilters = { ...filters, [key]: value };
-    onFiltersChange(newFilters);
+    onFiltersChange({ ...filters, [key]: value });
   };
+
 
   return (
     <div className="w-full bg-white border rounded-2xl shadow-sm p-5">
