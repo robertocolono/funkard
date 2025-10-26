@@ -11,7 +11,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${inter.className} bg-white text-gray-900 antialiased`}>
         <SessionProvider>
           <Navbar />
-          <main className="pt-16">{children}</main>
+          <main>{children}</main>
         </SessionProvider>
       </body>
     </html>
