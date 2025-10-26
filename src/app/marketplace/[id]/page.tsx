@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const mockCards = [
   {
@@ -21,6 +22,11 @@ const mockCards = [
     productType: "Carta singola",
     description:
       "Iconica carta Charizard del Base Set del 1999, una delle più ricercate dai collezionisti Pokémon. Esemplare in condizioni PSA 9 Mint, con ottimi bordi e centratura.",
+    seller: {
+      username: "pokemaster99",
+      displayName: "Pokemaster99",
+      id: "user_001",
+    },
   },
   {
     id: "2",
@@ -37,6 +43,11 @@ const mockCards = [
     productType: "Carta sportiva",
     description:
       "Rookie card di Cristiano Ronaldo, una delle più iconiche della storia del calcio moderno. Esemplare in condizioni PSA 9.",
+    seller: {
+      username: "cardinvest_it",
+      displayName: "CardInvest IT",
+      id: "user_002",
+    },
   },
   {
     id: "3",
@@ -53,6 +64,11 @@ const mockCards = [
     productType: "Carta singola",
     description:
       "La leggendaria Black Lotus di Magic: The Gathering, una delle carte più rare e costose del mondo. Esemplare in condizioni Excellent con grading CGC 7.",
+    seller: {
+      username: "mtg_legend",
+      displayName: "MTG Legend",
+      id: "user_003",
+    },
   },
   {
     id: "4",
@@ -67,6 +83,11 @@ const mockCards = [
     productType: "Carta singola",
     description:
       "Pikachu VMAX Rainbow Rare in condizioni Raw Near Mint. Carta moderna con design accattivante e grande richiesta tra i collezionisti.",
+    seller: {
+      username: "modern_cards",
+      displayName: "Modern Cards",
+      id: "user_004",
+    },
   },
   {
     id: "5",
@@ -83,6 +104,11 @@ const mockCards = [
     productType: "Carta singola",
     description:
       "Blue-Eyes White Dragon dalla Starter Deck Kaiba, una delle carte più iconiche di Yu-Gi-Oh!. Esemplare in condizioni Near Mint con grading BGS 8.",
+    seller: {
+      username: "yugioh_collector",
+      displayName: "Yu-Gi-Oh! Collector",
+      id: "user_005",
+    },
   },
   {
     id: "6",
@@ -97,6 +123,11 @@ const mockCards = [
     productType: "Box sigillato",
     description:
       "Booster Box One Piece OP-05 sigillato, perfetto per collezionisti e giocatori. Contiene 24 booster pack con carte rare e super rare.",
+    seller: {
+      username: "anime_cards",
+      displayName: "Anime Cards",
+      id: "user_006",
+    },
   },
   {
     id: "7",
@@ -113,6 +144,11 @@ const mockCards = [
     productType: "Carta sportiva",
     description:
       "Rookie card di Lionel Messi in condizioni PSA 10 Gem Mint, una delle carte più ricercate del calcio moderno. Esemplare perfetto.",
+    seller: {
+      username: "sport_cards_pro",
+      displayName: "Sport Cards Pro",
+      id: "user_007",
+    },
   },
   {
     id: "8",
@@ -127,6 +163,11 @@ const mockCards = [
     productType: "Carta singola",
     description:
       "Dark Magician in condizioni Raw Excellent, una delle carte più iconiche di Yu-Gi-Oh!. Perfetta per collezionisti e giocatori.",
+    seller: {
+      username: "classic_yugioh",
+      displayName: "Classic Yu-Gi-Oh!",
+      id: "user_008",
+    },
   },
 ];
 
@@ -194,6 +235,18 @@ export default function CardDetailPage() {
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
               {card.title}
             </h1>
+
+            {/* 🧑‍💼 Venditore */}
+            <p className="text-sm text-gray-500 mb-3">
+              {card.status === "sold" ? "Venduta da " : "In vendita da "}
+              <Link
+                href={`/user/${card.seller.id}`}
+                className="text-violet-700 font-medium hover:underline"
+              >
+                @{card.seller.displayName}
+              </Link>
+            </p>
+
             <p className="text-gray-600 text-sm mb-1">{card.game}</p>
             <p className="text-gray-600 text-sm mb-4">{card.condition}</p>
 
