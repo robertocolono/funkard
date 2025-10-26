@@ -16,24 +16,16 @@ export interface Filters {
   status: "available" | "sold" | "";
 }
 
-export default function Filters() {
-  const [filters, setFilters] = useState<Filters>({
-    category: "",
-    game: "",
-    productType: "",
-    condition: "",
-    priceMin: "",
-    priceMax: "",
-    year: "",
-    status: "",
-  });
-
+export default function Filters({
+  filters,
+  onFiltersChange,
+}: {
+  filters: Filters;
+  onFiltersChange: (filters: Filters) => void;
+}) {
   const handleChange = (key: keyof Filters, value: string) => {
-    setFilters((prev) => ({ ...prev, [key]: value }));
-  };
-
-  const handleApply = () => {
-    console.log("Filtri applicati:", filters);
+    const newFilters = { ...filters, [key]: value };
+    onFiltersChange(newFilters);
   };
 
   return (
@@ -42,7 +34,7 @@ export default function Filters() {
 
       {/* Categoria */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <Select onValueChange={(v) => handleChange("category", v)}>
+        <Select onValueChange={(v: string) => handleChange("category", v)}>
           <SelectTrigger>
             <SelectValue placeholder="Categoria (TCG / Sport)" />
           </SelectTrigger>
@@ -55,11 +47,11 @@ export default function Filters() {
         {/* Gioco */}
         <Input
           placeholder="Gioco / Lega (es. Pokémon, NBA, One Piece)"
-          onChange={(e) => handleChange("game", e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange("game", e.target.value)}
         />
 
         {/* Tipo Prodotto */}
-        <Select onValueChange={(v) => handleChange("productType", v)}>
+        <Select onValueChange={(v: string) => handleChange("productType", v)}>
           <SelectTrigger>
             <SelectValue placeholder="Tipo prodotto" />
           </SelectTrigger>
@@ -74,7 +66,7 @@ export default function Filters() {
         </Select>
 
         {/* Condizione */}
-        <Select onValueChange={(v) => handleChange("condition", v)}>
+        <Select onValueChange={(v: string) => handleChange("condition", v)}>
           <SelectTrigger>
             <SelectValue placeholder="Condizione / Grado" />
           </SelectTrigger>
@@ -97,12 +89,12 @@ export default function Filters() {
           <Input
             type="number"
             placeholder="Prezzo minimo €"
-            onChange={(e) => handleChange("priceMin", e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange("priceMin", e.target.value)}
           />
           <Input
             type="number"
             placeholder="Prezzo massimo €"
-            onChange={(e) => handleChange("priceMax", e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange("priceMax", e.target.value)}
           />
         </div>
 
@@ -110,11 +102,11 @@ export default function Filters() {
         <Input
           type="number"
           placeholder="Anno di rilascio (es. 1999)"
-          onChange={(e) => handleChange("year", e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange("year", e.target.value)}
         />
 
         {/* Stato */}
-        <Select onValueChange={(v) => handleChange("status", v)}>
+        <Select onValueChange={(v: string) => handleChange("status", v)}>
           <SelectTrigger>
             <SelectValue placeholder="Stato" />
           </SelectTrigger>
@@ -125,12 +117,6 @@ export default function Filters() {
         </Select>
       </div>
 
-      {/* Pulsante */}
-      <div className="flex justify-end mt-5">
-        <Button onClick={handleApply} className="btn-funkard">
-          Applica filtri
-        </Button>
-      </div>
     </div>
   );
 }
