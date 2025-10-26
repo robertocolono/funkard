@@ -12,7 +12,7 @@ interface CardItemProps {
   gradeCompany?: string;
   gradeValue?: number;
   price: number;
-  status: string;
+  status: "available" | "sold";
 }
 
 export default function CardItem({
@@ -26,45 +26,39 @@ export default function CardItem({
   price,
   status,
 }: CardItemProps) {
-  const isSold = status === "sold";
-
   return (
     <Link
       href={`/marketplace/${id}`}
-      className={`group block rounded-xl overflow-hidden border ${
-        isSold ? "border-gray-200 opacity-70" : "border-gray-100"
-      } bg-white shadow-sm hover:shadow-md hover:border-violet-400 transition`}
+      className="group bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden"
     >
-      {/* 🖼️ Immagine principale */}
-      <div className="relative w-full h-64 bg-gray-50 flex items-center justify-center">
+      {/* Immagine */}
+      <div className="relative w-full aspect-[3/4] bg-gray-50">
         <Image
           src={imageFront}
           alt={title}
           fill
-          className="object-contain group-hover:scale-105 transition-transform duration-300"
+          className="object-cover group-hover:scale-105 transition-transform duration-300"
         />
-        {isSold && (
-          <div className="absolute top-2 right-2 bg-gray-900/70 text-white text-xs px-2 py-1 rounded-md">
+        {status === "sold" && (
+          <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-md">
             Venduta
           </div>
         )}
       </div>
 
-      {/* 📋 Dettagli carta */}
-      <div className="p-4">
-        <h3 className="text-sm font-semibold text-gray-900 line-clamp-1 group-hover:text-violet-700 transition">
+      {/* Info */}
+      <div className="p-3">
+        <h3 className="text-gray-900 font-semibold text-base line-clamp-1 group-hover:text-violet-700 transition">
           {title}
         </h3>
-        <p className="text-xs text-gray-500 mt-0.5">{game}</p>
+        <p className="text-gray-500 text-sm">{game}</p>
 
-        <p className="text-xs text-gray-600 mt-1">
+        <p className="text-gray-700 text-sm mt-1">
           {condition}
-          {gradeCompany && gradeValue && (
-            <span> · {gradeCompany} {gradeValue}</span>
-          )}
+          {gradeCompany && gradeValue ? ` • ${gradeCompany} ${gradeValue}` : ""}
         </p>
 
-        <p className="text-violet-700 font-bold mt-2">
+        <p className="text-violet-700 font-semibold mt-2">
           €{price.toLocaleString("it-IT")}
         </p>
       </div>

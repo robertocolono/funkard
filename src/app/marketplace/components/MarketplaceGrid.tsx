@@ -12,7 +12,7 @@ const mockCards = [
     gradeCompany: "PSA",
     gradeValue: 9,
     price: 4500,
-    status: "available",
+    status: "available" as const,
   },
   {
     id: "2",
@@ -23,7 +23,7 @@ const mockCards = [
     gradeCompany: "BGS",
     gradeValue: 8,
     price: 1500,
-    status: "sold",
+    status: "sold" as const,
   },
   {
     id: "3",
@@ -34,7 +34,7 @@ const mockCards = [
     gradeCompany: "CGC",
     gradeValue: 7,
     price: 18500,
-    status: "available",
+    status: "available" as const,
   },
   {
     id: "4",
@@ -43,7 +43,7 @@ const mockCards = [
     game: "Pokémon",
     condition: "Raw - Near Mint",
     price: 180,
-    status: "available",
+    status: "available" as const,
   },
   {
     id: "5",
@@ -54,7 +54,7 @@ const mockCards = [
     gradeCompany: "PSA",
     gradeValue: 9,
     price: 2700,
-    status: "available",
+    status: "available" as const,
   },
 ];
 
@@ -68,12 +68,10 @@ export default function MarketplaceGrid() {
   }
 
   return (
-    <div className="w-full max-w-7xl mx-auto mt-8 px-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {mockCards.map((card) => (
-          <CardItem key={card.id} {...card} />
-        ))}
-      </div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
+      {mockCards.map((card) => (
+        <CardItem key={card.id} {...card} />
+      ))}
     </div>
   );
 }
