@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import Filters from "./components/Filters";
+import MarketplaceGrid from "./components/MarketplaceGrid";
 
 export default function MarketplacePage() {
   const [search, setSearch] = useState("");
@@ -46,37 +47,11 @@ export default function MarketplacePage() {
         </div>
       </section>
 
-      {/* Griglia carte (placeholder per ora) */}
+      {/* Griglia carte */}
       <section className="py-10 px-4 sm:px-8">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-lg font-semibold mb-4">Tutte le carte</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            {/* Qui verranno mostrate le card del market */}
-            <div className="border rounded-xl bg-white shadow-sm h-56 flex items-center justify-center text-neutral-400">
-              Placeholder carta
-            </div>
-            <div className="border rounded-xl bg-white shadow-sm h-56 flex items-center justify-center text-neutral-400">
-              Placeholder carta
-            </div>
-            <div className="border rounded-xl bg-white shadow-sm h-56 flex items-center justify-center text-neutral-400">
-              Placeholder carta
-            </div>
-            <div className="border rounded-xl bg-white shadow-sm h-56 flex items-center justify-center text-neutral-400">
-              Placeholder carta
-            </div>
-            <div className="border rounded-xl bg-white shadow-sm h-56 flex items-center justify-center text-neutral-400">
-              Placeholder carta
-            </div>
-            <div className="border rounded-xl bg-white shadow-sm h-56 flex items-center justify-center text-neutral-400">
-              Placeholder carta
-            </div>
-            <div className="border rounded-xl bg-white shadow-sm h-56 flex items-center justify-center text-neutral-400">
-              Placeholder carta
-            </div>
-            <div className="border rounded-xl bg-white shadow-sm h-56 flex items-center justify-center text-neutral-400">
-              Placeholder carta
-            </div>
-          </div>
+          <h2 className="text-lg font-semibold mb-6">Tutte le carte</h2>
+          <MarketplaceGrid />
         </div>
       </section>
     </main>
